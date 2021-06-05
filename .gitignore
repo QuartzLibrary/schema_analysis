@@ -1,0 +1,7 @@
+/target
+Cargo.lock
+
+/website/schema_analysis_wasm/pgk
+
+/website/node_modules
+/website/package-lock.json

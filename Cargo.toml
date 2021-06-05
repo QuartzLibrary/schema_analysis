@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "schema_analysis",
+    "website/schema_analysis_wasm",
+]
