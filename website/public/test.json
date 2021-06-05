@@ -1,0 +1,1768 @@
+{
+    "apiVersion": null,
+    "errorMessage": null,
+    "payload": {
+        "namespaces": [
+            {
+                "id": 1,
+                "prefix": "chebi",
+                "mirId": "MIR:00000002",
+                "name": "ChEBI",
+                "pattern": "^CHEBI:\\d+$",
+                "description": "Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on 'small' chemical compounds.",
+                "created": "2019-06-11T14:15:26.925+0000",
+                "modified": "2019-06-11T14:15:26.925+0000",
+                "resources": [
+                    {
+                        "id": 3,
+                        "mirId": "MIR:00100009",
+                        "urlPattern": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:{$id}",
+                        "name": "ChEBI (Chemical Entities of Biological Interest)",
+                        "description": "ChEBI (Chemical Entities of Biological Interest)",
+                        "official": true,
+                        "providerCode": "ebi",
+                        "sampleId": "36927",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/chebi/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 4,
+                        "mirId": "MIR:00100158",
+                        "urlPattern": "https://www.ebi.ac.uk/ols/ontologies/chebi/terms?obo_id=CHEBI:{$id}",
+                        "name": "ChEBI through OLS",
+                        "description": "ChEBI through OLS",
+                        "official": false,
+                        "providerCode": "ols",
+                        "sampleId": "36927",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/ols/ontologies/chebi",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 6,
+                        "mirId": "MIR:00100565",
+                        "urlPattern": "http://purl.bioontology.org/ontology/CHEBI/CHEBI:{$id}",
+                        "name": "ChEBI through BioPortal",
+                        "description": "ChEBI through BioPortal",
+                        "official": false,
+                        "providerCode": "bptl",
+                        "sampleId": "36927",
+                        "resourceHomeUrl": "http://bioportal.bioontology.org/ontologies/CHEBI",
+                        "institution": {
+                            "id": 5,
+                            "name": "National Center for Biomedical Ontology, Stanford",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "36927",
+                "namespaceEmbeddedInLui": true,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 7,
+                "prefix": "ensembl",
+                "mirId": "MIR:00000003",
+                "name": "Ensembl",
+                "pattern": "^((ENS[FPTG]\\\\d{11}(\\\\.\\\\d+)?)|(FB\\\\w{2}\\\\d{7})|(Y[A-Z]{2}\\\\d{3}[a-zA-Z](\\\\-[A-Z])?)|([A-Z_a-z0-9]+(\\\\.)?(t)?(\\\\d+)?([a-z])?))$",
+                "description": "Ensembl is a joint project between EMBL - EBI and the Sanger Institute  to develop a software system which produces and maintains automatic annotation on selected eukaryotic genomes. This collections also references outgroup organisms.",
+                "created": "2019-06-11T14:15:27.869+0000",
+                "modified": "2019-06-11T14:15:27.869+0000",
+                "resources": [
+                    {
+                        "id": 9,
+                        "mirId": "MIR:00100011",
+                        "urlPattern": "https://www.ensembl.org/id/{$id}",
+                        "name": "Ensembl at Sanger/EMBL-EBI",
+                        "description": "Ensembl at Sanger/EMBL-EBI",
+                        "official": true,
+                        "providerCode": "ebi",
+                        "sampleId": "ENSG00000139618",
+                        "resourceHomeUrl": "https://www.ensembl.org/",
+                        "institution": {
+                            "id": 8,
+                            "name": "Sanger Institute and European Bioinformatics Institute, Hinxton, Cambridge",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 10,
+                        "mirId": "MIR:00100561",
+                        "urlPattern": "http://uswest.ensembl.org/id/{$id}",
+                        "name": "Ensembl US West mirror",
+                        "description": "Ensembl US West mirror",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "ENSG00000139618",
+                        "resourceHomeUrl": "http://uswest.ensembl.org/",
+                        "institution": {
+                            "id": 8,
+                            "name": "Sanger Institute and European Bioinformatics Institute, Hinxton, Cambridge",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 11,
+                        "mirId": "MIR:00100562",
+                        "urlPattern": "http://useast.ensembl.org/id/{$id}",
+                        "name": "Ensembl US East mirror",
+                        "description": "Ensembl US East mirror",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "ENSG00000139618",
+                        "resourceHomeUrl": "http://useast.ensembl.org/",
+                        "institution": {
+                            "id": 8,
+                            "name": "Sanger Institute and European Bioinformatics Institute, Hinxton, Cambridge",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 12,
+                        "mirId": "MIR:00100563",
+                        "urlPattern": "http://asia.ensembl.org/id/{$id}",
+                        "name": "Ensembl Asia mirror",
+                        "description": "Ensembl Asia mirror",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "ENSG00000139618",
+                        "resourceHomeUrl": "http://asia.ensembl.org/",
+                        "institution": {
+                            "id": 8,
+                            "name": "Sanger Institute and European Bioinformatics Institute, Hinxton, Cambridge",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "SG",
+                            "countryName": "Singapore"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "ENSG00000139618",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 13,
+                "prefix": "ec-code",
+                "mirId": "MIR:00000004",
+                "name": "Enzyme Nomenclature",
+                "pattern": "^\\d+\\.-\\.-\\.-|\\d+\\.\\d+\\.-\\.-|\\d+\\.\\d+\\.\\d+\\.-|\\d+\\.\\d+\\.\\d+\\.(n)?\\d+$",
+                "description": "The Enzyme Classification contains the recommendations of the Nomenclature Committee of the International Union of Biochemistry and Molecular Biology on the nomenclature and classification of enzyme-catalysed reactions.",
+                "created": "2019-06-11T14:15:28.483+0000",
+                "modified": "2019-06-11T14:15:28.483+0000",
+                "resources": [
+                    {
+                        "id": 14,
+                        "mirId": "MIR:00100001",
+                        "urlPattern": "https://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec={$id}",
+                        "name": "IntEnZ (Integrated relational Enzyme database)",
+                        "description": "IntEnZ (Integrated relational Enzyme database)",
+                        "official": false,
+                        "providerCode": "intenz",
+                        "sampleId": "1.1.1.1",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/intenz/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 16,
+                        "mirId": "MIR:00100002",
+                        "urlPattern": "https://www.genome.jp/dbget-bin/www_bget?ec:{$id}",
+                        "name": "KEGG Ligand Database for Enzyme Nomenclature",
+                        "description": "KEGG Ligand Database for Enzyme Nomenclature",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "1.1.1.1",
+                        "resourceHomeUrl": "https://www.genome.jp/dbget-bin/www_bfind?enzyme",
+                        "institution": {
+                            "id": 15,
+                            "name": "Kyoto University Bioinformatics Center",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "JP",
+                                "countryName": "Japan"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "JP",
+                            "countryName": "Japan"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 20,
+                        "mirId": "MIR:00100308",
+                        "urlPattern": "http://www.enzyme-database.org/query.php?ec={$id}",
+                        "name": "ExploreEnz at Trinity College",
+                        "description": "ExploreEnz at Trinity College",
+                        "official": false,
+                        "providerCode": "expenz",
+                        "sampleId": "1.1.1.1",
+                        "resourceHomeUrl": "http://www.enzyme-database.org/",
+                        "institution": {
+                            "id": 19,
+                            "name": "Trinity College, Dublin",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "IE",
+                                "countryName": "Ireland"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "IE",
+                            "countryName": "Ireland"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 22,
+                        "mirId": "MIR:00100835",
+                        "urlPattern": "https://www.ebi.ac.uk/enzymeportal/ec/{$id}",
+                        "name": "Enzyme Portal through EMBL-EBI",
+                        "description": "Enzyme Portal through EMBL-EBI",
+                        "official": false,
+                        "providerCode": "enzymeportal",
+                        "sampleId": "1.1.1.1",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/enzymeportal",
+                        "institution": {
+                            "id": 21,
+                            "name": "Enzyme Portal at European Bioinformatics Institute, Hinxton, Cambridge",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 18,
+                        "mirId": "MIR:00100003",
+                        "urlPattern": "https://enzyme.expasy.org/EC/{$id}",
+                        "name": "Enzyme nomenclature database, ExPASy (Expert Protein Analysis System)",
+                        "description": "Enzyme nomenclature database, ExPASy (Expert Protein Analysis System)",
+                        "official": false,
+                        "providerCode": "expasy",
+                        "sampleId": "1.1.1.1",
+                        "resourceHomeUrl": "https://enzyme.expasy.org/",
+                        "institution": {
+                            "id": 1730,
+                            "name": "SIB Swiss Institute of Bioinformatics",
+                            "homeUrl": "https://www.sib.swiss",
+                            "description": "SIB provides bioinformatics services and resources for scientists and clinicians from academia and industry in Switzerland and worldwide.",
+                            "rorId": "https://ror.org/002n09z45",
+                            "location": {
+                                "countryCode": "CH",
+                                "countryName": "Switzerland"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "CH",
+                            "countryName": "Switzerland"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "1.1.1.1",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 23,
+                "prefix": "uniprot",
+                "mirId": "MIR:00000005",
+                "name": "UniProt Knowledgebase",
+                "pattern": "^([A-N,R-Z][0-9]([A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\.\\d+)?$",
+                "description": "The UniProt Knowledgebase (UniProtKB) is a comprehensive resource for protein sequence and functional information with extensive cross-references to more than 120 external databases. Besides amino acid sequence and a description, it also provides taxonomic data and citation information.",
+                "created": "2019-06-11T14:15:29.457+0000",
+                "modified": "2019-06-11T14:15:29.457+0000",
+                "resources": [
+                    {
+                        "id": 27,
+                        "mirId": "MIR:00100330",
+                        "urlPattern": "https://www.ncbi.nlm.nih.gov/protein/{$id}",
+                        "name": "UniProt through NCBI",
+                        "description": "UniProt through NCBI",
+                        "official": false,
+                        "providerCode": "ncbi",
+                        "sampleId": "P0DP23",
+                        "resourceHomeUrl": "https://www.ncbi.nlm.nih.gov/protein/",
+                        "institution": {
+                            "id": 26,
+                            "name": "National Center for Biotechnology Information",
+                            "homeUrl": "https://www.ncbi.nlm.nih.gov/",
+                            "description": "The National Center for Biotechnology Information advances science and health by providing access to biomedical and genomic information.",
+                            "rorId": "https://ror.org/02meqm098",
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 25,
+                        "mirId": "MIR:00100164",
+                        "urlPattern": "http://purl.uniprot.org/uniprot/{$id}",
+                        "name": "Universal Protein Resource using Persistent URL system",
+                        "description": "Universal Protein Resource using Persistent URL system",
+                        "official": true,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "P0DP23",
+                        "resourceHomeUrl": "https://www.uniprot.org/",
+                        "institution": {
+                            "id": 24,
+                            "name": "UniProt Consortium",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "P0DP23",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 28,
+                "prefix": "taxonomy",
+                "mirId": "MIR:00000006",
+                "name": "Taxonomy",
+                "pattern": "^\\d+$",
+                "description": "The taxonomy contains the relationships between all living forms for which nucleic acid or protein sequence have been determined.",
+                "created": "2019-06-11T14:15:29.882+0000",
+                "modified": "2019-06-11T14:15:29.882+0000",
+                "resources": [
+                    {
+                        "id": 29,
+                        "mirId": "MIR:00100007",
+                        "urlPattern": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id={$id}",
+                        "name": "NCBI Taxonomy",
+                        "description": "NCBI Taxonomy",
+                        "official": true,
+                        "providerCode": "ncbi",
+                        "sampleId": "9606",
+                        "resourceHomeUrl": "https://www.ncbi.nlm.nih.gov/Taxonomy/",
+                        "institution": {
+                            "id": 26,
+                            "name": "National Center for Biotechnology Information",
+                            "homeUrl": "https://www.ncbi.nlm.nih.gov/",
+                            "description": "The National Center for Biotechnology Information advances science and health by providing access to biomedical and genomic information.",
+                            "rorId": "https://ror.org/02meqm098",
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 30,
+                        "mirId": "MIR:00100019",
+                        "urlPattern": "https://purl.uniprot.org/taxonomy/{$id}",
+                        "name": "Taxonomy through UniProt PURL",
+                        "description": "Taxonomy through UniProt PURL",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "9606",
+                        "resourceHomeUrl": "https://www.uniprot.org/taxonomy/",
+                        "institution": {
+                            "id": 24,
+                            "name": "UniProt Consortium",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 31,
+                        "mirId": "MIR:00100299",
+                        "urlPattern": "https://www.ebi.ac.uk/ena/data/view/Taxon:{$id}",
+                        "name": "European Nucleotide Archive (ENA)",
+                        "description": "European Nucleotide Archive (ENA)",
+                        "official": false,
+                        "providerCode": "ebi",
+                        "sampleId": "9606",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/ena/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 32,
+                        "mirId": "MIR:00100507",
+                        "urlPattern": "http://purl.bioontology.org/ontology/NCBITAXON/{$id}",
+                        "name": "BioPortal",
+                        "description": "BioPortal",
+                        "official": false,
+                        "providerCode": "bptl",
+                        "sampleId": "9606",
+                        "resourceHomeUrl": "http://bioportal.bioontology.org/ontologies/NCBITAXON",
+                        "institution": {
+                            "id": 5,
+                            "name": "National Center for Biomedical Ontology, Stanford",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 35,
+                        "mirId": "MIR:00100770",
+                        "urlPattern": "https://www.ebi.ac.uk/ols/ontologies/ncbitaxon/terms?short_form=NCBITaxon_{$id}",
+                        "name": "NCBI Taxonomy through OLS",
+                        "description": "NCBI Taxonomy through OLS",
+                        "official": false,
+                        "providerCode": "ols",
+                        "sampleId": "9606",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/ols/ontologies/ncbitaxon/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 34,
+                        "mirId": "MIR:00100695",
+                        "urlPattern": "https://bio2rdf.org/taxonomy:{$id}",
+                        "name": "Bio2RDF",
+                        "description": "Bio2RDF",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "9606",
+                        "resourceHomeUrl": "https://bio2rdf.org/",
+                        "institution": {
+                            "id": 33,
+                            "name": "Bio2RDF.org",
+                            "homeUrl": "https://bio2rdf.org",
+                            "description": "Bio2RDF is an open-source project that uses Semantic Web technologies to build and provide the largest network of Linked Data for the Life Sciences. Bio2RDF defines a set of simple conventions to create RDF(S) compatible Linked Data from a diverse set of heterogeneously formatted sources obtained from multiple data providers.",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "9606",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 36,
+                "prefix": "biomodels.db",
+                "mirId": "MIR:00000007",
+                "name": "BioModels Database",
+                "pattern": "^((BIOMD|MODEL)\\d{10})|(BMID\\d{12})$",
+                "description": "BioModels Database is a data resource that allows biologists to store, search and retrieve published mathematical models of biological interests.",
+                "created": "2019-06-11T14:15:30.877+0000",
+                "modified": "2019-06-11T14:15:30.877+0000",
+                "resources": [
+                    {
+                        "id": 37,
+                        "mirId": "MIR:00100006",
+                        "urlPattern": "https://www.ebi.ac.uk/biomodels/{$id}",
+                        "name": "BioModels Database",
+                        "description": "BioModels Database",
+                        "official": true,
+                        "providerCode": "ebi",
+                        "sampleId": "BIOMD0000000048",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/biomodels/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 39,
+                        "mirId": "MIR:00100107",
+                        "urlPattern": "http://biomodels.caltech.edu/{$id}",
+                        "name": "Caltech mirror",
+                        "description": "Caltech mirror",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "BIOMD0000000048",
+                        "resourceHomeUrl": "http://biomodels.caltech.edu/",
+                        "institution": {
+                            "id": 38,
+                            "name": "California Institute of Technology",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 40,
+                        "mirId": "MIR:00100855",
+                        "urlPattern": "https://www.omicsdi.org/dataset/biomodels/{$id}",
+                        "name": "BioModels through OmicsDI",
+                        "description": "BioModels through OmicsDI",
+                        "official": false,
+                        "providerCode": "omicsdi",
+                        "sampleId": "BIOMD0000000048",
+                        "resourceHomeUrl": "https://www.omicsdi.org/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "BIOMD0000000048",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 43,
+                "prefix": "icd",
+                "mirId": "MIR:00000009",
+                "name": "ICD",
+                "pattern": "^[A-Z]\\d+(\\.[-\\d+])?$",
+                "description": "The International Classification of Diseases is the international standard diagnostic classification for all general epidemiological and many health management purposes.",
+                "created": "2019-06-11T14:15:31.658+0000",
+                "modified": "2019-06-11T14:15:31.658+0000",
+                "resources": [
+                    {
+                        "id": 45,
+                        "mirId": "MIR:00100016",
+                        "urlPattern": "http://apps.who.int/classifications/icd10/browse/2010/en#/{$id}",
+                        "name": "International Statistical Classification of Diseases and Related Health Problems",
+                        "description": "International Statistical Classification of Diseases and Related Health Problems",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "C34",
+                        "resourceHomeUrl": "http://www.who.int/classifications/icd/en/",
+                        "institution": {
+                            "id": 44,
+                            "name": "German Institute of Medical Documentation and Information",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "DE",
+                                "countryName": "Germany"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "DE",
+                            "countryName": "Germany"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "C34",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 46,
+                "prefix": "intact",
+                "mirId": "MIR:00000010",
+                "name": "IntAct",
+                "pattern": "^EBI\\-[0-9]+$",
+                "description": "IntAct provides a freely available, open source database system and analysis tools for protein interaction data.",
+                "created": "2019-06-11T14:15:31.920+0000",
+                "modified": "2019-06-11T14:15:31.920+0000",
+                "resources": [
+                    {
+                        "id": 47,
+                        "mirId": "MIR:00100017",
+                        "urlPattern": "https://www.ebi.ac.uk/intact/interaction/{$id}",
+                        "name": "IntAct at EBI",
+                        "description": "IntAct at EBI",
+                        "official": true,
+                        "providerCode": "ebi",
+                        "sampleId": "EBI-2307691",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/intact/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "EBI-2307691",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 48,
+                "prefix": "interpro",
+                "mirId": "MIR:00000011",
+                "name": "InterPro",
+                "pattern": "^IPR\\d{6}$",
+                "description": "InterPro is a database of protein families, domains and functional sites in which identifiable features found in known proteins can be applied to unknown protein sequences.",
+                "created": "2019-06-11T14:15:32.153+0000",
+                "modified": "2019-06-11T14:15:32.153+0000",
+                "resources": [
+                    {
+                        "id": 49,
+                        "mirId": "MIR:00100018",
+                        "urlPattern": "https://www.ebi.ac.uk/interpro/entry/{$id}",
+                        "name": "InterPro",
+                        "description": "InterPro",
+                        "official": true,
+                        "providerCode": "ebi",
+                        "sampleId": "IPR000100",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/interpro/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 50,
+                        "mirId": "MIR:00100697",
+                        "urlPattern": "http://interpro.bio2rdf.org/describe/?url=http://bio2rdf.org/interpro:{$id}",
+                        "name": "Bio2RDF",
+                        "description": "Bio2RDF",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "IPR000100",
+                        "resourceHomeUrl": "http://interpro.bio2rdf.org/fct/",
+                        "institution": {
+                            "id": 33,
+                            "name": "Bio2RDF.org",
+                            "homeUrl": "https://bio2rdf.org",
+                            "description": "Bio2RDF is an open-source project that uses Semantic Web technologies to build and provide the largest network of Linked Data for the Life Sciences. Bio2RDF defines a set of simple conventions to create RDF(S) compatible Linked Data from a diverse set of heterogeneously formatted sources obtained from multiple data providers.",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "IPR000100",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 51,
+                "prefix": "kegg.pathway",
+                "mirId": "MIR:00000012",
+                "name": "KEGG Pathway",
+                "pattern": "^\\w{2,4}\\d{5}$",
+                "description": "KEGG PATHWAY is a collection of manually drawn pathway maps representing our knowledge on the molecular interaction and reaction networks.",
+                "created": "2019-06-11T14:15:32.480+0000",
+                "modified": "2019-06-11T14:15:32.480+0000",
+                "resources": [
+                    {
+                        "id": 52,
+                        "mirId": "MIR:00100020",
+                        "urlPattern": "https://www.kegg.jp/entry/{$id}",
+                        "name": "KEGG PATHWAY Database",
+                        "description": "KEGG PATHWAY Database",
+                        "official": true,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "hsa00620",
+                        "resourceHomeUrl": "https://www.genome.jp/kegg/pathway.html",
+                        "institution": {
+                            "id": 15,
+                            "name": "Kyoto University Bioinformatics Center",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "JP",
+                                "countryName": "Japan"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "JP",
+                            "countryName": "Japan"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "hsa00620",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 53,
+                "prefix": "kegg.compound",
+                "mirId": "MIR:00000013",
+                "name": "KEGG Compound",
+                "pattern": "^C\\d+$",
+                "description": "KEGG compound contains our knowledge on the universe of chemical substances that are relevant to life.",
+                "created": "2019-06-11T14:15:32.730+0000",
+                "modified": "2019-06-11T14:15:32.730+0000",
+                "resources": [
+                    {
+                        "id": 54,
+                        "mirId": "MIR:00100021",
+                        "urlPattern": "https://www.kegg.jp/entry/{$id}",
+                        "name": "KEGG LIGAND Database",
+                        "description": "KEGG LIGAND Database",
+                        "official": true,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "C12345",
+                        "resourceHomeUrl": "https://www.genome.jp/kegg/ligand.html",
+                        "institution": {
+                            "id": 15,
+                            "name": "Kyoto University Bioinformatics Center",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "JP",
+                                "countryName": "Japan"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "JP",
+                            "countryName": "Japan"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "C12345",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 55,
+                "prefix": "kegg.reaction",
+                "mirId": "MIR:00000014",
+                "name": "KEGG Reaction",
+                "pattern": "^R\\d+$",
+                "description": "KEGG reaction contains our knowledge on the universe of reactions that are relevant to life.",
+                "created": "2019-06-11T14:15:32.930+0000",
+                "modified": "2019-06-11T14:15:32.930+0000",
+                "resources": [
+                    {
+                        "id": 56,
+                        "mirId": "MIR:00100022",
+                        "urlPattern": "https://www.kegg.jp/entry/{$id}",
+                        "name": "KEGG Reaction Database",
+                        "description": "KEGG Reaction Database",
+                        "official": true,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "R00100",
+                        "resourceHomeUrl": "https://www.genome.jp/kegg/reaction/",
+                        "institution": {
+                            "id": 15,
+                            "name": "Kyoto University Bioinformatics Center",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "JP",
+                                "countryName": "Japan"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "JP",
+                            "countryName": "Japan"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "R00100",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 57,
+                "prefix": "pubmed",
+                "mirId": "MIR:00000015",
+                "name": "PubMed",
+                "pattern": "^\\d+$",
+                "description": "PubMed is a service of the U.S. National Library of Medicine that includes citations from MEDLINE and other life science journals for biomedical articles back to the 1950s.",
+                "created": "2019-06-11T14:15:33.142+0000",
+                "modified": "2019-06-11T14:15:33.142+0000",
+                "resources": [
+                    {
+                        "id": 58,
+                        "mirId": "MIR:00100023",
+                        "urlPattern": "https://www.ncbi.nlm.nih.gov/pubmed/{$id}",
+                        "name": "NCBI PubMed",
+                        "description": "NCBI PubMed",
+                        "official": true,
+                        "providerCode": "ncbi",
+                        "sampleId": "16333295",
+                        "resourceHomeUrl": "https://www.ncbi.nlm.nih.gov/PubMed/",
+                        "institution": {
+                            "id": 26,
+                            "name": "National Center for Biotechnology Information",
+                            "homeUrl": "https://www.ncbi.nlm.nih.gov/",
+                            "description": "The National Center for Biotechnology Information advances science and health by providing access to biomedical and genomic information.",
+                            "rorId": "https://ror.org/02meqm098",
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 60,
+                        "mirId": "MIR:00100064",
+                        "urlPattern": "http://www.hubmed.org/display.cgi?uids={$id}",
+                        "name": "HubMed",
+                        "description": "HubMed",
+                        "official": false,
+                        "providerCode": "hubmed",
+                        "sampleId": "16333295",
+                        "resourceHomeUrl": "http://www.hubmed.org/",
+                        "institution": {
+                            "id": 59,
+                            "name": "University Health Network",
+                            "homeUrl": "https://www.uhn.ca/",
+                            "description": "The University Health Network has grown out of a series of mergers between our current hospitals, as we have adjusted and change to accommodate our growing and changing patient community in and around the GTA.",
+                            "rorId": "https://ror.org/042xt5161",
+                            "location": {
+                                "countryCode": "CA",
+                                "countryName": "Canada"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 62,
+                        "mirId": "MIR:00100497",
+                        "urlPattern": "http://europepmc.org/abstract/MED/{$id}",
+                        "name": "Europe PMC",
+                        "description": "Europe PMC",
+                        "official": false,
+                        "providerCode": "epmc",
+                        "sampleId": "16333295",
+                        "resourceHomeUrl": "http://europepmc.org/",
+                        "institution": {
+                            "id": 61,
+                            "name": "Europe PubMed Central partners",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 64,
+                        "mirId": "MIR:00100745",
+                        "urlPattern": "http://linkedlifedata.com/resource/pubmed/id/{$id}",
+                        "name": "PubMed through Linkedlife data",
+                        "description": "PubMed through Linkedlife data",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "23735196",
+                        "resourceHomeUrl": "http://linkedlifedata.com/",
+                        "institution": {
+                            "id": 63,
+                            "name": "Linkedlifedata, Ontotext, Sofia",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "BG",
+                                "countryName": "Bulgaria"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "BG",
+                            "countryName": "Bulgaria"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 2466,
+                        "mirId": "MIR:00000788",
+                        "urlPattern": "https://scholia.toolforge.org/pubmed/{$id}",
+                        "name": "Scholia",
+                        "description": "Scholia is a service that creates visual scholarly profiles for topic, people, organizations, species, chemicals, etc using bibliographic and other information in Wikidata.",
+                        "official": false,
+                        "providerCode": "scholia",
+                        "sampleId": "29029422",
+                        "resourceHomeUrl": "https://scholia.toolforge.org/",
+                        "institution": {
+                            "id": 283,
+                            "name": "Maastricht University",
+                            "homeUrl": "https://www.maastrichtuniversity.nl",
+                            "description": "Maastricht University (UM) is the most international university in the Netherlands and, with 18,000 students and 4,400 employees, is still growing. The university stands out for its innovative education model, international character and multidisciplinary approach to research and education.\nThanks to its high-quality research and study programmes as well as a strong focus on social engagement, UM has quickly built up a solid reputation. Today it is considered one of the best young universities in the world.",
+                            "rorId": "https://ror.org/02jz4aj89",
+                            "location": {
+                                "countryCode": "NL",
+                                "countryName": "Netherlands"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "NL",
+                            "countryName": "Netherlands"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "16333295",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 65,
+                "prefix": "mim",
+                "mirId": "MIR:00000016",
+                "name": "OMIM",
+                "pattern": "^[*#+%^]?\\d{6}$",
+                "description": "Online Mendelian Inheritance in Man is a catalog of human genes and genetic disorders.",
+                "created": "2019-06-11T14:15:33.878+0000",
+                "modified": "2019-06-11T14:15:33.878+0000",
+                "resources": [
+                    {
+                        "id": 67,
+                        "mirId": "MIR:00100024",
+                        "urlPattern": "https://omim.org/entry/{$id}",
+                        "name": "OMIM at John Hopkins",
+                        "description": "OMIM at John Hopkins",
+                        "official": true,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "603903",
+                        "resourceHomeUrl": "https://omim.org/",
+                        "institution": {
+                            "id": 66,
+                            "name": "Johns Hopkins University, Baltimore, Maryland",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 68,
+                        "mirId": "MIR:00100777",
+                        "urlPattern": "http://mirror.omim.org/entry/{$id}",
+                        "name": "OMIM mirror at John Hopkins",
+                        "description": "OMIM mirror at John Hopkins",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "603903",
+                        "resourceHomeUrl": "http://mirror.omim.org/",
+                        "institution": {
+                            "id": 66,
+                            "name": "Johns Hopkins University, Baltimore, Maryland",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "603903",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 69,
+                "prefix": "pirsf",
+                "mirId": "MIR:00000017",
+                "name": "PIRSF",
+                "pattern": "^PIRSF\\d{6}$",
+                "description": "The PIR SuperFamily concept is being used as a guiding principle to provide comprehensive and non-overlapping clustering of UniProtKB sequences into a hierarchical order to reflect their evolutionary relationships.",
+                "created": "2019-06-11T14:15:34.294+0000",
+                "modified": "2019-06-11T14:15:34.294+0000",
+                "resources": [
+                    {
+                        "id": 71,
+                        "mirId": "MIR:00100025",
+                        "urlPattern": "https://pir.georgetown.edu/cgi-bin/ipcSF?id={$id}",
+                        "name": "PIRSF",
+                        "description": "PIRSF",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "PIRSF000100",
+                        "resourceHomeUrl": "https://pir.georgetown.edu/",
+                        "institution": {
+                            "id": 70,
+                            "name": "Georgetown University Medical Center",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "PIRSF000100",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 72,
+                "prefix": "reactome",
+                "mirId": "MIR:00000018",
+                "name": "Reactome",
+                "pattern": "(^R-[A-Z]{3}-\\d+(-\\d+)?(\\.\\d+)?$)|(^REACT_\\d+(\\.\\d+)?$)",
+                "description": "The Reactome project is a collaboration to develop a curated resource of core pathways and reactions in human biology.",
+                "created": "2019-06-11T14:15:34.555+0000",
+                "modified": "2019-06-11T14:15:34.555+0000",
+                "resources": [
+                    {
+                        "id": 74,
+                        "mirId": "MIR:00100026",
+                        "urlPattern": "https://reactome.org/content/detail/{$id}",
+                        "name": "Reactome, a curated knowledgebase of biological pathways",
+                        "description": "Reactome, a curated knowledgebase of biological pathways",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "R-HSA-201451",
+                        "resourceHomeUrl": "https://www.reactome.org/",
+                        "institution": {
+                            "id": 73,
+                            "name": "Ontario Institute for Cancer Research, NYU Medical School, Cold Spring Harbor Laboratory and European Bioinformatics Institute",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "R-HSA-201451",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 75,
+                "prefix": "doi",
+                "mirId": "MIR:00000019",
+                "name": "DOI",
+                "pattern": "^(doi\\:)?\\d{2}\\.\\d{4}.*$",
+                "description": "The Digital Object Identifier System is for identifying content objects in the digital environment.",
+                "created": "2019-06-11T14:15:34.841+0000",
+                "modified": "2019-06-11T14:15:34.841+0000",
+                "resources": [
+                    {
+                        "id": 77,
+                        "mirId": "MIR:00100010",
+                        "urlPattern": "https://doi.org/{$id}",
+                        "name": "Digital Object Identifier",
+                        "description": "Digital Object Identifier",
+                        "official": true,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "10.1038/nbt1156",
+                        "resourceHomeUrl": "https://www.doi.org/",
+                        "institution": {
+                            "id": 76,
+                            "name": "International DOI Foundation",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 2462,
+                        "mirId": "MIR:00000793",
+                        "urlPattern": "https://scholia.toolforge.org/doi/{$id}",
+                        "name": "Scholia",
+                        "description": "Scholia is a service that creates visual scholarly profiles for topic, people, organizations, species, chemicals, etc using bibliographic and other information in Wikidata.",
+                        "official": false,
+                        "providerCode": "scholia",
+                        "sampleId": "10.1186/S13321-016-0161-3",
+                        "resourceHomeUrl": "https://scholia.toolforge.org/",
+                        "institution": {
+                            "id": 283,
+                            "name": "Maastricht University",
+                            "homeUrl": "https://www.maastrichtuniversity.nl",
+                            "description": "Maastricht University (UM) is the most international university in the Netherlands and, with 18,000 students and 4,400 employees, is still growing. The university stands out for its innovative education model, international character and multidisciplinary approach to research and education.\nThanks to its high-quality research and study programmes as well as a strong focus on social engagement, UM has quickly built up a solid reputation. Today it is considered one of the best young universities in the world.",
+                            "rorId": "https://ror.org/02jz4aj89",
+                            "location": {
+                                "countryCode": "NL",
+                                "countryName": "Netherlands"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "NL",
+                            "countryName": "Netherlands"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "10.1038/nbt1156",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 78,
+                "prefix": "pdb",
+                "mirId": "MIR:00000020",
+                "name": "Protein Data Bank",
+                "pattern": "^[0-9][A-Za-z0-9]{3}$",
+                "description": "The Protein Data Bank is the single worldwide archive of structural data of biological macromolecules.",
+                "created": "2019-06-11T14:15:35.100+0000",
+                "modified": "2019-06-11T14:15:35.100+0000",
+                "resources": [
+                    {
+                        "id": 83,
+                        "mirId": "MIR:00100096",
+                        "urlPattern": "http://proteopedia.org/wiki/index.php/{$id}",
+                        "name": "Proteopedia",
+                        "description": "Proteopedia",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "2gc4",
+                        "resourceHomeUrl": "http://www.proteopedia.org/",
+                        "institution": {
+                            "id": 82,
+                            "name": "Weizmann Institute of Science",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "IL",
+                                "countryName": "Israel"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "IL",
+                            "countryName": "Israel"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 80,
+                        "mirId": "MIR:00100029",
+                        "urlPattern": "https://www.rcsb.org/structure/{$id}",
+                        "name": "RCSB PDB",
+                        "description": "RCSB PDB",
+                        "official": true,
+                        "providerCode": "rcsb",
+                        "sampleId": "2gc4",
+                        "resourceHomeUrl": "https://www.pdb.org/",
+                        "institution": {
+                            "id": 79,
+                            "name": "Rutgers, The State University of New Jersey",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 86,
+                        "mirId": "MIR:00100166",
+                        "urlPattern": "https://www.ebi.ac.uk/pdbsum/{$id}",
+                        "name": "Protein Databank through PDBsum",
+                        "description": "Protein Databank through PDBsum",
+                        "official": false,
+                        "providerCode": "ebi",
+                        "sampleId": "2gc4",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/pdbsum/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 85,
+                        "mirId": "MIR:00100165",
+                        "urlPattern": "https://pdbj.org/mine/summary/{$id}",
+                        "name": "Protein Data Bank Japan (PDBj)",
+                        "description": "Protein Data Bank Japan (PDBj)",
+                        "official": true,
+                        "providerCode": "pdbj",
+                        "sampleId": "2gc4",
+                        "resourceHomeUrl": "http://www.pdbj.org/",
+                        "institution": {
+                            "id": 84,
+                            "name": "Institute for Protein Research, Osaka University",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "JP",
+                                "countryName": "Japan"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "JP",
+                            "countryName": "Japan"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 81,
+                        "mirId": "MIR:00100037",
+                        "urlPattern": "https://www.ebi.ac.uk/pdbe/entry/pdb/{$id}",
+                        "name": "Protein Databank in Europe (PDBe)",
+                        "description": "Protein Databank in Europe (PDBe)",
+                        "official": true,
+                        "providerCode": "pdbe",
+                        "sampleId": "2gc4",
+                        "resourceHomeUrl": "http://www.pdbe.org/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "2gc4",
+                "namespaceEmbeddedInLui": false,
+                "deprecated": false,
+                "deprecationDate": null
+            },
+            {
+                "id": 87,
+                "prefix": "go",
+                "mirId": "MIR:00000022",
+                "name": "Gene Ontology",
+                "pattern": "^GO:\\d{7}$",
+                "description": "The Gene Ontology project provides a controlled vocabulary to describe gene and gene product attributes in any organism.",
+                "created": "2019-06-11T14:15:35.970+0000",
+                "modified": "2019-06-11T14:15:35.970+0000",
+                "resources": [
+                    {
+                        "id": 88,
+                        "mirId": "MIR:00100012",
+                        "urlPattern": "https://www.ebi.ac.uk/QuickGO/GTerm?id=GO:{$id}",
+                        "name": "QuickGO (Gene Ontology browser)",
+                        "description": "QuickGO (Gene Ontology browser)",
+                        "official": false,
+                        "providerCode": "quickgo",
+                        "sampleId": "0006915",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/QuickGO/",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 90,
+                        "mirId": "MIR:00100013",
+                        "urlPattern": "http://amigo.geneontology.org/amigo/term/GO:{$id}",
+                        "name": "AmiGO 2",
+                        "description": "AmiGO 2",
+                        "official": true,
+                        "providerCode": "amigo",
+                        "sampleId": "0006915",
+                        "resourceHomeUrl": "http://amigo.geneontology.org/",
+                        "institution": {
+                            "id": 89,
+                            "name": "The Gene Ontology Consortium",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 92,
+                        "mirId": "MIR:00100015",
+                        "urlPattern": "http://www.informatics.jax.org/searches/GO.cgi?id=GO:{$id}",
+                        "name": "GO Browser",
+                        "description": "GO Browser",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "0006915",
+                        "resourceHomeUrl": "http://www.informatics.jax.org/searches/GO_form.shtml",
+                        "institution": {
+                            "id": 91,
+                            "name": "The Jackson Laboratory",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 93,
+                        "mirId": "MIR:00100237",
+                        "urlPattern": "http://purl.bioontology.org/ontology/GO/GO:{$id}",
+                        "name": "GO through BioPortal",
+                        "description": "GO through BioPortal",
+                        "official": false,
+                        "providerCode": "bptl",
+                        "sampleId": "0006915",
+                        "resourceHomeUrl": "http://bioportal.bioontology.org/ontologies/GO",
+                        "institution": {
+                            "id": 5,
+                            "name": "National Center for Biomedical Ontology, Stanford",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 95,
+                        "mirId": "MIR:00100585",
+                        "urlPattern": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:{$id}",
+                        "name": "GO through PANTHER",
+                        "description": "GO through PANTHER",
+                        "official": false,
+                        "providerCode": "CURATOR_REVIEW",
+                        "sampleId": "0000003",
+                        "resourceHomeUrl": "http://www.pantherdb.org/",
+                        "institution": {
+                            "id": 94,
+                            "name": "Keck School of Medicine, University of Southern California",
+                            "homeUrl": "CURATOR_REVIEW",
+                            "description": "CURATOR_REVIEW",
+                            "rorId": null,
+                            "location": {
+                                "countryCode": "US",
+                                "countryName": "United States"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "US",
+                            "countryName": "United States"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    },
+                    {
+                        "id": 96,
+                        "mirId": "MIR:00100675",
+                        "urlPattern": "https://www.ebi.ac.uk/ols/ontologies/go/terms?obo_id=GO:{$id}",
+                        "name": "GO through OLS",
+                        "description": "GO through OLS",
+                        "official": false,
+                        "providerCode": "ols",
+                        "sampleId": "0006915",
+                        "resourceHomeUrl": "https://www.ebi.ac.uk/ols/ontologies/go",
+                        "institution": {
+                            "id": 2,
+                            "name": "European Bioinformatics Institute",
+                            "homeUrl": "https://www.ebi.ac.uk",
+                            "description": "At EMBL-EBI, we make the world’s public biological data freely available to the scientific community via a range of services and tools, perform basic research and provide professional training in bioinformatics. \nWe are part of the European Molecular Biology Laboratory (EMBL), an international, innovative and interdisciplinary research organisation funded by 26 member states and two associate member states.",
+                            "rorId": "https://ror.org/02catss52",
+                            "location": {
+                                "countryCode": "GB",
+                                "countryName": "United Kingdom"
+                            }
+                        },
+                        "location": {
+                            "countryCode": "GB",
+                            "countryName": "United Kingdom"
+                        },
+                        "deprecated": false,
+                        "deprecationDate": null
+                    }
+                ],
+                "sampleId": "0006915",
+                "namespaceEmbeddedInLui": true,
+                "deprecated": false,
+                "deprecationDate": null
+            }
+        ]
+    }
+}

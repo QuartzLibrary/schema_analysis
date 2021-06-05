@@ -1,0 +1,26 @@
+{
+    "name": "Schema Analysis",
+    "short_name": "Schema Analysis",
+    "start_url": "/index.html",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/maskable_icon.png",
+            "sizes": "731x731",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "theme_color": "#5f9ea0",
+    "background_color": "#5f9ea0",
+    "display": "standalone"
+}
