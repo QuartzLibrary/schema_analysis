@@ -1,7 +1,11 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
+#![doc(html_root_url = "https://docs.rs/schema_analysis/0.3.3/")]
 /*!
 # Universal-ish Schema Analysis
+
+[![](https://meritbadge.herokuapp.com/schema_analysis)](https://crates.io/crates/schema_analysis)
+[![](https://docs.rs/schema_analysis/badge.svg)](https://docs.rs/schema_analysis/)
 
 Ever wished you could figure out what was in that json file? Or maybe it was xml... Ehr, yaml?
 It was definitely toml.
@@ -10,7 +14,7 @@ Alas, many great tools will only work with one of those formats, and the interne
 nice a place as to finally understand that no, xml is not an acceptable document format.
 
 Enter this neat little tool, a single interface to any self-describing format supported by
-our gymmnast friend, [serde].
+our gymnast friend, [serde].
 
 ## Features
 
@@ -23,7 +27,7 @@ our gymmnast friend, [serde].
 
 [^1]: This is just a weirdly shaped parser, so values are discarded as soon as they have been analyzed.
 This should hopefully translate in memory requirements that scale with the size of [Schema], not
-the input data. If you ever had a schema analysis tool break on you after a mere million documents
+the input data. If you ever had a schema analysis tool break on you after a mere million documents,
 this'll probably be appreciated.
 
 ## Usage
@@ -81,12 +85,13 @@ if let Some(file) = iter.next() {
         // So here it borrows the data mutably and runs it against the deserializer.
         let () = inferred.deserialize(&mut json_deserializer)?;
     }
+
     let mut context: NumberContext<i128> = Default::default();
     context.aggregate(&1);
     context.aggregate(&2);
     context.aggregate(&1000);
-
     let expected: Schema = Schema::Integer(context);
+
     assert_eq!(inferred.schema, expected);
 }
 # Ok(())

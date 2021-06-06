@@ -2,6 +2,9 @@
 
 ## Universal-ish Schema Analysis
 
+[![](https://meritbadge.herokuapp.com/schema_analysis)](https://crates.io/crates/schema_analysis)
+[![](https://docs.rs/schema_analysis/badge.svg)](https://docs.rs/schema_analysis/)
+
 Ever wished you could figure out what was in that json file? Or maybe it was xml... Ehr, yaml?
 It was definitely toml.
 
@@ -9,7 +12,7 @@ Alas, many great tools will only work with one of those formats, and the interne
 nice a place as to finally understand that no, xml is not an acceptable document format.
 
 Enter this neat little tool, a single interface to any self-describing format supported by
-our gymmnast friend, serde.
+our gymnast friend, serde.
 
 ### Features
 
@@ -45,7 +48,7 @@ let serialized_schema: String = serde_json::to_string_pretty(&schema)?;
 
 That's it.
 
-Check [Schema](schema_analysis/src/schema.rs) to see what info you get, 
+Check [Schema](https://docs.rs/schema_analysis/latest/schema_analysis/enum.Schema.html) to see what info you get, 
 and [targets](schema_analysis/src/targets) to see the available integrations (which include code and 
 json schema generation).
 
@@ -70,12 +73,13 @@ if let Some(file) = iter.next() {
         // So here it borrows the data mutably and runs it against the deserializer.
         let () = inferred.deserialize(&mut json_deserializer)?;
     }
+
     let mut context: NumberContext<i128> = Default::default();
     context.aggregate(&1);
     context.aggregate(&2);
     context.aggregate(&1000);
-
     let expected: Schema = Schema::Integer(context);
+    
     assert_eq!(inferred.schema, expected);
 }
 ```
@@ -92,6 +96,6 @@ You can also find a demo website [here](https://schema-analysis.com/).
 
 ### How does this work?
 
-For a the short story long go [here](schema_analysis/src/analysis/mod.rs), the juicy bit is that Serde is kind enough to let
+For a the short story long go [here](https://docs.rs/schema_analysis/latest/schema_analysis/analysis/index.html), the juicy bit is that Serde is kind enough to let
 the format tell us what it is working with, we take it from there and construct a nice schema
 from that info.

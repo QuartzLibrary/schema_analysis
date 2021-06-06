@@ -11,7 +11,7 @@ Let's ~~quickly~~ run through how Serde works as that's pretty much all there is
 
 ```ignore
 // Program uses:
-let _: Type = Deserialize::deserialize(deserializer)
+let _: Type = <Type as Deserialize>::deserialize(deserializer)
 ```
 
 **`Type`**: Ok!
@@ -140,7 +140,7 @@ There is bit more to the story: since all the code above is defined at compile t
 This would stop us from using an already inferred schema to expand as that is a runtime value.
 
 Unsurprisingly at this point, Serde covers this use case too by introducing a different trait [DeserializeSeed]. [DeserializeSeed] is essentially equivalent to [Deserialize], with the difference that it also passes along the value it is being called on ([Deserialize::deserialize]​(deserializer)/[DeserializeSeed::deserialize]​(self, deserializer)).
-This means that the value you call [DeserializeSeed::deserialize] on is available to both the deserialize call an inside the [Visitor] (if you put the value there). In our case we hide the [Schema] inside the [Visitor], so that when the [Visitor] is called by the [Deserializer] it'll be able to modify the [Schema] with additional juicy details.
+This means that the value you call [DeserializeSeed::deserialize] on is available to both the deserialize call and inside the [Visitor] (if you put the value there). In our case we hide the [Schema] as a mutable reference inside the [Visitor], so that when the [Visitor] is called by the [Deserializer] it'll be able to modify the [Schema] with additional juicy details.
 
 A mandatory illustration follows:
 
