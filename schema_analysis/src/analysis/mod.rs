@@ -60,7 +60,7 @@ let _: bool = purification_magic(abomination);
 **`Type`**: Oh, such a nice and shiny [bool], this is all the information I need to finish building myself. Thank you very much, and say bye to [Visitor] for me!
 
 ### **Result**:
-The `Type` defined the what the serialized form is supposed to be by calling the correct method on the [Deserializer], then the [Visitor] handled the conversion before the value was returned to the `Type`.
+The `Type` defined what the serialized form is supposed to be by calling the correct method on the [Deserializer], then the [Visitor] handled the conversion before the value was returned to the `Type`.
 Why not return directly and let `Type` do the conversion? To allow for more use cases like the one below.
 
 ---
