@@ -28,10 +28,12 @@ export function Intro(props: {
       {dataType !== undefined ? <> <p>Where is it located?</p>
         <div>
           {!files ? <>
-            <p><input
-              type="text"
-              placeholder="Here, conveniently pasted..."
-              onChange={(e) => setText(e?.currentTarget.value)} /></p>
+            <p>
+              <textarea
+                placeholder="Here, conveniently pasted..."
+                onChange={(e) => setText(e?.currentTarget.value)}>
+              </textarea>
+            </p>
 
             {text ?
               <p><button onClick={() => props.onUrlSelection(textToUrl(text), dataType)}>Confirm</button></p>

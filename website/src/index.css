@@ -84,7 +84,7 @@ button:hover .cb-hover {
 }
 
 /* The input fields and buttons */
-input[type=text] {
+textarea {
     background-color: whitesmoke;
     color: #101010;
     border: none;
