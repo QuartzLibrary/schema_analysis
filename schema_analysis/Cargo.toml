@@ -1,6 +1,6 @@
 [package]
 name = "schema_analysis"
-version = "0.3.4"
+version = "0.4.0"
 authors = ["QuartzLibrary"]
 license = "MIT OR Apache-2.0"
 edition = "2018"
@@ -34,13 +34,8 @@ dyn-clonable = "0.9"
 schemars = { version = "0.8", optional = true }
 serde_json = { version = "1.0", optional = true }
 
-[dependencies.json_typegen_shared]
 # json_typegen integration allows the generation of types in several languages and json schemas.
-# Note: using a fork whose only change is exposing the internals.
-git = "https://github.com/QuartzLibrary/json_typegen"
-version = "0.6.0"
-optional = true
-default-features = false
+json_typegen_shared = { version = "0.7", optional = true, default-features = false }
 
 
 [dev-dependencies]
@@ -59,5 +54,4 @@ quick-xml = {version = "0.22", features = ["serialize"]}
 version-sync = "0.9.2"
 
 [package.metadata.docs.rs]
-# Needs json_typegen internals exposed to not break docs.rs
-# all-features = true
+all-features = true
