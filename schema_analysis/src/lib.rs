@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
-#![doc(html_root_url = "https://docs.rs/schema_analysis/0.3.4/")]
+#![doc(html_root_url = "https://docs.rs/schema_analysis/0.4.0/")]
 /*!
 # Universal-ish Schema Analysis
 

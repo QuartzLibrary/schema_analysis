@@ -1,6 +1,6 @@
 #![cfg(feature = "json_typegen")]
 
-use json_typegen_shared::shape::Shape;
+use json_typegen_shared::Shape;
 
 use linked_hash_map::LinkedHashMap;
 use schema_analysis::{InferredSchema, Schema};
@@ -22,7 +22,7 @@ impl FormatTests<Shape> for JsonTypegen {
     // The target schema from the tests before is now being serialized to a json schema and then
     // parsed and compared to the json Shapes below.
     fn compare(target_shape: Shape, tested_schema: Schema) {
-        let tested_schema_shape: Shape = tested_schema.into();
+        let tested_schema_shape: Shape = tested_schema.to_json_typegen_shape();
         assert_eq!(tested_schema_shape, target_shape);
     }
 

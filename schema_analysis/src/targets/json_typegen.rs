@@ -1,18 +1,25 @@
-//! Integration with [json_typegen](https://github.com/evestera/json_typegen)
-//!
-//! Currently re-exports a couple private modules from a fork and has a copied-and-pasted helper
-//! function below.
-//!
-//! FIXME: ping json_typegen author.
+/*!
+Integration with [json_typegen](https://github.com/evestera/json_typegen)
 
-use std::error::Error;
+You can:
+```rust
+# use schema_analysis::Schema;
+# use schema_analysis::targets::json_typegen::{Shape, OutputMode, Options};
+#
+# let schema: Schema = Schema::Boolean(Default::default());
+#
+// Convert to a json_typegen Shape.
+let shape: Shape = schema.to_json_typegen_shape();
 
-pub use json_typegen_shared::{
-    generation,
-    options::{Options, OutputMode, StringTransform},
-    shape::Shape,
-    ErrorKind, JTError,
-};
+// Convert to a specific json_typegen output with default options.
+let output: String = schema.process_with_json_typegen(OutputMode::Rust).unwrap();
+
+// Convert a json_typegen Shape with custom options.
+let output: String = json_typegen_shared::codegen_from_shape("Root", &Shape::Bool, Options::default()).unwrap();
+```
+*/
+
+pub use json_typegen_shared::{codegen_from_shape, ErrorKind, JTError, Options, OutputMode, Shape};
 
 use crate::{Field, Schema};
 
@@ -23,7 +30,7 @@ impl Schema {
     }
 
     /// Convert a [Schema] to a supported json_typegen output
-    pub fn process_with_json_typegen(&self, mode: OutputMode) -> Result<String, impl Error> {
+    pub fn process_with_json_typegen(&self, mode: OutputMode) -> Result<String, JTError> {
         let mut options = Options::default();
         options.output_mode = mode;
         self.process_with_json_typegen_options("Root", &options)
@@ -34,51 +41,10 @@ impl Schema {
         &self,
         name: &str,
         options: &Options,
-    ) -> Result<String, impl Error> {
+    ) -> Result<String, JTError> {
         let shape = self.to_json_typegen_shape();
-        process_json_typegen_shape(name, &shape, options)
+        codegen_from_shape(name, &shape, options.clone())
     }
-}
-
-/// Convert a json_typegen_shared [Shape] to a supported json_typegen output.
-///
-/// This helper function adapts json_typegen code to work directly on the [Shape]
-/// (instead of deriving the [Shape] and processing it in one go).
-pub fn process_json_typegen_shape(
-    name: &str,
-    shape: &Shape,
-    options: &Options,
-) -> Result<String, JTError> {
-    let options = options.clone();
-
-    // Taken from:
-    // https://github.com/evestera/json_typegen/blob/HEAD/json_typegen_shared/src/lib.rs
-
-    let mut generated_code = if options.runnable {
-        generation::rust::rust_program(name, shape, options)
-    } else {
-        let (name, defs) = match options.output_mode {
-            OutputMode::Rust => generation::rust::rust_types(name, shape, options),
-            OutputMode::JsonSchema => generation::json_schema::json_schema(name, shape, options),
-            OutputMode::KotlinJackson | OutputMode::KotlinKotlinx => {
-                generation::kotlin::kotlin_types(name, shape, options)
-            }
-            OutputMode::Shape => generation::shape::shape_string(name, shape, options),
-            OutputMode::Typescript => {
-                generation::typescript::typescript_types(name, shape, options)
-            }
-            OutputMode::TypescriptTypeAlias => {
-                generation::typescript_type_alias::typescript_type_alias(name, shape, options)
-            }
-        };
-        defs.ok_or_else(|| JTError::from(ErrorKind::ExistingType(name.to_string())))?
-    };
-
-    // Ensure generated code ends with exactly one newline
-    generated_code.truncate(generated_code.trim_end().len());
-    generated_code.push('\n');
-
-    Ok(generated_code)
 }
 
 impl From<Schema> for Shape {
@@ -117,6 +83,7 @@ fn convert_field(field: &Field) -> Shape {
     // `Optional(T)` represents that a value is nullable, or not always present
     // `Null` represents optionality with no further information. [Equivalent to `Optional(Bottom)`]
 
+    // So:
     // `Bottom` would be equivalent to a field with a `None` schema.
     // `Optional(T)` would be equivalent to a field marked as possibly missing or possibly null.
     // `Null` would be equivalent to a field that is both missing/null and has no schema.
