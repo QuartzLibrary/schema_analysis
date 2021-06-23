@@ -62,12 +62,12 @@ fn schema_to_shape(schema: &Schema) -> Shape {
         Schema::String(_) => Shape::StringT,
         Schema::Bytes(_) => Shape::Any,
         Schema::Sequence { field, .. } => Shape::VecT {
-            elem_type: Box::new(convert_field(field.as_ref())),
+            elem_type: Box::new(convert_field(field.as_ref(), field.status.may_be_null)),
         },
         Schema::Struct { fields, .. } => Shape::Struct {
             fields: fields
                 .iter()
-                .map(|(name, value)| (name.clone(), convert_field(value)))
+                .map(|(name, field)| (name.clone(), convert_field(field, field.status.is_option())))
                 .collect(),
         },
         // From Shape docs:
@@ -77,7 +77,11 @@ fn schema_to_shape(schema: &Schema) -> Shape {
     }
 }
 
-fn convert_field(field: &Field) -> Shape {
+/// This function also takes `is_option` because fields in structs are considered 'optional' also
+/// if they are missing, while sequences whose fields may be missing are merely empty.
+///
+/// In both cases the field is optional if it may have a value of null/none.
+fn convert_field(field: &Field, is_option: bool) -> Shape {
     // From Shape docs:
     // `Bottom` represents the absence of any inference information
     // `Optional(T)` represents that a value is nullable, or not always present
@@ -88,7 +92,6 @@ fn convert_field(field: &Field) -> Shape {
     // `Optional(T)` would be equivalent to a field marked as possibly missing or possibly null.
     // `Null` would be equivalent to a field that is both missing/null and has no schema.
 
-    let is_option = field.status.is_option();
     match &field.schema {
         Some(s) if is_option => Shape::Optional(Box::new(schema_to_shape(s))),
         Some(s) => schema_to_shape(s),
