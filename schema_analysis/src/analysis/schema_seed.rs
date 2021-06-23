@@ -71,7 +71,7 @@ impl<'de, 's> Visitor<'de> for SchemaVisitorSeed<'s> {
     fn visit_borrowed_str<E: Error>(mut self, value: &'de str) -> Result<Self::Value, E> {
         match &mut self.schema {
             // The schema matches
-            Schema::String(aggregators) => aggregators.aggregate(&value),
+            Schema::String(aggregators) => aggregators.aggregate(value),
             // Extend a different schema
             schema => {
                 let new_schema = SchemaVisitor {
@@ -87,7 +87,7 @@ impl<'de, 's> Visitor<'de> for SchemaVisitorSeed<'s> {
     fn visit_borrowed_bytes<E: Error>(mut self, value: &'de [u8]) -> Result<Self::Value, E> {
         match &mut self.schema {
             // The schema matches
-            Schema::Bytes(aggregators) => aggregators.aggregate(&value),
+            Schema::Bytes(aggregators) => aggregators.aggregate(value),
             // Extend a different schema
             schema => {
                 let new_schema = SchemaVisitor {

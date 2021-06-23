@@ -40,13 +40,13 @@ impl<'de, 's> Visitor<'de> for SchemaVisitor<'s> {
     }
     fn visit_borrowed_str<E: Error>(self, value: &'de str) -> Result<Self::Value, E> {
         let mut aggregators = self.context.for_string();
-        aggregators.aggregate(&value);
+        aggregators.aggregate(value);
 
         Ok(Schema::String(aggregators))
     }
     fn visit_borrowed_bytes<E: Error>(self, value: &'de [u8]) -> Result<Self::Value, E> {
         let mut aggregators = self.context.for_bytes();
-        aggregators.aggregate(&value);
+        aggregators.aggregate(value);
 
         Ok(Schema::Bytes(aggregators))
     }

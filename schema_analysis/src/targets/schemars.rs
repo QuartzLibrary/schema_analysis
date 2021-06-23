@@ -30,7 +30,7 @@ impl Schema {
         generator: &mut schemars::gen::SchemaGenerator,
     ) -> schemars_types::RootSchema {
         let inner = helpers::inferred_to_schemars(generator, self);
-        helpers::wrap_in_root(inner, &generator.settings())
+        helpers::wrap_in_root(inner, generator.settings())
     }
 }
 
@@ -112,7 +112,7 @@ mod helpers {
             Schema::Sequence { field, .. } => schemars_types::SchemaObject {
                 instance_type: Some(schemars_types::InstanceType::Array.into()),
                 array: Some(Box::new(schemars_types::ArrayValidation {
-                    items: Some(internal_field_to_schemars_schema(generator, &field).into()),
+                    items: Some(internal_field_to_schemars_schema(generator, field).into()),
                     ..Default::default()
                 })),
                 ..Default::default()

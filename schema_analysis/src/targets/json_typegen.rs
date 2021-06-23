@@ -36,7 +36,7 @@ impl Schema {
         options: &Options,
     ) -> Result<String, impl Error> {
         let shape = self.to_json_typegen_shape();
-        process_json_typegen_shape(name, &shape, &options)
+        process_json_typegen_shape(name, &shape, options)
     }
 }
 
@@ -55,20 +55,20 @@ pub fn process_json_typegen_shape(
     // https://github.com/evestera/json_typegen/blob/HEAD/json_typegen_shared/src/lib.rs
 
     let mut generated_code = if options.runnable {
-        generation::rust::rust_program(name, &shape, options)
+        generation::rust::rust_program(name, shape, options)
     } else {
         let (name, defs) = match options.output_mode {
-            OutputMode::Rust => generation::rust::rust_types(name, &shape, options),
-            OutputMode::JsonSchema => generation::json_schema::json_schema(name, &shape, options),
+            OutputMode::Rust => generation::rust::rust_types(name, shape, options),
+            OutputMode::JsonSchema => generation::json_schema::json_schema(name, shape, options),
             OutputMode::KotlinJackson | OutputMode::KotlinKotlinx => {
-                generation::kotlin::kotlin_types(name, &shape, options)
+                generation::kotlin::kotlin_types(name, shape, options)
             }
-            OutputMode::Shape => generation::shape::shape_string(name, &shape, options),
+            OutputMode::Shape => generation::shape::shape_string(name, shape, options),
             OutputMode::Typescript => {
-                generation::typescript::typescript_types(name, &shape, options)
+                generation::typescript::typescript_types(name, shape, options)
             }
             OutputMode::TypescriptTypeAlias => {
-                generation::typescript_type_alias::typescript_type_alias(name, &shape, options)
+                generation::typescript_type_alias::typescript_type_alias(name, shape, options)
             }
         };
         defs.ok_or_else(|| JTError::from(ErrorKind::ExistingType(name.to_string())))?
@@ -101,7 +101,7 @@ fn schema_to_shape(schema: &Schema) -> Shape {
         Schema::Struct { fields, .. } => Shape::Struct {
             fields: fields
                 .iter()
-                .map(|(name, value)| (name.clone(), convert_field(&value)))
+                .map(|(name, value)| (name.clone(), convert_field(value)))
                 .collect(),
         },
         // From Shape docs:
