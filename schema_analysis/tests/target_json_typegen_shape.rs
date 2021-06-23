@@ -44,9 +44,7 @@ impl FormatTests<Shape> for JsonTypegen {
 
     fn empty_sequence() -> Option<Shape> {
         Some(Shape::VecT {
-            // `Null` represents optionality with no further information.
-            // [Equivalent to `Optional(Bottom)`]
-            elem_type: Box::new(Shape::Null),
+            elem_type: Box::new(Shape::Bottom),
         })
     }
     fn string_sequence() -> Option<Shape> {
