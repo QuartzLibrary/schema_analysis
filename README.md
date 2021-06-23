@@ -27,7 +27,7 @@ our gymnast friend, serde.
 ### Usage
 
 ```rust
-let data: &[u8] = "true".as_bytes();
+let data: &[u8] = b"true";
 
 // Just pick your format, and deserialize InferredSchema as if it were a normal type.
 let inferred: InferredSchema = serde_json::from_slice(data)?;
@@ -62,25 +62,29 @@ we can bring out the big guns: [DeserializeSeed](https://docs.serde.rs/serde/de/
 It's everything you love about Serde, but with runtime state.
 
 ```rust
-let a_lot_of_files: &[&[u8]] = &[ "1".as_bytes(), "2".as_bytes(), "1000".as_bytes() ];
-let mut iter = a_lot_of_files.iter();
+let a_lot_of_json_files: &[&str] = &[ "1", "2", "1000" ];
+let mut iter = a_lot_of_json_files.iter();
 
 if let Some(file) = iter.next() {
-    let mut inferred: InferredSchema = serde_json::from_slice(file)?;
+    // We use the first file to generate a new schema to work with.
+    let mut inferred: InferredSchema = serde_json::from_str(file)?;
+
+    // Then we iterate over the rest to expand the schema.
     for file in iter {
-        let mut json_deserializer = serde_json::Deserializer::from_slice(file);
+        let mut json_deserializer = serde_json::Deserializer::from_str(file);
         // DeserializeSeed is implemented on &mut InferredSchema
         // So here it borrows the data mutably and runs it against the deserializer.
         let () = inferred.deserialize(&mut json_deserializer)?;
     }
 
+    // The result in this case would be a simple integer schema
+    // that 'has met' the numbers 1, 2, and 100.
     let mut context: NumberContext<i128> = Default::default();
     context.aggregate(&1);
     context.aggregate(&2);
     context.aggregate(&1000);
-    let expected: Schema = Schema::Integer(context);
-    
-    assert_eq!(inferred.schema, expected);
+
+    assert_eq!(inferred.schema, Schema::Integer(context));
 }
 ```
 
@@ -99,3 +103,26 @@ You can also find a demo website [here](https://schema-analysis.com/).
 For a the short story long go [here](https://docs.rs/schema_analysis/latest/schema_analysis/analysis/index.html), the juicy bit is that Serde is kind enough to let
 the format tell us what it is working with, we take it from there and construct a nice schema
 from that info.
+
+### Performance
+
+> These are not proper benchmarks, but should give a vague idea of the performance on a 3 years old i7 laptop with the raw data already loaded into memory.
+
+| Size                  | wasm (MB/s)  | native (MB/s) | Format | File # |
+| --------------------- | ------------ | ------------- | ------ | ------ |
+| [~180MB]              | ~20s (9)     | ~5s (36)      | json   | 1      |
+| [~650MB]              | ~150s (4.3)  | ~50s (13)     | json   | 1      |
+| [~1.7GB]              | ~470s (3.6)  | ~145s (11.7)  | json   | 1      |
+| [~2.1GB]              | <sup>a</sup> | ~182s (11.5)  | json   | 1      |
+| [~13.3GB]<sup>b</sup> |              | ~810s (16.4)  | xml    | ~200k  |
+
+<sup>a</sup> This one seems to go over some kind of browser limit when fetching the data in the Web Worker, I believe I would have to split large files to handle it.
+
+<sup>b</sup> ~2.7GB compressed. This one seems like it would be a worst-case scenario because it includes decompression overhead and the files had a section that was formatted text which resulted in crazy schemas. (The json pretty printed schema was almost 0.5GB!)
+
+
+[~180MB]: https://github.com/zemirco/sf-city-lots-json/blob/master/citylots.json
+[~650MB]: https://catalog.data.gov/dataset/forestry-planting-spaces
+[~1.7GB]: https://catalog.data.gov/dataset/nys-thruway-origin-and-destination-points-for-all-vehicles-15-minute-intervals-2018-q4
+[~2.1GB]: https://catalog.data.gov/dataset/turnstile-usage-data-2016
+[~13.3GB]: https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/
