@@ -77,7 +77,7 @@ export type WSub = ({
 
 /**
  * Exactly the same as useEffect, but with 0 dependencies.
- * Makes the fact that the effect will execute only once upon muonting 
+ * Makes the fact that the effect will execute only once upon mounting 
  * (as there are no changing dependency values) clear and avoids linting warnings.
  * @param callback 
  */
@@ -85,7 +85,7 @@ export type WSub = ({
 export const useMountEffect = (callback: () => (void | (() => void | undefined))) => useEffect(callback, [])
 /**
  * Exactly the same as useLayoutEffect, but with 0 dependencies.
- * Makes the fact that the effect will execute only once upon muonting 
+ * Makes the fact that the effect will execute only once upon mounting 
  * (as there are no changing dependency values) clear and avoids linting warnings.
  * @param callback 
  */
