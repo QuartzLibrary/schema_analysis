@@ -46,7 +46,6 @@ export type WIn = (
 export enum WOutTag {
   Ready, Inferred,
 }
-export type AllOutputs = { ... }
 export type WOut = (
   { tag: WOutTag.Ready, } |
   { tag: WOutTag.Inferred,
