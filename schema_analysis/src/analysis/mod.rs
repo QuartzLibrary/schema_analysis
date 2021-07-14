@@ -193,8 +193,7 @@ static DEFAULT_CONTEXT: Lazy<Context> = Lazy::new(Context::default);
 [InferredSchema] is at the heart of this crate, it is a wrapper around [Schema] that interfaces
 with the analysis code.
 It implements both [Deserialize] and [DeserializeSeed] to allow for analysis both when no schema is
-yet available and when we wish to expand an existing schema (for the data is across files,
-for example).
+yet available and when we wish to expand an existing schema (for data across files, for example).
  */
 #[derive(Debug, Clone, PartialEq)]
 pub struct InferredSchema {
