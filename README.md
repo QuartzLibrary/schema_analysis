@@ -100,7 +100,7 @@ You can also find a demo website [here](https://schema-analysis.com/).
 
 ### How does this work?
 
-For a the short story long go [here](https://docs.rs/schema_analysis/latest/schema_analysis/analysis/index.html), the juicy bit is that Serde is kind enough to let
+For the short story long go [here](https://docs.rs/schema_analysis/latest/schema_analysis/analysis/index.html), the juicy bit is that Serde is kind enough to let
 the format tell us what it is working with, we take it from there and construct a nice schema
 from that info.
 
