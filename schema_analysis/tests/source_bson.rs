@@ -11,10 +11,8 @@ test_format!(Bson);
 
 impl FormatTests<Value> for Bson {
     fn convert_to_inferred_schema(value: Value) -> InferredSchema {
-        let document = bson::to_document(&value).unwrap();
-        let mut raw_data = vec![];
-        let () = document.to_writer(&mut raw_data).unwrap();
-        let processed_schema: InferredSchema = rawbson::de::from_bytes(&raw_data).unwrap();
+        let bytes = bson::to_vec(&value).unwrap();
+        let processed_schema: InferredSchema = bson::from_slice(&bytes).unwrap();
         processed_schema
     }
 
