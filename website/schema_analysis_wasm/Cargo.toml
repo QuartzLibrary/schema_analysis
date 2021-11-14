@@ -1,8 +1,9 @@
 [package]
 name = "schema_analysis_wasm"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["QuartzLibrary"]
 edition = "2018"
+publish = false
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -34,7 +35,11 @@ serde_json = "1.0"
 serde_yaml = "0.8"
 serde_cbor = "0.11"
 toml = "0.5"
+bson = "2.0"
 quick-xml = { version = "0.22", features = ["serialize"] }
+
+# Enable the "js" feature in transitive dependency via `bson`.
+getrandom = { version = "0.2", features = ["js"] }
 
 [dependencies.schema_analysis]
 path = "../../schema_analysis"

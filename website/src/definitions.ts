@@ -11,12 +11,12 @@ export enum DataType {
   Yaml = 2,
   Cbor = 3,
   Toml = 4,
-  // Bson = 5,
+  Bson = 5,
   Xml = 6,
 }
 
 export const DATA_TYPES = [
-  DataType.Json, DataType.Yaml, DataType.Cbor, DataType.Toml, DataType.Xml
+  DataType.Json, DataType.Yaml, DataType.Cbor, DataType.Toml, DataType.Bson, DataType.Xml
 ];
 
 export enum WInTag {
