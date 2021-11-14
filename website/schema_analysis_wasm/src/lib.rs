@@ -7,7 +7,7 @@ use schema_analysis::{targets::json_typegen::OutputMode, InferredSchema, Schema}
 
 // For some reason Rust Analyzer (clippy) errors with missing-unsafe if log! (or similar)
 // is not in a nested function. Adding an unsafe block results in a rustc lint (unused_unsafe).
-// So for not I'm gonna leave everything in nested functions to avoid all that.
+// So for now I'm gonna leave everything in nested functions to avoid all that.
 macro_rules! log { ( $( $t:tt )* ) => { web_sys::console::log_1(&format!( $( $t )* ).into()); } }
 
 static INFERRED_SCHEMA: Lazy<Mutex<Option<InferredSchema>>> = Lazy::new(|| Mutex::new(None));
@@ -15,13 +15,13 @@ static INFERRED_SCHEMA: Lazy<Mutex<Option<InferredSchema>>> = Lazy::new(|| Mutex
 #[wasm_bindgen]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum DataType {
-    // Avoid 0 valus that can lead to problems given Typescript's handling of enums and
+    // Avoid 0 value that can lead to problems given Typescript's handling of enums and
     // true/false casting in Javascript.
     Json = 1,
     Yaml = 2,
     Cbor = 3,
     Toml = 4,
-    // Bson = 5,
+    Bson = 5,
     Xml = 6,
 }
 impl ToString for DataType {
@@ -31,6 +31,7 @@ impl ToString for DataType {
             DataType::Yaml => "yaml",
             DataType::Cbor => "cbor",
             DataType::Toml => "toml",
+            DataType::Bson => "bson",
             DataType::Xml => "xml",
         };
         s.into()
@@ -46,7 +47,7 @@ pub fn infer(data: Vec<u8>, file_type: DataType) -> Result<(), wasm_bindgen::JsV
         DataType::Yaml => infer::from_yaml(&data).map_err(to_js_string)?,
         DataType::Cbor => infer::from_cbor(&data).map_err(to_js_string)?,
         DataType::Toml => infer::from_toml(&data).map_err(to_js_string)?,
-        // DataType::Bson => infer::from_bson(&data).map_err(to_js_string)?,
+        DataType::Bson => infer::from_bson(&data).map_err(to_js_string)?,
         DataType::Xml => infer::from_xml(&data).map_err(to_js_string)?,
     };
 
@@ -99,6 +100,13 @@ mod infer {
         use serde::de::Error;
         let s = std::str::from_utf8(v).map_err(|e| toml::de::Error::custom(e.to_string()))?;
         process(v, toml::from_slice, &mut toml::Deserializer::new(s))
+    }
+
+    pub fn from_bson(v: &[u8]) -> Result<(), bson::de::Error> {
+        // Here we do double work on the first deserialisation because the deserializer
+        // from raw bytes is hidden in `bson::de::raw`.
+        let bson: bson::Bson = bson::from_slice(v)?;
+        process(v, bson::from_slice, bson::de::Deserializer::new(bson))
     }
 
     pub fn from_xml(v: &[u8]) -> Result<(), quick_xml::DeError> {
