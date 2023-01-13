@@ -178,7 +178,7 @@ impl<'de, 's> Visitor<'de> for SchemaVisitor<'s> {
         while let Some(key) = map.next_key::<String>()? {
             match fields.get_mut(&key) {
                 Some(old_field) => {
-                    let () = map.next_value_seed(FieldVisitorSeed {
+                    map.next_value_seed(FieldVisitorSeed {
                         context: self.context,
                         field: old_field,
                     })?;

@@ -42,7 +42,7 @@ impl ToString for DataType {
 pub fn infer(data: Vec<u8>, file_type: DataType) -> Result<(), wasm_bindgen::JsValue> {
     log_size_and_type(&data, &file_type);
 
-    let () = match file_type {
+    match file_type {
         DataType::Json => infer::from_json(&data).map_err(to_js_string)?,
         DataType::Yaml => infer::from_yaml(&data).map_err(to_js_string)?,
         DataType::Cbor => infer::from_cbor(&data).map_err(to_js_string)?,
@@ -130,7 +130,7 @@ mod infer {
         start();
         match schema.take() {
             Some(mut inferred) => {
-                let () = inferred.deserialize(deserializer)?;
+                inferred.deserialize(deserializer)?;
                 schema.replace(inferred);
             }
             None => {
