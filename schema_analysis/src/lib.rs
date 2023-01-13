@@ -4,7 +4,7 @@
 /*!
 # Universal-ish Schema Analysis
 
-[![](https://meritbadge.herokuapp.com/schema_analysis)](https://crates.io/crates/schema_analysis)
+[![](https://img.shields.io/crates/v/schema_analysis.svg)](https://crates.io/crates/schema_analysis)
 [![](https://docs.rs/schema_analysis/badge.svg)](https://docs.rs/schema_analysis/)
 
 Ever wished you could figure out what was in that json file? Or maybe it was xml... Ehr, yaml?
