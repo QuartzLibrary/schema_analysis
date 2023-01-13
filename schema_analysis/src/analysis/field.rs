@@ -16,7 +16,7 @@ impl<'de, 's> DeserializeSeed<'de> for FieldVisitor<'s> {
         D: serde::Deserializer<'de>,
     {
         let mut field = Field::default();
-        let () = deserializer.deserialize_any(FieldVisitorSeed {
+        deserializer.deserialize_any(FieldVisitorSeed {
             context: self.context,
             field: &mut field,
         })?;
@@ -148,7 +148,7 @@ impl<'de, 's> Visitor<'de> for FieldVisitorSeed<'s> {
         D: serde::Deserializer<'de>,
     {
         self.field.status.may_be_null = true;
-        let () = self.deserialize(deserializer)?;
+        self.deserialize(deserializer)?;
         Ok(())
     }
     /// serde_json calls this method for `null`, so we assume `visit_unit == visit_none`.
@@ -162,7 +162,7 @@ impl<'de, 's> Visitor<'de> for FieldVisitorSeed<'s> {
     {
         match &mut self.field.schema {
             Some(schema) => {
-                let () = SchemaVisitorSeed {
+                SchemaVisitorSeed {
                     context: self.context,
                     schema,
                 }
@@ -186,7 +186,7 @@ impl<'de, 's> Visitor<'de> for FieldVisitorSeed<'s> {
     {
         match &mut self.field.schema {
             Some(schema) => {
-                let () = SchemaVisitorSeed {
+                SchemaVisitorSeed {
                     context: self.context,
                     schema,
                 }

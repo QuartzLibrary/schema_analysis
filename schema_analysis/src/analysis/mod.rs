@@ -233,7 +233,7 @@ impl<'de> DeserializeSeed<'de> for &mut InferredSchema {
             context: &DEFAULT_CONTEXT,
             schema: &mut self.schema,
         };
-        let () = deserializer.deserialize_any(visitor)?;
+        deserializer.deserialize_any(visitor)?;
         Ok(())
     }
 }
@@ -275,7 +275,7 @@ impl<'de> DeserializeSeed<'de> for &mut InferredSchemaWithContext {
             context: &self.context,
             schema: &mut self.schema,
         };
-        let () = deserializer.deserialize_any(visitor)?;
+        deserializer.deserialize_any(visitor)?;
         Ok(())
     }
 }

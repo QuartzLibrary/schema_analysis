@@ -176,7 +176,7 @@ impl<'de, 's> Visitor<'de> for SchemaVisitorSeed<'s> {
     where
         D: serde::Deserializer<'de>,
     {
-        let () = deserializer.deserialize_any(self)?;
+        deserializer.deserialize_any(self)?;
         Ok(())
     }
     fn visit_unit<E: Error>(self) -> Result<Self::Value, E> {
@@ -243,7 +243,7 @@ impl<'de, 's> Visitor<'de> for SchemaVisitorSeed<'s> {
                     match fields.get_mut(&key) {
                         Some(old_field) => {
                             old_field.status.allow_duplicates(keys.contains(&key));
-                            let () = map.next_value_seed(FieldVisitorSeed {
+                            map.next_value_seed(FieldVisitorSeed {
                                 context: self.context,
                                 field: old_field,
                             })?;
