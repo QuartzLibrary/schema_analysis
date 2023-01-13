@@ -47,10 +47,10 @@ pub trait Coalesce {
 /// This trait has a blanket implementation on any [Sized] type implementing [Coalesce].
 pub trait CoalesceAny: Coalesce {
     /// Merge `other` into `self`. Trait object is returned if merging was unsuccessful.
-    fn coalesce_any<'a>(&mut self, other: Box<dyn Any + 'a>) -> Option<Box<dyn Any>>;
+    fn coalesce_any(&mut self, other: Box<dyn Any>) -> Option<Box<dyn Any>>;
 }
 impl<T: Coalesce + 'static> CoalesceAny for T {
-    fn coalesce_any<'a>(&mut self, other: Box<dyn Any + 'a>) -> Option<Box<dyn Any>> {
+    fn coalesce_any(&mut self, other: Box<dyn Any>) -> Option<Box<dyn Any>> {
         let other: Self = match other.downcast() {
             Ok(downcasted) => *downcasted,
             Err(not_downcasted) => return Some(not_downcasted),
