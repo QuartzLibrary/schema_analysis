@@ -120,7 +120,7 @@ from that info.
 
 ### Performance
 
-> These are not proper benchmarks, but should give a vague idea of the performance on a 3 years old i7 laptop with the raw data already loaded into memory.
+> These are not proper benchmarks, but should give a vague idea of the performance on a i7-7700HQ laptop (2017) with the raw data already loaded into memory.
 
 | Size                  | wasm (MB/s)  | native (MB/s) | Format | File # |
 | --------------------- | ------------ | ------------- | ------ | ------ |
