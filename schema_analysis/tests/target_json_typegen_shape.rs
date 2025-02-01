@@ -12,8 +12,10 @@ struct JsonTypegen;
 
 test_format!(JsonTypegen);
 
-impl FormatTests<Shape> for JsonTypegen {
-    fn convert_to_inferred_schema(_shape: Shape) -> InferredSchema {
+impl FormatTests for JsonTypegen {
+    type Value = Shape;
+
+    fn infer_schema(_value: Self::Value) -> InferredSchema {
         // Not needed for testing the target.
         unreachable!()
     }
@@ -21,76 +23,76 @@ impl FormatTests<Shape> for JsonTypegen {
     // Note: here we are actually switching the source and target.
     // The target schema from the tests before is now being serialized to a json schema and then
     // parsed and compared to the json Shapes below.
-    fn compare(target_shape: Shape, tested_schema: Schema) {
+    fn compare(target_shape: Self::Value, tested_schema: Schema) {
         let tested_schema_shape: Shape = tested_schema.to_json_typegen_shape();
         assert_eq!(tested_schema_shape, target_shape);
     }
 
-    fn null() -> Option<Shape> {
-        Some(Shape::Null)
+    fn null() -> Self::Value {
+        Shape::Null
     }
-    fn boolean() -> Option<Shape> {
-        Some(Shape::Bool)
+    fn boolean() -> Self::Value {
+        Shape::Bool
     }
-    fn integer() -> Option<Shape> {
-        Some(Shape::Integer)
+    fn integer() -> Self::Value {
+        Shape::Integer
     }
-    fn float() -> Option<Shape> {
-        Some(Shape::Floating)
+    fn float() -> Self::Value {
+        Shape::Floating
     }
-    fn string() -> Option<Shape> {
-        Some(Shape::StringT)
+    fn string() -> Self::Value {
+        Shape::StringT
     }
 
-    fn empty_sequence() -> Option<Shape> {
-        Some(Shape::VecT {
+    fn empty_sequence() -> Self::Value {
+        Shape::VecT {
             elem_type: Box::new(Shape::Bottom),
-        })
+        }
     }
-    fn string_sequence() -> Option<Shape> {
-        Some(Shape::VecT {
+    fn string_sequence() -> Self::Value {
+        Shape::VecT {
             elem_type: Box::new(Shape::StringT),
-        })
+        }
     }
-    fn integer_sequence() -> Option<Shape> {
-        Some(Shape::VecT {
+    fn integer_sequence() -> Self::Value {
+        Shape::VecT {
             elem_type: Box::new(Shape::Integer),
-        })
+        }
     }
-    fn mixed_sequence() -> Option<Shape> {
-        Some(Shape::VecT {
+    fn mixed_sequence() -> Self::Value {
+        Shape::VecT {
             elem_type: Box::new(Shape::Any),
-        })
+        }
     }
-    fn optional_mixed_sequence() -> Option<Shape> {
-        Some(Shape::VecT {
+    fn optional_mixed_sequence() -> Self::Value {
+        Shape::VecT {
             elem_type: Box::new(Shape::Optional(Box::new(Shape::Any))),
-        })
+        }
     }
 
-    fn empty_map_struct() -> Option<Shape> {
-        Some(Shape::Struct {
+    fn empty_map_struct() -> Self::Value {
+        Shape::Struct {
             fields: Default::default(),
-        })
+        }
     }
-    fn map_struct_single() -> Option<Shape> {
+    fn map_struct_single() -> Self::Value {
         // Note that the LinkedHashMap preserves order.
         let mut fields = LinkedHashMap::new();
 
         fields.insert("hello".to_string(), Shape::Integer);
 
-        Some(Shape::Struct { fields })
+        Shape::Struct { fields }
     }
-    fn map_struct_double() -> Option<Shape> {
+    fn map_struct_double() -> Self::Value {
         // Note that the LinkedHashMap preserves order.
         let mut fields = LinkedHashMap::new();
 
         fields.insert("hello".to_string(), Shape::Integer);
         fields.insert("world".to_string(), Shape::StringT);
 
-        Some(Shape::Struct { fields })
+        Shape::Struct { fields }
     }
-    fn sequence_map_struct_mixed() -> Option<Shape> {
+    fn sequence_map_struct_mixed() -> Self::Value {
         // Note that the LinkedHashMap preserves order.
         let mut fields = LinkedHashMap::new();
 
@@ -98,11 +100,11 @@ impl FormatTests<Shape> for JsonTypegen {
         fields.insert("mixed".to_string(), Shape::Any);
         fields.insert("world".to_string(), Shape::StringT);
 
-        Some(Shape::VecT {
+        Shape::VecT {
             elem_type: Box::new(Shape::Struct { fields }),
-        })
+        }
     }
-    fn sequence_map_struct_optional_or_missing() -> Option<Shape> {
+    fn sequence_map_struct_optional_or_missing() -> Self::Value {
         // Note that the LinkedHashMap preserves order.
         let mut fields = LinkedHashMap::new();
 
@@ -117,11 +119,11 @@ impl FormatTests<Shape> for JsonTypegen {
             Shape::Optional(Box::new(Shape::StringT)),
         );
 
-        Some(Shape::VecT {
+        Shape::VecT {
             elem_type: Box::new(Shape::Struct { fields }),
-        })
+        }
     }
-    fn map_struct_mixed_sequence() -> Option<Shape> {
+    fn map_struct_mixed_sequence() -> Self::Value {
         // Note that the LinkedHashMap preserves order.
         let mut fields = LinkedHashMap::new();
 
@@ -134,9 +136,9 @@ impl FormatTests<Shape> for JsonTypegen {
         );
         fields.insert("world".to_string(), Shape::StringT);
 
-        Some(Shape::Struct { fields })
+        Shape::Struct { fields }
     }
-    fn map_struct_mixed_sequence_optional() -> Option<Shape> {
+    fn map_struct_mixed_sequence_optional() -> Self::Value {
         // Note that the LinkedHashMap preserves order.
         let mut fields = LinkedHashMap::new();
 
@@ -150,6 +152,6 @@ impl FormatTests<Shape> for JsonTypegen {
         );
         fields.insert("world".to_string(), Shape::StringT);
 
-        Some(Shape::Struct { fields })
+        Shape::Struct { fields }
     }
 }

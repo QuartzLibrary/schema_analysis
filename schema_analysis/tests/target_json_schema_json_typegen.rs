@@ -8,6 +8,8 @@ use schema_analysis::{InferredSchema, Schema};
 mod shared;
 use shared::FormatTests;
 
+const INTEGER: &str = "number"; // json_typegen always uses "number"
+
 struct JSchema;
 
 test_format!(JSchema);
@@ -15,8 +17,10 @@ test_format!(JSchema);
 const SCHEMA_TYPE: &str = "http://json-schema.org/draft-07/schema#";
 const SCHEMA_TITLE: &str = "Generated schema for Root";
 
-impl FormatTests<Value> for JSchema {
-    fn convert_to_inferred_schema(_value: Value) -> InferredSchema {
+impl FormatTests for JSchema {
+    type Value = Value;
+
+    fn infer_schema(_value: Self::Value) -> InferredSchema {
         // Not needed for testing the target.
         unreachable!()
     }
@@ -24,7 +28,7 @@ impl FormatTests<Value> for JSchema {
     // Note: here we are actually switching the source and target.
     // The target schema from the tests before is now being serialized to a json schema and then
     // parsed and compared to the json values below.
-    fn compare(target_json_schema: Value, tested_schema: Schema) {
+    fn compare(target_json_schema: Self::Value, tested_schema: Schema) {
         let serialized_json_schema = tested_schema
             .process_with_json_typegen(OutputMode::JsonSchema)
             .unwrap();
@@ -36,8 +40,8 @@ impl FormatTests<Value> for JSchema {
         );
     }
 
-    fn null() -> Option<Value> {
-        Some(json! ({
+    fn null() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
 
@@ -45,88 +49,86 @@ impl FormatTests<Value> for JSchema {
             //  further information, but it's assumed an actual schema actually does exist
             //  underneath, so we don't restrict the type to "null" here.
             // "type": "null",
-        }))
+        })
     }
-    fn boolean() -> Option<Value> {
-        Some(json! ({
+    fn boolean() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "boolean",
-        }))
+        })
     }
-    fn integer() -> Option<Value> {
-        Some(json! ({
+    fn integer() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
-            // json_typegen always uses "number"
-            "type": "number",
-        }))
+            "type": INTEGER,
+        })
     }
-    fn float() -> Option<Value> {
-        Some(json! ({
+    fn float() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "number",
-        }))
+        })
     }
-    fn string() -> Option<Value> {
-        Some(json! ({
+    fn string() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "string",
-        }))
+        })
     }
 
-    fn empty_sequence() -> Option<Value> {
-        Some(json!({
+    fn empty_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             "items": {}
-        }))
+        })
     }
-    fn string_sequence() -> Option<Value> {
-        Some(json!({
+    fn string_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             "items": {
                 "type": "string"
             }
-        }))
+        })
     }
-    fn integer_sequence() -> Option<Value> {
-        Some(json!({
+    fn integer_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             "items": {
-                // json_typegen always uses "number"
-                "type": "number"
+                "type": INTEGER
             }
-        }))
+        })
     }
-    fn mixed_sequence() -> Option<Value> {
-        Some(json!({
+    fn mixed_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             // json_typegen does not have a concept of union types.
             "items": {},
-        }))
+        })
     }
-    fn optional_mixed_sequence() -> Option<Value> {
-        Some(json!({
+    fn optional_mixed_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             // json_typegen does not have a concept of union types.
             "items": {},
-        }))
+        })
     }
 
-    fn empty_map_struct() -> Option<Value> {
-        Some(json!({
+    fn empty_map_struct() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "object",
@@ -134,61 +136,57 @@ impl FormatTests<Value> for JSchema {
             // json_typegen always inserts these fields.
             "properties": {},
             "required": [],
-        }))
+        })
     }
-    fn map_struct_single() -> Option<Value> {
-        Some(json!({
+    fn map_struct_single() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "object",
             "properties": {
-                // json_typegen always uses "number"
-                "hello": { "type": "number" }
+                "hello": { "type": INTEGER }
             },
             "required": [ "hello" ]
-        }))
+        })
     }
-    fn map_struct_double() -> Option<Value> {
-        Some(json!({
+    fn map_struct_double() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "object",
             "properties": {
-                // json_typegen always uses "number"
-                "hello": { "type": "number" },
+                "hello": { "type": INTEGER },
                 "world": { "type": "string" },
             },
             "required": [ "hello", "world" ]
-        }))
+        })
     }
-    fn sequence_map_struct_mixed() -> Option<Value> {
-        Some(json!({
+    fn sequence_map_struct_mixed() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
-                    // json_typegen always uses "number"
-                    "hello": { "type": "number" },
+                    "hello": { "type": INTEGER },
                     // json_typegen does not have a concept of union types.
                     "mixed": {},
                     "world": { "type": "string" },
                 },
                 "required": [ "hello", "mixed", "world" ],
             }
-        }))
+        })
     }
-    fn sequence_map_struct_optional_or_missing() -> Option<Value> {
-        Some(json!({
+    fn sequence_map_struct_optional_or_missing() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
-                    // json_typegen always uses "number"
-                    "hello": { "type": "number" },
+                    "hello": { "type": INTEGER },
                     // We don't know what it is when it's not null, so it might be anything.
                     "null_or_missing": {},
                     "possibly_missing": { "type": "number" },
@@ -201,16 +199,15 @@ impl FormatTests<Value> for JSchema {
                 // for the "required" field.
                 "required": [ "hello", "null_or_missing" ],
             }
-        }))
+        })
     }
-    fn map_struct_mixed_sequence() -> Option<Value> {
-        Some(json!({
+    fn map_struct_mixed_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "object",
             "properties": {
-                // json_typegen always uses "number"
-                "hello": { "type": "number" },
+                "hello": { "type": INTEGER},
                 "sequence": {
                     "type": "array",
                     "items": { "type": "string" },
@@ -218,16 +215,15 @@ impl FormatTests<Value> for JSchema {
                 "world": { "type": "string" },
             },
             "required": [ "hello", "sequence", "world" ],
-        }))
+        })
     }
-    fn map_struct_mixed_sequence_optional() -> Option<Value> {
-        Some(json!({
+    fn map_struct_mixed_sequence_optional() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "title": SCHEMA_TITLE,
             "type": "object",
             "properties": {
-                // json_typegen always uses "number"
-                "hello": { "type": "number" },
+                "hello": { "type": INTEGER },
                 "optional": {},
                 "sequence": {
                     "type": "array",
@@ -241,6 +237,6 @@ impl FormatTests<Value> for JSchema {
                 "world": { "type": "string" },
             },
             "required": [ "hello", "optional", "sequence", "world" ],
-        }))
+        })
     }
 }
