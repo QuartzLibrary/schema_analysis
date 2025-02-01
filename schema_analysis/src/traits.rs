@@ -1,6 +1,6 @@
 //! A module holding the crate's public traits.
 
-use std::{any::Any, collections::BTreeMap, fmt::Debug};
+use std::{any::Any, fmt::Debug};
 
 use downcast_rs::Downcast;
 
@@ -118,14 +118,5 @@ impl<T: StructuralEq> StructuralEq for Option<T> {
             (Some(_), None) | (None, Some(_)) => false,
             (None, None) => true,
         }
-    }
-}
-impl<K: StructuralEq, V: StructuralEq> StructuralEq for BTreeMap<K, V> {
-    fn structural_eq(&self, other: &Self) -> bool {
-        self.len() == other.len()
-            && self
-                .iter()
-                .zip(other)
-                .all(|((sk, sv), (ok, ov))| sk.structural_eq(ok) && sv.structural_eq(ov))
     }
 }

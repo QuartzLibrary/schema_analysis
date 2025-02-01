@@ -132,22 +132,18 @@ impl FormatTests for Xml {
 
 /// We need to redefine some targets because, for example, xml doesn't have integer values.
 mod targets {
-    use std::collections::BTreeMap;
-
-    use maplit::btreemap;
+    use ordermap::OrderMap;
 
     use schema_analysis::{Field, FieldStatus, Schema};
 
     pub fn map_struct_single() -> Schema {
-        let fields: BTreeMap<String, Field> = {
+        let fields: OrderMap<String, Field> = {
             let mut hello_field = Field {
                 status: FieldStatus::default(),
                 schema: Some(Schema::String(Default::default())),
             };
             hello_field.status.may_be_normal = true;
-            btreemap! {
-                "hello".into() => hello_field
-            }
+            [("hello".into(), hello_field)].into()
         };
         Schema::Struct {
             fields,
@@ -155,7 +151,7 @@ mod targets {
         }
     }
     pub fn map_struct_double() -> Schema {
-        let fields: BTreeMap<String, Field> = {
+        let fields: OrderMap<String, Field> = {
             let mut hello_field = Field {
                 status: FieldStatus::default(),
                 schema: Some(Schema::String(Default::default())),
@@ -166,10 +162,7 @@ mod targets {
                 schema: Some(Schema::String(Default::default())),
             };
             world_field.status.may_be_normal = true;
-            btreemap! {
-                "hello".into() => hello_field,
-                "world".into() => world_field,
-            }
+            [("hello".into(), hello_field), ("world".into(), world_field)].into()
         };
         Schema::Struct {
             fields,
@@ -200,12 +193,13 @@ mod targets {
             null_or_missing_field.status.may_be_normal = true; //  No built-in null
             null_or_missing_field.status.may_be_missing = true;
 
-            btreemap! {
-                "hello".into() => hello_field,
-                "possibly_null".into() => possibly_null_field,
-                "possibly_missing".into() => possibly_missing_field,
-                "null_or_missing".into() => null_or_missing_field,
-            }
+            [
+                ("hello".into(), hello_field),
+                ("possibly_null".into(), possibly_null_field),
+                ("possibly_missing".into(), possibly_missing_field),
+                ("null_or_missing".into(), null_or_missing_field),
+            ]
+            .into()
         };
 
         let mut element_field = Field::with_schema(Schema::Struct {
@@ -224,15 +218,13 @@ mod targets {
         sequence_field.status.may_be_normal = true;
 
         Schema::Struct {
-            fields: btreemap! {
-                "element".into() => sequence_field,
-            },
+            fields: [("element".into(), sequence_field)].into(),
             context: Default::default(),
         }
     }
 
     pub fn map_struct_mixed_sequence() -> Schema {
-        let fields: BTreeMap<String, Field> = {
+        let fields: OrderMap<String, Field> = {
             let mut hello_field = Field::with_schema(Schema::String(Default::default())); //
             hello_field.status.may_be_normal = true;
 
@@ -252,11 +244,12 @@ mod targets {
             };
             sequence_field.status.may_be_normal = true;
 
-            btreemap! {
-                "hello".into() => hello_field,
-                "world".into() => world_field,
-                "sequence".into() => sequence_field,
-            }
+            [
+                ("hello".into(), hello_field),
+                ("world".into(), world_field),
+                ("sequence".into(), sequence_field),
+            ]
+            .into()
         };
         Schema::Struct {
             fields,

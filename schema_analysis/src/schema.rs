@@ -1,5 +1,4 @@
-use std::collections::BTreeMap;
-
+use ordermap::OrderMap;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -47,7 +46,7 @@ pub enum Schema {
     Struct {
         /// Each [String] key gets assigned a [Field].
         /// Currently we are using a [BTreeMap], but that might change in the future.
-        fields: BTreeMap<String, Field>,
+        fields: OrderMap<String, Field>,
         /// The context aggregates information about the struct.
         /// It is passed a vector of the key names.
         context: MapStructContext,
@@ -123,7 +122,15 @@ impl StructuralEq for Schema {
                 Struct {
                     fields: fields_2, ..
                 },
-            ) => fields_1.structural_eq(fields_2),
+            ) => {
+                fields_1.len() == fields_2.len()
+                    && fields_1.iter().all(|(sk, sv)| {
+                        let Some(ov) = fields_2.get(sk) else {
+                            return false;
+                        };
+                        sv.structural_eq(ov)
+                    })
+            }
 
             (Union { variants: s }, Union { variants: o }) => {
                 let mut s = s.clone();

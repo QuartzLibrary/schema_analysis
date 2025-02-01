@@ -170,11 +170,11 @@ impl FormatTests for JSchema {
                 "type": "object",
                 "properties": {
                     "hello": { "type": INTEGER },
+                    "world": { "type": "string" },
                     // json_typegen does not have a concept of union types.
                     "mixed": {},
-                    "world": { "type": "string" },
                 },
-                "required": [ "hello", "mixed", "world" ],
+                "required": [ "hello", "world", "mixed" ],
             }
         })
     }
@@ -187,12 +187,12 @@ impl FormatTests for JSchema {
                 "type": "object",
                 "properties": {
                     "hello": { "type": INTEGER },
-                    // We don't know what it is when it's not null, so it might be anything.
-                    "null_or_missing": {},
-                    "possibly_missing": { "type": "number" },
                     // json_typegen considers being of type "null" and missing equivalent,
                     // so it's simply not required instead of required and both "string" and "null".
-                    "possibly_null": { "type": "string" }
+                    "possibly_null": { "type": "string" },
+                    "possibly_missing": { "type": "number" },
+                    // We don't know what it is when it's not null, so it might be anything.
+                    "null_or_missing": {},
                 },
                 // FIXME: "null_or_missing" is included because json_typegen collapses
                 // null/missing + no inference info into it, but checks only Shape::Optional
@@ -207,14 +207,14 @@ impl FormatTests for JSchema {
             "title": SCHEMA_TITLE,
             "type": "object",
             "properties": {
-                "hello": { "type": INTEGER},
+                "hello": { "type": INTEGER },
+                "world": { "type": "string" },
                 "sequence": {
                     "type": "array",
                     "items": { "type": "string" },
                 },
-                "world": { "type": "string" },
             },
-            "required": [ "hello", "sequence", "world" ],
+            "required": [ "hello", "world", "sequence" ],
         })
     }
     fn map_struct_mixed_sequence_optional() -> Self::Value {
@@ -224,6 +224,7 @@ impl FormatTests for JSchema {
             "type": "object",
             "properties": {
                 "hello": { "type": INTEGER },
+                "world": { "type": "string" },
                 "optional": {},
                 "sequence": {
                     "type": "array",
@@ -234,9 +235,8 @@ impl FormatTests for JSchema {
                     // "items": { "type": [ "string", "null" ] },
                     "items": { "type": "string" },
                 },
-                "world": { "type": "string" },
             },
-            "required": [ "hello", "optional", "sequence", "world" ],
+            "required": [ "hello", "world", "optional", "sequence" ],
         })
     }
 }
