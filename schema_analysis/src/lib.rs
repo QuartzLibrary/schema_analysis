@@ -142,14 +142,14 @@ from that info.
 [~13.3GB]: https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/
 */
 
+mod analysis;
 mod schema;
 
-pub mod analysis;
 pub mod context;
 pub mod helpers;
 pub mod targets;
 pub mod traits;
 
-pub use analysis::{InferredSchema, InferredSchemaWithContext};
+pub use analysis::InferredSchema;
 pub use schema::{Field, FieldStatus, Schema};
 pub use traits::{Coalesce, StructuralEq};

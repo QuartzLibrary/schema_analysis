@@ -31,38 +31,21 @@ use crate::{traits::Aggregate, Coalesce};
 /// For no analysis, you can use `()`. [DefaultContext] is the one used by default.
 pub trait Context {
     /// The state for the analysis run on null values.
-    type Null: Aggregate<()> + Coalesce + Clone;
+    type Null: Aggregate<()> + Coalesce + Default;
     /// The state for the analysis run on boolean values.
-    type Boolean: Aggregate<bool> + Coalesce + Clone;
+    type Boolean: Aggregate<bool> + Coalesce + Default;
     /// The state for the analysis run on integer values.
-    type Integer: Aggregate<i128> + Coalesce + Clone;
+    type Integer: Aggregate<i128> + Coalesce + Default;
     /// The state for the analysis run on floating point values.
-    type Float: Aggregate<f64> + Coalesce + Clone;
+    type Float: Aggregate<f64> + Coalesce + Default;
     /// The state for the analysis run on strings.
-    type String: Aggregate<str> + Coalesce + Clone;
+    type String: Aggregate<str> + Coalesce + Default;
     /// The state for the analysis run on binary data.
-    type Bytes: Aggregate<[u8]> + Coalesce + Clone;
+    type Bytes: Aggregate<[u8]> + Coalesce + Default;
     /// The state for the analysis run on sequence values.
-    type Sequence: Aggregate<usize> + Coalesce + Clone;
+    type Sequence: Aggregate<usize> + Coalesce + Default;
     /// The state for the analysis run on struct values.
-    type Struct: Aggregate<[String]> + Coalesce + Clone;
-
-    /// A fresh copy of the context for null values.
-    fn new_null(&self) -> Self::Null;
-    /// A fresh copy of the context for boolean values.
-    fn new_boolean(&self) -> Self::Boolean;
-    /// A fresh copy of the context for integer values.
-    fn new_integer(&self) -> Self::Integer;
-    /// A fresh copy of the context for floating point values.
-    fn new_float(&self) -> Self::Float;
-    /// A fresh copy of the context for string values.
-    fn new_string(&self) -> Self::String;
-    /// A fresh copy of the context for binary data.
-    fn new_bytes(&self) -> Self::Bytes;
-    /// A fresh copy of the context for sequence values.
-    fn new_sequence(&self) -> Self::Sequence;
-    /// A fresh copy of the context for struct values.
-    fn new_map_struct(&self) -> Self::Struct;
+    type Struct: Aggregate<[String]> + Coalesce + Default;
 }
 
 impl Context for () {
@@ -74,15 +57,6 @@ impl Context for () {
     type Bytes = ();
     type Sequence = ();
     type Struct = ();
-
-    fn new_null(&self) -> Self::Null {}
-    fn new_boolean(&self) -> Self::Boolean {}
-    fn new_integer(&self) -> Self::Integer {}
-    fn new_float(&self) -> Self::Float {}
-    fn new_string(&self) -> Self::String {}
-    fn new_bytes(&self) -> Self::Bytes {}
-    fn new_sequence(&self) -> Self::Sequence {}
-    fn new_map_struct(&self) -> Self::Struct {}
 }
 
 /// This is the default [Context].
@@ -92,25 +66,8 @@ impl Context for () {
 /// This allows the analysis of arbitraryly large amounts of data as long
 /// as the schema itself does not grow out of proportion.
 /// (Do note that sampling might still be very large if individual leaves are large.)
-#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
-pub struct DefaultContext {
-    /// The context for null values.
-    pub null: NullContext,
-    /// The context for boolean values.
-    pub boolean: BooleanContext,
-    /// The context for integer values.
-    pub integer: NumberContext<i128>,
-    /// The context for floating point values.
-    pub float: NumberContext<f64>,
-    /// The context for string values.
-    pub string: StringContext,
-    /// The context for bytes values.
-    pub bytes: BytesContext,
-    /// The context for sequence values.
-    pub sequence: SequenceContext,
-    /// The context for struct values.
-    pub map_struct: MapStructContext,
-}
+#[derive(Debug, Clone, Copy, PartialEq, Default, Serialize, Deserialize)]
+pub struct DefaultContext;
 impl Context for DefaultContext {
     type Null = NullContext;
     type Boolean = BooleanContext;
@@ -120,29 +77,4 @@ impl Context for DefaultContext {
     type Bytes = BytesContext;
     type Sequence = SequenceContext;
     type Struct = MapStructContext;
-
-    fn new_null(&self) -> Self::Null {
-        self.null.clone()
-    }
-    fn new_boolean(&self) -> Self::Boolean {
-        self.boolean.clone()
-    }
-    fn new_integer(&self) -> Self::Integer {
-        self.integer.clone()
-    }
-    fn new_float(&self) -> Self::Float {
-        self.float.clone()
-    }
-    fn new_string(&self) -> Self::String {
-        self.string.clone()
-    }
-    fn new_bytes(&self) -> Self::Bytes {
-        self.bytes.clone()
-    }
-    fn new_sequence(&self) -> Self::Sequence {
-        self.sequence.clone()
-    }
-    fn new_map_struct(&self) -> Self::Struct {
-        self.map_struct.clone()
-    }
 }

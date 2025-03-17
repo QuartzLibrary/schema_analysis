@@ -1,3 +1,5 @@
+use std::mem;
+
 use ordermap::{map::Entry, OrderMap};
 use serde::{Deserialize, Serialize};
 
@@ -158,6 +160,9 @@ impl<C: Context> Schema<C> {
             }
         }
     }
+    fn take(&mut self) -> Self {
+        mem::replace(self, Self::Null(C::Null::default()))
+    }
 }
 impl<C: Context> StructuralEq for Schema<C>
 where
@@ -281,7 +286,7 @@ impl<C: Context> Coalesce for Schema<C> {
                     variants: mut other_alternatives,
                 },
             ) => {
-                coalesce_to_alternatives(&mut other_alternatives, any_self.clone());
+                coalesce_to_alternatives(&mut other_alternatives, any_self.take());
                 *any_self = Schema::Union {
                     variants: other_alternatives,
                 };
@@ -289,7 +294,7 @@ impl<C: Context> Coalesce for Schema<C> {
 
             (any_self, any_other) => {
                 *any_self = Union {
-                    variants: vec![any_self.clone(), any_other],
+                    variants: vec![any_self.take(), any_other],
                 };
             }
         };

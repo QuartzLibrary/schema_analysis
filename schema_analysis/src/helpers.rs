@@ -78,7 +78,7 @@ pub mod xml {
                     status: field.status.clone(),
                     schema: Some(Schema::Sequence {
                         field: Box::new(mem::take(field)),
-                        context: C::default().new_sequence(),
+                        context: C::Sequence::default(),
                     }),
                 };
                 field.status.may_be_duplicate = false;

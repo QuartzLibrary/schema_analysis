@@ -3,16 +3,14 @@ use serde::de::{Error, Visitor};
 use crate::{traits::Aggregate, traits::Coalesce, Schema};
 
 use super::{
-    field::{FieldVisitor, FieldVisitorSeed},
+    field::{InferredField, InferredFieldSeed},
     schema::SchemaVisitor,
     Context,
 };
 
-pub struct SchemaVisitorSeed<'s, C: Context> {
-    pub context: &'s C,
-    pub schema: &'s mut Schema<C>,
+pub(super) struct SchemaVisitorSeed<'s, C: Context> {
+    pub(super) schema: &'s mut Schema<C>,
 }
-
 impl<'de, C: Context> Visitor<'de> for SchemaVisitorSeed<'_, C>
 where
     Schema<C>: Coalesce,
@@ -29,10 +27,7 @@ where
             Schema::Boolean(aggregators) => aggregators.aggregate(&value),
             // Extend a different schema
             schema => {
-                let new_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_bool(value)?;
+                let new_schema = SchemaVisitor::new().visit_bool(value)?;
 
                 schema.coalesce(new_schema);
             }
@@ -45,10 +40,7 @@ where
             Schema::Integer(aggregators) => aggregators.aggregate(&value),
             // Extend a different schema
             schema => {
-                let new_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_i128(value)?;
+                let new_schema = SchemaVisitor::new().visit_i128(value)?;
 
                 schema.coalesce(new_schema);
             }
@@ -61,10 +53,7 @@ where
             Schema::Float(aggregators) => aggregators.aggregate(&value),
             // Extend a different schema
             schema => {
-                let new_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_f64(value)?;
+                let new_schema = SchemaVisitor::new().visit_f64(value)?;
 
                 schema.coalesce(new_schema);
             }
@@ -77,10 +66,7 @@ where
             Schema::String(aggregators) => aggregators.aggregate(value),
             // Extend a different schema
             schema => {
-                let new_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_borrowed_str(value)?;
+                let new_schema = SchemaVisitor::new().visit_borrowed_str(value)?;
 
                 schema.coalesce(new_schema);
             }
@@ -93,10 +79,7 @@ where
             Schema::Bytes(aggregators) => aggregators.aggregate(value),
             // Extend a different schema
             schema => {
-                let new_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_borrowed_bytes(value)?;
+                let new_schema = SchemaVisitor::new().visit_borrowed_bytes(value)?;
 
                 schema.coalesce(new_schema);
             }
@@ -165,10 +148,7 @@ where
             }
             // Extend a different schema
             schema => {
-                let new_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_none()?;
+                let new_schema = SchemaVisitor::new().visit_none()?;
 
                 schema.coalesce(new_schema);
             }
@@ -207,10 +187,7 @@ where
             } => {
                 let field = boxed_field.as_mut();
 
-                while let Some(()) = seq.next_element_seed(FieldVisitorSeed {
-                    context: self.context,
-                    field,
-                })? {
+                while let Some(()) = seq.next_element_seed(InferredFieldSeed { field })? {
                     count += 1;
                 }
 
@@ -222,10 +199,7 @@ where
             }
             // Extend a different schema
             schema => {
-                let sequence_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_seq(seq)?;
+                let sequence_schema = SchemaVisitor::new().visit_seq(seq)?;
                 schema.coalesce(sequence_schema);
             }
         };
@@ -246,16 +220,11 @@ where
                     match fields.get_mut(&key) {
                         Some(old_field) => {
                             old_field.status.allow_duplicates(keys.contains(&key));
-                            map.next_value_seed(FieldVisitorSeed {
-                                context: self.context,
-                                field: old_field,
-                            })?;
+                            map.next_value_seed(InferredFieldSeed { field: old_field })?;
                         }
 
                         None => {
-                            let mut new_field = map.next_value_seed(FieldVisitor {
-                                context: self.context,
-                            })?;
+                            let mut new_field = map.next_value_seed(InferredField::new())?;
                             // If we are adding it to an existing schema it means that it was
                             // missing when this schema was created.
                             new_field.status.may_be_missing = true;
@@ -276,10 +245,7 @@ where
                 aggregators.aggregate(&keys);
             }
             schema => {
-                let sequence_schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_map(map)?;
+                let sequence_schema = SchemaVisitor::new().visit_map(map)?;
                 schema.coalesce(sequence_schema);
             }
         }
