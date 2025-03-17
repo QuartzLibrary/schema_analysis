@@ -4,12 +4,12 @@ use crate::Field;
 
 use super::{schema::SchemaVisitor, schema_seed::SchemaVisitorSeed, Context};
 
-pub struct FieldVisitor<'s> {
-    pub context: &'s Context,
+pub struct FieldVisitor<'s, C> {
+    pub context: &'s C,
 }
 
-impl<'de> DeserializeSeed<'de> for FieldVisitor<'_> {
-    type Value = Field;
+impl<'de, C: Context> DeserializeSeed<'de> for FieldVisitor<'_, C> {
+    type Value = Field<C>;
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
     where
@@ -20,17 +20,16 @@ impl<'de> DeserializeSeed<'de> for FieldVisitor<'_> {
             context: self.context,
             field: &mut field,
         })?;
-
         Ok(field)
     }
 }
 
-pub struct FieldVisitorSeed<'s> {
-    pub context: &'s Context,
-    pub field: &'s mut Field,
+pub struct FieldVisitorSeed<'s, C: Context> {
+    pub context: &'s C,
+    pub field: &'s mut Field<C>,
 }
 
-impl<'de> DeserializeSeed<'de> for FieldVisitorSeed<'_> {
+impl<'de, C: Context> DeserializeSeed<'de> for FieldVisitorSeed<'_, C> {
     type Value = ();
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
@@ -71,7 +70,7 @@ macro_rules! method_impl {
     };
 }
 
-impl<'de> Visitor<'de> for FieldVisitorSeed<'_> {
+impl<'de, C: Context> Visitor<'de> for FieldVisitorSeed<'_, C> {
     type Value = ();
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {

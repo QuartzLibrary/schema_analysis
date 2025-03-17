@@ -170,13 +170,15 @@ let _: Visitor::Value = deserializer.deserialize_str(visitor);
 `[...]`
 
 */
-use once_cell::sync::Lazy;
 use serde::{de::DeserializeSeed, Deserialize, Deserializer};
 
 #[allow(unused_imports)]
 use serde::de::Visitor; // For docs above.
 
-use crate::{Coalesce, Context, Schema};
+use crate::{
+    context::{Context, DefaultContext},
+    Coalesce, Schema,
+};
 
 mod field;
 mod schema;
@@ -185,52 +187,50 @@ mod schema_seed;
 use schema::SchemaVisitor;
 use schema_seed::SchemaVisitorSeed;
 
-/// Since the context is never modified, we can store a default to avoid creating a new one
-/// each time.
-static DEFAULT_CONTEXT: Lazy<Context> = Lazy::new(Context::default);
-
 /**
 [InferredSchema] is at the heart of this crate, it is a wrapper around [Schema] that interfaces
 with the analysis code.
 It implements both [Deserialize] and [DeserializeSeed] to allow for analysis both when no schema is
 yet available and when we wish to expand an existing schema (for data across files, for example).
  */
-#[derive(Debug, Clone, PartialEq)]
-pub struct InferredSchema {
+pub struct InferredSchema<C: Context = DefaultContext> {
     /// Where the juicy info lays.
-    pub schema: Schema,
+    pub schema: Schema<C>,
 }
-impl Coalesce for InferredSchema {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+impl<C: Context> Coalesce for InferredSchema<C>
+where
+    Schema<C>: Coalesce,
+{
+    fn coalesce(&mut self, other: Self) {
         self.schema.coalesce(other.schema)
     }
 }
 // (no schema + no context) -> (schema + no context)
-impl<'de> Deserialize<'de> for InferredSchema {
+impl<'de, C: Context + Default> Deserialize<'de> for InferredSchema<C> {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let visitor = SchemaVisitor {
-            context: &DEFAULT_CONTEXT,
-        };
+        let context = C::default();
+        let visitor = SchemaVisitor { context: &context };
         let schema = deserializer.deserialize_any(visitor)?;
         Ok(InferredSchema { schema })
     }
 }
 // (schema + no context) -> (schema + no context)
-impl<'de> DeserializeSeed<'de> for &mut InferredSchema {
+impl<'de, C: Context + Default> DeserializeSeed<'de> for &mut InferredSchema<C>
+where
+    Schema<C>: Coalesce,
+{
     type Value = ();
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
+        let context = C::default();
         let visitor = SchemaVisitorSeed {
-            context: &DEFAULT_CONTEXT,
+            context: &context,
             schema: &mut self.schema,
         };
         deserializer.deserialize_any(visitor)?;
@@ -248,14 +248,16 @@ To use it, construct a [Default] [Context] and push custom aggregators to the `o
 fields present on some sub-contexts like [StringContext](crate::context::StringContext). The
 custom aggregator will need to implement [CoalescingAggregator](crate::traits::CoalescingAggregator).
  */
-#[derive(Debug, Clone, PartialEq)]
-pub struct InferredSchemaWithContext {
+pub struct InferredSchemaWithContext<C: Context> {
     /// The schema holds the actual description of the data.
-    pub schema: Schema,
+    pub schema: Schema<C>,
     /// The context may be user-provided with additional aggregators.
-    pub context: Context,
+    pub context: C,
 }
-impl Coalesce for InferredSchemaWithContext {
+impl<C: Context> Coalesce for InferredSchemaWithContext<C>
+where
+    Schema<C>: Coalesce,
+{
     fn coalesce(&mut self, other: Self)
     where
         Self: Sized,
@@ -264,7 +266,10 @@ impl Coalesce for InferredSchemaWithContext {
     }
 }
 // (schema + context) -> (schema + context)
-impl<'de> DeserializeSeed<'de> for &mut InferredSchemaWithContext {
+impl<'de, C: Context> DeserializeSeed<'de> for &mut InferredSchemaWithContext<C>
+where
+    Schema<C>: Coalesce,
+{
     type Value = ();
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
@@ -280,21 +285,91 @@ impl<'de> DeserializeSeed<'de> for &mut InferredSchemaWithContext {
     }
 }
 // (no schema + context) -> (schema + context)
-impl Context {
+impl<C: Context> InferredSchemaWithContext<C> {
     /// Deserialization of a new schema using a context, returns a [InferredSchemaWithContext] that
     /// can be used to deserialize further files and reuse the context.
-    pub fn deserialize_schema<'de, D>(
-        self,
-        deserializer: D,
-    ) -> Result<InferredSchemaWithContext, D::Error>
+    pub fn deserialize_schema<'de, D>(context: C, deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        let visitor = SchemaVisitor { context: &self };
+        let visitor = SchemaVisitor { context: &context };
         let schema = deserializer.deserialize_any(visitor)?;
-        Ok(InferredSchemaWithContext {
-            context: self,
-            schema,
-        })
+        Ok(InferredSchemaWithContext { context, schema })
+    }
+}
+
+mod boilerplate {
+    use std::fmt;
+
+    use crate::{context::Context, Schema};
+
+    use super::{InferredSchema, InferredSchemaWithContext};
+
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> fmt::Debug for InferredSchema<C>
+    where
+        Schema<C>: fmt::Debug,
+    {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("InferredSchema")
+                .field("schema", &self.schema)
+                .finish()
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> Clone for InferredSchema<C>
+    where
+        Schema<C>: Clone,
+    {
+        fn clone(&self) -> Self {
+            Self {
+                schema: self.schema.clone(),
+            }
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> PartialEq for InferredSchema<C>
+    where
+        Schema<C>: PartialEq,
+    {
+        fn eq(&self, other: &Self) -> bool {
+            self.schema == other.schema
+        }
+    }
+
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context + fmt::Debug> fmt::Debug for InferredSchemaWithContext<C>
+    where
+        Schema<C>: fmt::Debug,
+    {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("InferredSchemaWithContext")
+                .field("schema", &self.schema)
+                .field("context", &self.context)
+                .finish()
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> Clone for InferredSchemaWithContext<C>
+    where
+        Schema<C>: Clone,
+        C: Clone,
+    {
+        fn clone(&self) -> Self {
+            Self {
+                schema: self.schema.clone(),
+                context: self.context.clone(),
+            }
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> PartialEq for InferredSchemaWithContext<C>
+    where
+        Schema<C>: PartialEq,
+        C: PartialEq,
+    {
+        fn eq(&self, other: &Self) -> bool {
+            self.schema == other.schema && self.context == other.context
+        }
     }
 }

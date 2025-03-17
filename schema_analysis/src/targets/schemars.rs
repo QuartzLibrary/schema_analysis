@@ -4,9 +4,9 @@ use std::error::Error;
 
 use schemars::schema as schemars_types;
 
-use crate::Schema;
+use crate::{context::Context, Schema};
 
-impl Schema {
+impl<C: Context> Schema<C> {
     /// Convert into a json_schema using the default settings.
     pub fn to_json_schema_with_schemars(&self) -> Result<String, impl Error> {
         self.to_json_schema_with_schemars_version(&Default::default())
@@ -67,7 +67,7 @@ mod helpers {
 
     use schemars::schema as schemars_types;
 
-    use crate::{Field, Schema};
+    use crate::{context::Context, Field, Schema};
 
     /// Wraps a [Schema](schemars_types::Schema) in a [RootSchema](schemars_types::RootSchema).
     pub fn wrap_in_root(
@@ -82,9 +82,9 @@ mod helpers {
     }
 
     /// Converts an inferred [Schema] to a schemars [Schema](schemars_types::Schema).
-    pub fn inferred_to_schemars(
+    pub fn inferred_to_schemars<C: Context>(
         generator: &mut schemars::gen::SchemaGenerator,
-        inferred: &Schema,
+        inferred: &Schema<C>,
     ) -> schemars_types::Schema {
         // Note: we can use the generator even if we don't generate the final root schema
         //  using it because simple values will not be referrenced.
@@ -165,9 +165,9 @@ mod helpers {
     }
 
     /// Converts a [Field] into a [Schema](schemars_types::Schema).
-    fn internal_field_to_schemars_schema(
+    fn internal_field_to_schemars_schema<C: Context>(
         generator: &mut schemars::gen::SchemaGenerator,
-        field: &Field,
+        field: &Field<C>,
     ) -> schemars_types::Schema {
         // Note: we can use the generator even if we don't generate the final root schema
         //  using it because simple values will not be referrenced.

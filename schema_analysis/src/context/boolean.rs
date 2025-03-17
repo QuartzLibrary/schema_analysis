@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::{traits::Coalesce, Aggregate};
+use crate::{traits::Aggregate, traits::Coalesce};
 
 use super::Counter;
 

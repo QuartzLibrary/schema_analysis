@@ -1,6 +1,6 @@
 use serde::de::{Error, Visitor};
 
-use crate::{traits::Coalesce, Aggregate, Schema};
+use crate::{traits::Aggregate, traits::Coalesce, Schema};
 
 use super::{
     field::{FieldVisitor, FieldVisitorSeed},
@@ -8,12 +8,15 @@ use super::{
     Context,
 };
 
-pub struct SchemaVisitorSeed<'s> {
-    pub context: &'s Context,
-    pub schema: &'s mut Schema,
+pub struct SchemaVisitorSeed<'s, C: Context> {
+    pub context: &'s C,
+    pub schema: &'s mut Schema<C>,
 }
 
-impl<'de> Visitor<'de> for SchemaVisitorSeed<'_> {
+impl<'de, C: Context> Visitor<'de> for SchemaVisitorSeed<'_, C>
+where
+    Schema<C>: Coalesce,
+{
     type Value = ();
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {

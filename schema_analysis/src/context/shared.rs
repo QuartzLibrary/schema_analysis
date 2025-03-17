@@ -5,7 +5,7 @@ use std::{
 
 use serde::{Deserialize, Serialize};
 
-use crate::{traits::Coalesce, Aggregate};
+use crate::{traits::Aggregate, traits::Coalesce};
 
 //
 // Counter

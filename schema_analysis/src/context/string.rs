@@ -6,12 +6,9 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 
-use crate::{traits::Coalesce, Aggregate};
+use crate::{traits::Aggregate, traits::Coalesce};
 
-use super::{
-    shared::{Counter, CountingSet, MinMax, Sampler},
-    Aggregators,
-};
+use super::shared::{Counter, CountingSet, MinMax, Sampler};
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct StringContext {
@@ -24,8 +21,6 @@ pub struct StringContext {
     #[serde(default, skip_serializing_if = "SemanticExtractor::is_empty")]
     pub semantic_extractor: SemanticExtractor,
     pub min_max_length: MinMax<usize>,
-    #[serde(skip)]
-    pub other_aggregators: Aggregators<str>,
 }
 impl Aggregate<str> for StringContext {
     fn aggregate(&mut self, value: &'_ str) {
@@ -34,7 +29,6 @@ impl Aggregate<str> for StringContext {
         self.suspicious_strings.aggregate(value);
         self.semantic_extractor.aggregate(value);
         self.min_max_length.aggregate(&value.len());
-        self.other_aggregators.aggregate(value);
     }
 }
 impl Coalesce for StringContext {
@@ -47,12 +41,9 @@ impl Coalesce for StringContext {
         self.suspicious_strings.coalesce(other.suspicious_strings);
         self.semantic_extractor.coalesce(other.semantic_extractor);
         self.min_max_length.coalesce(other.min_max_length);
-        self.other_aggregators.coalesce(other.other_aggregators);
     }
 }
 impl PartialEq for StringContext {
-    /// NOTE: [StringContext]'s [PartialEq] implementation ignores the `other_aggregators`
-    /// provided by the user of the library.
     fn eq(&self, other: &Self) -> bool {
         self.count == other.count
             && self.samples == other.samples

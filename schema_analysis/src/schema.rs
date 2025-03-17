@@ -1,44 +1,38 @@
-use ordermap::OrderMap;
+use ordermap::{map::Entry, OrderMap};
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    context::{
-        BooleanContext, BytesContext, MapStructContext, NullContext, NumberContext,
-        SequenceContext, StringContext,
-    },
-    Coalesce, StructuralEq,
-};
+use crate::{context::Context, context::DefaultContext, Coalesce, StructuralEq};
 
 /// This enum is the core output of the analysis, it describes the structure of a document.
 ///
 /// Each variant also contains [context](crate::context) data that allows it to store information
 /// about the values it has encountered.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(tag = "type")]
-pub enum Schema {
+pub enum Schema<C: Context = DefaultContext> {
     /// The Null variant is a special one that is only ever found when a document has a single
     /// null value at the root of the document.
     /// Null values in [Struct](Schema::Struct)s or [Sequence](Schema::Sequence)s are instead
     /// handled at the [Field] level, where it is more ergonomic.
-    Null(NullContext),
+    Null(C::Null),
     /// Represents a boolean value.
-    Boolean(BooleanContext),
+    Boolean(C::Boolean),
     /// Represents an integer value.
-    Integer(NumberContext<i128>),
+    Integer(C::Integer),
     /// Represents a floating point value.
-    Float(NumberContext<f64>),
+    Float(C::Float),
     /// Represents a textual value.
-    String(StringContext),
+    String(C::String),
     /// Represents a value of raw bytes.
-    Bytes(BytesContext),
+    Bytes(C::Bytes),
     /// Represents a sequence of values described by a [Field].
     /// It assumes all values share the same schema.
     Sequence {
         /// The field is the structure shared by all the elements of the sequence.
-        field: Box<Field>,
+        field: Box<Field<C>>,
         /// The context aggregates information about the sequence.
         /// It is passed the length of the sequence.
-        context: SequenceContext,
+        context: C::Sequence,
     },
     /// Represents a [String]->[Field] mapping.
     ///
@@ -46,10 +40,10 @@ pub enum Schema {
     Struct {
         /// Each [String] key gets assigned a [Field].
         /// Currently we are using a [BTreeMap], but that might change in the future.
-        fields: OrderMap<String, Field>,
+        fields: OrderMap<String, Field<C>>,
         /// The context aggregates information about the struct.
         /// It is passed a vector of the key names.
-        context: MapStructContext,
+        context: C::Struct,
     },
     /// Simply a vector of [Schema]s, it should never contain an Union or multiple instances of the
     /// same variant inside.
@@ -57,7 +51,7 @@ pub enum Schema {
     /// Note: content needs to be a struct variant to work with `#[serde(tag = "type")]`.
     Union {
         /// A list of the possible schemas that were found.
-        variants: Vec<Schema>,
+        variants: Vec<Schema<C>>,
     },
     // Tuple(..),
     // Map(..),
@@ -66,8 +60,12 @@ pub enum Schema {
 /// A [Field] is a useful abstraction to record metadata that does not belong or would be unyieldy
 /// to place into the [Schema] and to account for cases in which the existence of a [Field] might be
 /// known, but nothing is known about its shape.
-#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
-pub struct Field {
+#[derive(Serialize, Deserialize)]
+#[serde(bound(
+    serialize = "Schema<C>: Serialize",
+    deserialize = "Schema<C>: Deserialize<'de>"
+))]
+pub struct Field<C: Context = DefaultContext> {
     /// The status holds information on the the field, like whether it might be null or
     /// missing altogether. Duplicate fields are also recorded.
     #[serde(flatten)]
@@ -75,7 +73,15 @@ pub struct Field {
     /// The inner Schema is optional because we might have no information on the shape of the field
     /// (like for an empty array).
     #[serde(flatten)]
-    pub schema: Option<Schema>,
+    pub schema: Option<Schema<C>>,
+}
+impl<C: Context> Default for Field<C> {
+    fn default() -> Self {
+        Self {
+            status: FieldStatus::default(),
+            schema: None,
+        }
+    }
 }
 
 /// The FieldStatus keeps track of what kind of values a [Field] has been found to have.
@@ -100,7 +106,7 @@ pub struct FieldStatus {
 //
 // Schema implementations
 //
-impl Schema {
+impl<C: Context> Schema<C> {
     /// Sorts the fields of the schema by their name (using [String::cmp]).
     pub fn sort_fields(&mut self) {
         match self {
@@ -153,7 +159,10 @@ impl Schema {
         }
     }
 }
-impl StructuralEq for Schema {
+impl<C: Context> StructuralEq for Schema<C>
+where
+    Self: Clone,
+{
     fn structural_eq(&self, other: &Self) -> bool {
         use Schema::*;
         match (self, other) {
@@ -206,7 +215,7 @@ impl StructuralEq for Schema {
         }
     }
 }
-impl Coalesce for Schema {
+impl<C: Context> Coalesce for Schema<C> {
     fn coalesce(&mut self, other: Self) {
         use Schema::*;
         match (self, other) {
@@ -242,10 +251,14 @@ impl Coalesce for Schema {
             ) => {
                 self_agg.coalesce(other_agg);
                 for (name, other_schema) in other_fields {
-                    self_fields
-                        .entry(name)
-                        .and_modify(|schema| schema.coalesce(other_schema.clone()))
-                        .or_insert_with(|| other_schema);
+                    match self_fields.entry(name) {
+                        Entry::Occupied(mut schema) => {
+                            schema.get_mut().coalesce(other_schema);
+                        }
+                        Entry::Vacant(entry) => {
+                            entry.insert(other_schema);
+                        }
+                    }
                 }
             }
             (
@@ -268,23 +281,21 @@ impl Coalesce for Schema {
                     variants: mut other_alternatives,
                 },
             ) => {
-                let self_original = std::mem::replace(any_self, Schema::Null(Default::default()));
-                coalesce_to_alternatives(&mut other_alternatives, self_original);
+                coalesce_to_alternatives(&mut other_alternatives, any_self.clone());
                 *any_self = Schema::Union {
                     variants: other_alternatives,
                 };
             }
 
             (any_self, any_other) => {
-                let self_original = std::mem::replace(any_self, Schema::Null(Default::default()));
                 *any_self = Union {
-                    variants: vec![self_original, any_other],
+                    variants: vec![any_self.clone(), any_other],
                 };
             }
         };
         return;
 
-        fn coalesce_unions(selfs: &mut Vec<Schema>, others: Vec<Schema>) {
+        fn coalesce_unions<C: Context>(selfs: &mut Vec<Schema<C>>, others: Vec<Schema<C>>) {
             for o in others {
                 coalesce_to_alternatives(selfs, o);
             }
@@ -293,7 +304,10 @@ impl Coalesce for Schema {
         /// This function attempts to match the incomming schema against all the
         /// alternatives already present, and if it fails it pushes it to the vector as a
         /// new alternative.
-        fn coalesce_to_alternatives(alternatives: &mut Vec<Schema>, mut other: Schema) {
+        fn coalesce_to_alternatives<C: Context>(
+            alternatives: &mut Vec<Schema<C>>,
+            mut other: Schema<C>,
+        ) {
             use Schema::*;
             for s in alternatives.iter_mut() {
                 match (s, other) {
@@ -352,10 +366,14 @@ impl Coalesce for Schema {
                     ) => {
                         self_agg.coalesce(other_agg);
                         for (name, other_schema) in other_fields {
-                            self_fields
-                                .entry(name)
-                                .and_modify(|schema| schema.coalesce(other_schema.clone()))
-                                .or_insert_with(|| other_schema);
+                            match self_fields.entry(name) {
+                                Entry::Occupied(mut schema) => {
+                                    schema.get_mut().coalesce(other_schema);
+                                }
+                                Entry::Vacant(entry) => {
+                                    entry.insert(other_schema);
+                                }
+                            }
                         }
                         return;
                     }
@@ -376,9 +394,9 @@ impl Coalesce for Schema {
 //
 // Field implementations
 //
-impl Field {
+impl<C: Context> Field<C> {
     /// Returns a [Field] with the given [Schema] and default [FieldStatus].
-    pub fn with_schema(schema: Schema) -> Self {
+    pub fn with_schema(schema: Schema<C>) -> Self {
         Self {
             status: FieldStatus::default(),
             schema: Some(schema),
@@ -396,7 +414,10 @@ impl Field {
         }
     }
 }
-impl Coalesce for Field {
+impl<C: Context> Coalesce for Field<C>
+where
+    Schema<C>: Coalesce,
+{
     fn coalesce(&mut self, other: Self)
     where
         Self: Sized,
@@ -413,7 +434,10 @@ impl Coalesce for Field {
         }
     }
 }
-impl StructuralEq for Field {
+impl<C: Context> StructuralEq for Field<C>
+where
+    Schema<C>: StructuralEq,
+{
     fn structural_eq(&self, other: &Self) -> bool {
         self.status == other.status && self.schema.structural_eq(&other.schema)
     }
@@ -453,8 +477,8 @@ impl Coalesce for FieldStatus {
 /// to help in comparing two [Schema::Union].
 /// Since a [Schema::Union] should never hold two schemas of the same type, it is enough to
 /// just compare the top level without recursion.
-fn schema_cmp(first: &Schema, second: &Schema) -> std::cmp::Ordering {
-    fn ordering(v: &Schema) -> u8 {
+fn schema_cmp<C: Context>(first: &Schema<C>, second: &Schema<C>) -> std::cmp::Ordering {
+    fn ordering<C: Context>(v: &Schema<C>) -> u8 {
         use Schema::*;
 
         match v {
@@ -470,4 +494,169 @@ fn schema_cmp(first: &Schema, second: &Schema) -> std::cmp::Ordering {
         }
     }
     Ord::cmp(&ordering(first), &ordering(second))
+}
+
+mod boilerplate {
+    use std::fmt;
+
+    use crate::context::Context;
+
+    use super::{Field, Schema};
+
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> fmt::Debug for Schema<C>
+    where
+        C::Null: fmt::Debug,
+        C::Boolean: fmt::Debug,
+        C::Integer: fmt::Debug,
+        C::Float: fmt::Debug,
+        C::String: fmt::Debug,
+        C::Bytes: fmt::Debug,
+        C::Sequence: fmt::Debug,
+        C::Struct: fmt::Debug,
+    {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            match self {
+                Self::Null(arg0) => f.debug_tuple("Null").field(arg0).finish(),
+                Self::Boolean(arg0) => f.debug_tuple("Boolean").field(arg0).finish(),
+                Self::Integer(arg0) => f.debug_tuple("Integer").field(arg0).finish(),
+                Self::Float(arg0) => f.debug_tuple("Float").field(arg0).finish(),
+                Self::String(arg0) => f.debug_tuple("String").field(arg0).finish(),
+                Self::Bytes(arg0) => f.debug_tuple("Bytes").field(arg0).finish(),
+                Self::Sequence { field, context } => f
+                    .debug_struct("Sequence")
+                    .field("field", field)
+                    .field("context", context)
+                    .finish(),
+                Self::Struct { fields, context } => f
+                    .debug_struct("Struct")
+                    .field("fields", fields)
+                    .field("context", context)
+                    .finish(),
+                Self::Union { variants } => {
+                    f.debug_struct("Union").field("variants", variants).finish()
+                }
+            }
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> Clone for Schema<C>
+    where
+        C::Null: Clone,
+        C::Boolean: Clone,
+        C::Integer: Clone,
+        C::Float: Clone,
+        C::String: Clone,
+        C::Bytes: Clone,
+        C::Sequence: Clone,
+        C::Struct: Clone,
+    {
+        fn clone(&self) -> Self {
+            match self {
+                Self::Null(arg0) => Self::Null(arg0.clone()),
+                Self::Boolean(arg0) => Self::Boolean(arg0.clone()),
+                Self::Integer(arg0) => Self::Integer(arg0.clone()),
+                Self::Float(arg0) => Self::Float(arg0.clone()),
+                Self::String(arg0) => Self::String(arg0.clone()),
+                Self::Bytes(arg0) => Self::Bytes(arg0.clone()),
+                Self::Sequence { field, context } => Self::Sequence {
+                    field: field.clone(),
+                    context: context.clone(),
+                },
+                Self::Struct { fields, context } => Self::Struct {
+                    fields: fields.clone(),
+                    context: context.clone(),
+                },
+                Self::Union { variants } => Self::Union {
+                    variants: variants.clone(),
+                },
+            }
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> PartialEq for Schema<C>
+    where
+        C::Null: PartialEq,
+        C::Boolean: PartialEq,
+        C::Integer: PartialEq,
+        C::Float: PartialEq,
+        C::String: PartialEq,
+        C::Bytes: PartialEq,
+        C::Sequence: PartialEq,
+        C::Struct: PartialEq,
+    {
+        fn eq(&self, other: &Self) -> bool {
+            match (self, other) {
+                (Self::Null(l0), Self::Null(r0)) => l0 == r0,
+                (Self::Boolean(l0), Self::Boolean(r0)) => l0 == r0,
+                (Self::Integer(l0), Self::Integer(r0)) => l0 == r0,
+                (Self::Float(l0), Self::Float(r0)) => l0 == r0,
+                (Self::String(l0), Self::String(r0)) => l0 == r0,
+                (Self::Bytes(l0), Self::Bytes(r0)) => l0 == r0,
+                (
+                    Self::Sequence {
+                        field: l_field,
+                        context: l_context,
+                    },
+                    Self::Sequence {
+                        field: r_field,
+                        context: r_context,
+                    },
+                ) => l_field == r_field && l_context == r_context,
+                (
+                    Self::Struct {
+                        fields: l_fields,
+                        context: l_context,
+                    },
+                    Self::Struct {
+                        fields: r_fields,
+                        context: r_context,
+                    },
+                ) => l_fields == r_fields && l_context == r_context,
+                (
+                    Self::Union {
+                        variants: l_variants,
+                    },
+                    Self::Union {
+                        variants: r_variants,
+                    },
+                ) => l_variants == r_variants,
+                _ => false,
+            }
+        }
+    }
+
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> fmt::Debug for Field<C>
+    where
+        Schema<C>: fmt::Debug,
+    {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("Field")
+                .field("status", &self.status)
+                .field("schema", &self.schema)
+                .finish()
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> Clone for Field<C>
+    where
+        Schema<C>: Clone,
+    {
+        fn clone(&self) -> Self {
+            Self {
+                status: self.status.clone(),
+                schema: self.schema.clone(),
+            }
+        }
+    }
+    // Auto-generated, with bounds changed. (TODO: use perfect derive.)
+    impl<C: Context> PartialEq for Field<C>
+    where
+        Schema<C>: PartialEq,
+    {
+        fn eq(&self, other: &Self) -> bool {
+            self.status == other.status && self.schema == other.schema
+        }
+    }
 }
