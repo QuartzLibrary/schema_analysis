@@ -13,7 +13,7 @@ use crate::{
 ///
 /// Each variant also contains [context](crate::context) data that allows it to store information
 /// about the values it has encountered.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Schema {
     /// The Null variant is a special one that is only ever found when a document has a single
@@ -369,60 +369,6 @@ impl Coalesce for Schema {
 
             // If we were unable to find a match, push the schema to the alternatives:
             alternatives.push(other);
-        }
-    }
-}
-impl PartialEq for Schema {
-    fn eq(&self, other: &Self) -> bool {
-        use Schema::*;
-        match (self, other) {
-            (Null(s), Null(o)) => s == o,
-            (Boolean(s), Boolean(o)) => s == o,
-            (Integer(s), Integer(o)) => s == o,
-            (Float(s), Float(o)) => s == o,
-            (String(s), String(o)) => s == o,
-            (Bytes(s), Bytes(o)) => s == o,
-
-            (
-                Sequence {
-                    field: field_1,
-                    context: context_1,
-                },
-                Sequence {
-                    field: field_2,
-                    context: context_2,
-                },
-            ) => field_1 == field_2 && context_1 == context_2,
-
-            (
-                Struct {
-                    fields: fields_1,
-                    context: context_1,
-                },
-                Struct {
-                    fields: fields_2,
-                    context: context_2,
-                },
-            ) => fields_1 == fields_2 && context_1 == context_2,
-
-            (Union { variants: s }, Union { variants: o }) => {
-                let mut s = s.clone();
-                let mut o = o.clone();
-                s.sort_by(schema_cmp);
-                o.sort_by(schema_cmp);
-                s == o
-            }
-
-            // Listing these out makes sure it fails if new variants are added.
-            (Null(_), _)
-            | (Boolean(_), _)
-            | (Integer(_), _)
-            | (Float(_), _)
-            | (String(_), _)
-            | (Bytes(_), _)
-            | (Sequence { .. }, _)
-            | (Struct { .. }, _)
-            | (Union { .. }, _) => false,
         }
     }
 }
