@@ -1,4 +1,4 @@
-use std::{error::Error, sync::Mutex};
+use std::{error::Error, fmt, sync::Mutex};
 
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::wasm_bindgen;
@@ -24,8 +24,8 @@ pub enum DataType {
     Bson = 5,
     Xml = 6,
 }
-impl ToString for DataType {
-    fn to_string(&self) -> String {
+impl fmt::Display for DataType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             DataType::Json => "json",
             DataType::Yaml => "yaml",
@@ -34,7 +34,7 @@ impl ToString for DataType {
             DataType::Bson => "bson",
             DataType::Xml => "xml",
         };
-        s.into()
+        f.write_str(s)
     }
 }
 

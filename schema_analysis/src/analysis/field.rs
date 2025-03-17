@@ -8,7 +8,7 @@ pub struct FieldVisitor<'s> {
     pub context: &'s Context,
 }
 
-impl<'de, 's> DeserializeSeed<'de> for FieldVisitor<'s> {
+impl<'de> DeserializeSeed<'de> for FieldVisitor<'_> {
     type Value = Field;
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
@@ -30,7 +30,7 @@ pub struct FieldVisitorSeed<'s> {
     pub field: &'s mut Field,
 }
 
-impl<'de, 's> DeserializeSeed<'de> for FieldVisitorSeed<'s> {
+impl<'de> DeserializeSeed<'de> for FieldVisitorSeed<'_> {
     type Value = ();
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
@@ -71,7 +71,7 @@ macro_rules! method_impl {
     };
 }
 
-impl<'de, 's> Visitor<'de> for FieldVisitorSeed<'s> {
+impl<'de> Visitor<'de> for FieldVisitorSeed<'_> {
     type Value = ();
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {

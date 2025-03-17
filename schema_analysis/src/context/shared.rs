@@ -37,10 +37,10 @@ impl Coalesce for Counter {
 pub struct CountingSet<T: Ord>(pub BTreeMap<T, usize>);
 impl<T: Clone + Ord> CountingSet<T> {
     /// adds a value to the set or increases its counter if it already exists.
-    pub fn insert<Q: ?Sized>(&mut self, key: &Q)
+    pub fn insert<Q>(&mut self, key: &Q)
     where
         T: Borrow<Q>,
-        Q: Ord + ToOwned<Owned = T>,
+        Q: Ord + ToOwned<Owned = T> + ?Sized,
     {
         match self.0.get_mut(key) {
             Some(v) => *v += 1,
@@ -50,10 +50,10 @@ impl<T: Clone + Ord> CountingSet<T> {
         };
     }
     /// Checks if a specific value is present inside.
-    pub fn contains_key<Q: ?Sized>(&mut self, key: &Q) -> bool
+    pub fn contains_key<Q>(&mut self, key: &Q) -> bool
     where
         T: Borrow<Q>,
-        Q: Ord,
+        Q: Ord + ?Sized,
     {
         self.0.contains_key(key)
     }
