@@ -13,8 +13,10 @@ test_format!(JSchema);
 
 const SCHEMA_TYPE: &str = "https://json-schema.org/draft/2019-09/schema";
 
-impl FormatTests<Value> for JSchema {
-    fn convert_to_inferred_schema(_value: Value) -> InferredSchema {
+impl FormatTests for JSchema {
+    type Value = Value;
+
+    fn infer_schema(_value: Self::Value) -> InferredSchema {
         // Not needed for testing the target.
         unreachable!()
     }
@@ -22,78 +24,78 @@ impl FormatTests<Value> for JSchema {
     // Note: here we are actually switching the source and target.
     // The target schema from the tests before is now being serialized to a json schema and then
     // parsed and compared to the json values below.
-    fn compare(target_json_schema: Value, tested_schema: Schema) {
+    fn compare(target_json_schema: Self::Value, tested_schema: Schema) {
         let serialized_json_schema = tested_schema.to_json_schema_with_schemars().unwrap();
         let deserialized_json_schema: Value =
             serde_json::from_str(&serialized_json_schema).unwrap();
         assert_eq!(deserialized_json_schema, target_json_schema);
     }
 
-    fn null() -> Option<Value> {
-        Some(json! ({
+    fn null() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "type": "null",
-        }))
+        })
     }
 
-    fn boolean() -> Option<Value> {
-        Some(json! ({
+    fn boolean() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "type": "boolean",
-        }))
+        })
     }
 
-    fn integer() -> Option<Value> {
-        Some(json! ({
+    fn integer() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "type": "integer",
-        }))
+        })
     }
 
-    fn float() -> Option<Value> {
-        Some(json! ({
+    fn float() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "type": "number",
-        }))
+        })
     }
 
-    fn string() -> Option<Value> {
-        Some(json! ({
+    fn string() -> Self::Value {
+        json! ({
             "$schema": SCHEMA_TYPE,
             "type": "string",
-        }))
+        })
     }
 
-    fn empty_sequence() -> Option<Value> {
-        Some(json!({
+    fn empty_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": true
-        }))
+        })
     }
 
-    fn string_sequence() -> Option<Value> {
-        Some(json!({
+    fn string_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": {
                 "type": "string"
             }
-        }))
+        })
     }
 
-    fn integer_sequence() -> Option<Value> {
-        Some(json!({
+    fn integer_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": {
                 "type": "integer"
             }
-        }))
+        })
     }
 
-    fn mixed_sequence() -> Option<Value> {
-        Some(json!({
+    fn mixed_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": {
@@ -107,11 +109,11 @@ impl FormatTests<Value> for JSchema {
                     },
                 ]
             }
-        }))
+        })
     }
 
-    fn optional_mixed_sequence() -> Option<Value> {
-        Some(json!({
+    fn optional_mixed_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": {
@@ -126,29 +128,29 @@ impl FormatTests<Value> for JSchema {
                     { "type": "null" }
                 ]
             }
-        }))
+        })
     }
 
-    fn empty_map_struct() -> Option<Value> {
-        Some(json!({
+    fn empty_map_struct() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
-        }))
+        })
     }
 
-    fn map_struct_single() -> Option<Value> {
-        Some(json!({
+    fn map_struct_single() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
             "properties": {
                 "hello": { "type": "integer" }
             },
             "required": [ "hello" ]
-        }))
+        })
     }
 
-    fn map_struct_double() -> Option<Value> {
-        Some(json!({
+    fn map_struct_double() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
             "properties": {
@@ -156,11 +158,11 @@ impl FormatTests<Value> for JSchema {
                 "world": { "type": "string" },
             },
             "required": [ "hello", "world" ]
-        }))
+        })
     }
 
-    fn sequence_map_struct_mixed() -> Option<Value> {
-        Some(json!({
+    fn sequence_map_struct_mixed() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": {
@@ -177,11 +179,11 @@ impl FormatTests<Value> for JSchema {
                     "world": { "type": "string" },
                 },
             }
-        }))
+        })
     }
 
-    fn sequence_map_struct_optional_or_missing() -> Option<Value> {
-        Some(json!({
+    fn sequence_map_struct_optional_or_missing() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "array",
             "items": {
@@ -195,11 +197,11 @@ impl FormatTests<Value> for JSchema {
                     "possibly_null": { "type": ["string", "null"] }
                 },
             }
-        }))
+        })
     }
 
-    fn map_struct_mixed_sequence() -> Option<Value> {
-        Some(json!({
+    fn map_struct_mixed_sequence() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
             "required": [ "hello", "sequence", "world" ],
@@ -211,11 +213,11 @@ impl FormatTests<Value> for JSchema {
                     "items": { "type": "string" },
                 },
             },
-        }))
+        })
     }
 
-    fn map_struct_mixed_sequence_optional() -> Option<Value> {
-        Some(json!({
+    fn map_struct_mixed_sequence_optional() -> Self::Value {
+        json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
             "required": [ "hello", "optional", "sequence", "world" ],
@@ -228,6 +230,6 @@ impl FormatTests<Value> for JSchema {
                     "items": { "type": [ "string", "null" ] },
                 },
             },
-        }))
+        })
     }
 }

@@ -1,4 +1,4 @@
-use bson::{bson, Bson as Value};
+use bson::bson;
 
 use schema_analysis::InferredSchema;
 
@@ -9,82 +9,94 @@ struct Bson;
 
 test_format!(Bson);
 
-impl FormatTests<Value> for Bson {
-    fn convert_to_inferred_schema(value: Value) -> InferredSchema {
+impl FormatTests for Bson {
+    type Value = bson::Bson;
+
+    fn infer_schema(value: Self::Value) -> InferredSchema {
         let bytes = bson::to_vec(&value).unwrap();
         let processed_schema: InferredSchema = bson::from_slice(&bytes).unwrap();
         processed_schema
     }
 
     // Bson doesn't allow top-level primitives
-    fn null() -> Option<Value> {
-        None
+    fn test_null() {}
+    fn null() -> Self::Value {
+        unreachable!()
     }
-    fn boolean() -> Option<Value> {
-        None
+    fn test_boolean() {}
+    fn boolean() -> Self::Value {
+        unreachable!()
     }
-    fn integer() -> Option<Value> {
-        None
+    fn test_integer() {}
+    fn integer() -> Self::Value {
+        unreachable!()
     }
-    fn float() -> Option<Value> {
-        None
+    fn test_float() {}
+    fn float() -> Self::Value {
+        unreachable!()
     }
-    fn string() -> Option<Value> {
-        None
+    fn test_string() {}
+    fn string() -> Self::Value {
+        unreachable!()
     }
 
     // Bson doesn't allow top-level arrays
-    fn empty_sequence() -> Option<Value> {
-        None
+    fn test_empty_sequence() {}
+    fn empty_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn string_sequence() -> Option<Value> {
-        None
+    fn test_string_sequence() {}
+    fn string_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn integer_sequence() -> Option<Value> {
-        None
+    fn test_integer_sequence() {}
+    fn integer_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn mixed_sequence() -> Option<Value> {
-        None
+    fn test_mixed_sequence() {}
+    fn mixed_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn optional_mixed_sequence() -> Option<Value> {
-        None
+    fn test_optional_mixed_sequence() {}
+    fn optional_mixed_sequence() -> Self::Value {
+        unreachable!()
     }
 
-    fn empty_map_struct() -> Option<Value> {
-        Some(bson!({}))
+    fn empty_map_struct() -> Self::Value {
+        bson!({})
     }
-    fn map_struct_single() -> Option<Value> {
-        Some(bson!({
+    fn map_struct_single() -> Self::Value {
+        bson!({
             "hello": 1
-        }))
+        })
     }
-    fn map_struct_double() -> Option<Value> {
-        Some(bson!({
+    fn map_struct_double() -> Self::Value {
+        bson!({
             "hello": 1,
             "world": "!"
-        }))
-    }
-    fn sequence_map_struct_mixed() -> Option<Value> {
-        None // Bson doesn't allow top-level arrays
+        })
     }
     fn test_sequence_map_struct_mixed() {}
-    fn sequence_map_struct_optional_or_missing() -> Option<Value> {
-        None // Bson doesn't allow top-level arrays
+    fn sequence_map_struct_mixed() -> Self::Value {
+        unreachable!() // Bson doesn't allow top-level arrays
     }
     fn test_sequence_map_struct_optional_or_missing() {}
-    fn map_struct_mixed_sequence() -> Option<Value> {
-        Some(bson!({
+    fn sequence_map_struct_optional_or_missing() -> Self::Value {
+        unreachable!() // Bson doesn't allow top-level arrays
+    }
+    fn map_struct_mixed_sequence() -> Self::Value {
+        bson!({
             "hello": 1,
             "world": "!",
             "sequence": ["one", "two", "three"]
-        }))
+        })
     }
-    fn map_struct_mixed_sequence_optional() -> Option<Value> {
-        Some(bson!({
+    fn map_struct_mixed_sequence_optional() -> Self::Value {
+        bson!({
             "hello": 1,
             "world": "!",
             "optional": null,
             "sequence": ["one", "two", "three", null]
-        }))
+        })
     }
 }

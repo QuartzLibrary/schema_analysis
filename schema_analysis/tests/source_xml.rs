@@ -1,8 +1,4 @@
-use std::collections::BTreeMap;
-
-use maplit::btreemap;
-
-use schema_analysis::{helpers, Field, FieldStatus, InferredSchema, Schema};
+use schema_analysis::{helpers, InferredSchema};
 
 mod shared;
 use shared::FormatTests;
@@ -11,57 +7,138 @@ struct Xml;
 
 test_format!(Xml);
 
-impl FormatTests<String> for Xml {
-    fn convert_to_inferred_schema(value: String) -> InferredSchema {
+impl FormatTests for Xml {
+    type Value = String;
+
+    fn infer_schema(value: Self::Value) -> InferredSchema {
         let mut processed_schema: InferredSchema = quick_xml::de::from_str(&value).unwrap();
         helpers::xml::cleanup_xml_schema(&mut processed_schema.schema);
         processed_schema
     }
 
     // Xml doesn't allow top-level primitives
-    fn null() -> Option<String> {
-        None
+    fn test_null() {}
+    fn null() -> Self::Value {
+        unreachable!()
     }
-    fn boolean() -> Option<String> {
-        None
+    fn test_boolean() {}
+    fn boolean() -> Self::Value {
+        unreachable!()
     }
-    fn integer() -> Option<String> {
-        None
+    fn test_integer() {}
+    fn integer() -> Self::Value {
+        unreachable!()
     }
-    fn float() -> Option<String> {
-        None
+    fn test_float() {}
+    fn float() -> Self::Value {
+        unreachable!()
     }
-    fn string() -> Option<String> {
-        None
+    fn test_string() {}
+    fn string() -> Self::Value {
+        unreachable!()
     }
 
     // Xml doesn't allow top-level arrays (quick_xml ignores later elements anyway)
-    fn empty_sequence() -> Option<String> {
-        None
+    fn test_empty_sequence() {}
+    fn empty_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn string_sequence() -> Option<String> {
-        None
+    fn test_string_sequence() {}
+    fn string_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn integer_sequence() -> Option<String> {
-        None
+    fn test_integer_sequence() {}
+    fn integer_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn mixed_sequence() -> Option<String> {
-        None
+    fn test_mixed_sequence() {}
+    fn mixed_sequence() -> Self::Value {
+        unreachable!()
     }
-    fn optional_mixed_sequence() -> Option<String> {
-        None
+    fn test_optional_mixed_sequence() {}
+    fn optional_mixed_sequence() -> Self::Value {
+        unreachable!()
     }
 
     // Note: root name is discarded
-    fn empty_map_struct() -> Option<String> {
-        Some(r#"<wrapper></wrapper>"#.into())
+    fn empty_map_struct() -> Self::Value {
+        r#"<wrapper></wrapper>"#.into()
     }
 
-    fn map_struct_single() -> Option<String> {
-        Some(r#"<wrapper><hello>1</hello></wrapper>"#.into())
+    fn map_struct_single() -> Self::Value {
+        r#"<wrapper><hello>1</hello></wrapper>"#.into()
     }
     fn test_map_struct_single() {
-        // Xml doesn't have integer values
+        Self::compare(Self::map_struct_single(), targets::map_struct_single());
+    }
+
+    fn map_struct_double() -> Self::Value {
+        r#"<wrapper><hello>1</hello><world>!</world></wrapper>"#.into()
+    }
+    fn test_map_struct_double() {
+        Self::compare(Self::map_struct_double(), targets::map_struct_double());
+    }
+
+    // Xml only has strings, so there is no meaning to 'mixed'.
+    fn test_sequence_map_struct_mixed() {}
+    fn sequence_map_struct_mixed() -> Self::Value {
+        unreachable!()
+    }
+
+    fn sequence_map_struct_optional_or_missing() -> Self::Value {
+        "
+        <wrapper>
+            <element>
+                <hello>1</hello>
+                <possibly_null></possibly_null>
+                <possibly_missing>1.1</possibly_missing>
+                <null_or_missing></null_or_missing>
+            </element>
+            <element>
+                <hello>1</hello>
+                <possibly_null>!</possibly_null>
+            </element>
+        </wrapper>"
+            .into()
+    }
+    fn test_sequence_map_struct_optional_or_missing() {
+        Self::compare(
+            Self::sequence_map_struct_optional_or_missing(),
+            targets::sequence_map_struct_optional_or_missing(),
+        );
+    }
+
+    fn map_struct_mixed_sequence() -> Self::Value {
+        "
+        <wrapper>
+            <hello>1</hello>
+            <world>!</world>
+            <sequence>one</sequence><sequence>two</sequence><sequence>three</sequence>
+        </wrapper>"
+            .into()
+    }
+    fn test_map_struct_mixed_sequence() {
+        Self::compare(
+            Self::map_struct_mixed_sequence(),
+            targets::map_struct_mixed_sequence(),
+        );
+    }
+    // No built-in null makes this equivalent to the above.
+    fn test_map_struct_mixed_sequence_optional() {}
+    fn map_struct_mixed_sequence_optional() -> Self::Value {
+        unreachable!()
+    }
+}
+
+/// We need to redefine some targets because, for example, xml doesn't have integer values.
+mod targets {
+    use std::collections::BTreeMap;
+
+    use maplit::btreemap;
+
+    use schema_analysis::{Field, FieldStatus, Schema};
+
+    pub fn map_struct_single() -> Schema {
         let fields: BTreeMap<String, Field> = {
             let mut hello_field = Field {
                 status: FieldStatus::default(),
@@ -72,14 +149,12 @@ impl FormatTests<String> for Xml {
                 "hello".into() => hello_field
             }
         };
-        Self::_compare_map_struct(Self::map_struct_single(), fields);
+        Schema::Struct {
+            fields,
+            context: Default::default(),
+        }
     }
-
-    fn map_struct_double() -> Option<String> {
-        Some(r#"<wrapper><hello>1</hello><world>!</world></wrapper>"#.into())
-    }
-    fn test_map_struct_double() {
-        // Xml doesn't have integer values
+    pub fn map_struct_double() -> Schema {
         let fields: BTreeMap<String, Field> = {
             let mut hello_field = Field {
                 status: FieldStatus::default(),
@@ -96,33 +171,13 @@ impl FormatTests<String> for Xml {
                 "world".into() => world_field,
             }
         };
-        Self::_compare_map_struct(Self::map_struct_double(), fields);
+        Schema::Struct {
+            fields,
+            context: Default::default(),
+        }
     }
 
-    // Xml only has strings, so there is no meaning to 'mixed'.
-    fn sequence_map_struct_mixed() -> Option<String> {
-        None
-    }
-
-    fn sequence_map_struct_optional_or_missing() -> Option<String> {
-        Some(
-            "
-            <wrapper>
-                <element>
-                    <hello>1</hello>
-                    <possibly_null></possibly_null>
-                    <possibly_missing>1.1</possibly_missing>
-                    <null_or_missing></null_or_missing>
-                </element>
-                <element>
-                    <hello>1</hello>
-                    <possibly_null>!</possibly_null>
-                </element>
-            </wrapper>"
-                .into(),
-        )
-    }
-    fn test_sequence_map_struct_optional_or_missing() {
+    pub fn sequence_map_struct_optional_or_missing() -> Schema {
         // NOTE: in xml sequences are detected as the same key appearing multiple times, so
         // the inner schema is correctly computed over all instances but it is not detected
         // as a sequence.
@@ -168,26 +223,15 @@ impl FormatTests<String> for Xml {
         });
         sequence_field.status.may_be_normal = true;
 
-        Self::_compare_map_struct(
-            Self::sequence_map_struct_optional_or_missing(),
-            btreemap! {
+        Schema::Struct {
+            fields: btreemap! {
                 "element".into() => sequence_field,
             },
-        );
+            context: Default::default(),
+        }
     }
 
-    fn map_struct_mixed_sequence() -> Option<String> {
-        Some(
-            "
-            <wrapper>
-                <hello>1</hello>
-                <world>!</world>
-                <sequence>one</sequence><sequence>two</sequence><sequence>three</sequence>
-            </wrapper>"
-                .into(),
-        )
-    }
-    fn test_map_struct_mixed_sequence() {
+    pub fn map_struct_mixed_sequence() -> Schema {
         let fields: BTreeMap<String, Field> = {
             let mut hello_field = Field::with_schema(Schema::String(Default::default())); //
             hello_field.status.may_be_normal = true;
@@ -214,10 +258,9 @@ impl FormatTests<String> for Xml {
                 "sequence".into() => sequence_field,
             }
         };
-        Self::_compare_map_struct(Self::map_struct_mixed_sequence(), fields);
-    }
-    // No built-in null makes this equivalent to the above.
-    fn map_struct_mixed_sequence_optional() -> Option<String> {
-        None
+        Schema::Struct {
+            fields,
+            context: Default::default(),
+        }
     }
 }
