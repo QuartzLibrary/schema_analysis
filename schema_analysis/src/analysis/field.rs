@@ -1,36 +1,39 @@
+use std::marker::PhantomData;
+
 use serde::de::{DeserializeSeed, Error, Visitor};
 
 use crate::Field;
 
 use super::{schema::SchemaVisitor, schema_seed::SchemaVisitorSeed, Context};
 
-pub struct FieldVisitor<'s> {
-    pub context: &'s Context,
+pub(super) struct InferredField<C> {
+    _marker: PhantomData<C>,
 }
-
-impl<'de> DeserializeSeed<'de> for FieldVisitor<'_> {
-    type Value = Field;
+impl<C: Context> InferredField<C> {
+    pub fn new() -> Self {
+        Self {
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'de, C: Context> DeserializeSeed<'de> for InferredField<C> {
+    type Value = Field<C>;
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let mut field = Field::default();
-        deserializer.deserialize_any(FieldVisitorSeed {
-            context: self.context,
-            field: &mut field,
-        })?;
-
+        deserializer.deserialize_any(InferredFieldSeed { field: &mut field })?;
         Ok(field)
     }
 }
 
-pub struct FieldVisitorSeed<'s> {
-    pub context: &'s Context,
-    pub field: &'s mut Field,
+// NOTE: this is also the [Visitor] for convenience.
+pub(super) struct InferredFieldSeed<'s, C: Context> {
+    pub(super) field: &'s mut Field<C>,
 }
-
-impl<'de> DeserializeSeed<'de> for FieldVisitorSeed<'_> {
+impl<'de, C: Context> DeserializeSeed<'de> for InferredFieldSeed<'_, C> {
     type Value = ();
 
     fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
@@ -40,7 +43,6 @@ impl<'de> DeserializeSeed<'de> for FieldVisitorSeed<'_> {
         deserializer.deserialize_any(self)
     }
 }
-
 macro_rules! method_impl {
     ($method_name:ident, $type:ty) => {
         fn $method_name<E: Error>(self, value: $type) -> Result<Self::Value, E> {
@@ -48,18 +50,11 @@ macro_rules! method_impl {
                 // If a schema is already present, then we can use it as seed and let
                 // the schema side of things take care of the rest.
                 Some(schema) => {
-                    let () = SchemaVisitorSeed {
-                        context: self.context,
-                        schema,
-                    }
-                    .$method_name(value)?;
+                    let () = SchemaVisitorSeed { schema }.$method_name(value)?;
                 }
                 // Otherwise we need to generate a new schema.
                 None => {
-                    let schema = SchemaVisitor {
-                        context: self.context,
-                    }
-                    .$method_name(value)?;
+                    let schema = SchemaVisitor::new().$method_name(value)?;
                     self.field.schema = Some(schema);
                 }
             }
@@ -70,8 +65,7 @@ macro_rules! method_impl {
         }
     };
 }
-
-impl<'de> Visitor<'de> for FieldVisitorSeed<'_> {
+impl<'de, C: Context> Visitor<'de> for InferredFieldSeed<'_, C> {
     type Value = ();
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -162,17 +156,10 @@ impl<'de> Visitor<'de> for FieldVisitorSeed<'_> {
     {
         match &mut self.field.schema {
             Some(schema) => {
-                SchemaVisitorSeed {
-                    context: self.context,
-                    schema,
-                }
-                .visit_seq(seq)?;
+                SchemaVisitorSeed { schema }.visit_seq(seq)?;
             }
             None => {
-                let schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_seq(seq)?;
+                let schema = SchemaVisitor::new().visit_seq(seq)?;
                 self.field.schema = Some(schema);
             }
         }
@@ -186,17 +173,10 @@ impl<'de> Visitor<'de> for FieldVisitorSeed<'_> {
     {
         match &mut self.field.schema {
             Some(schema) => {
-                SchemaVisitorSeed {
-                    context: self.context,
-                    schema,
-                }
-                .visit_map(map)?;
+                SchemaVisitorSeed { schema }.visit_map(map)?;
             }
             None => {
-                let schema = SchemaVisitor {
-                    context: self.context,
-                }
-                .visit_map(map)?;
+                let schema = SchemaVisitor::new().visit_map(map)?;
                 self.field.schema = Some(schema);
             }
         }

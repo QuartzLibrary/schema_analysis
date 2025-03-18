@@ -4,14 +4,16 @@ pub mod xml {
     //! A module for xml cleaning helper functions.
     //! Check individual functions for details.
 
-    use crate::{Field, Schema};
+    use std::mem;
+
+    use crate::{context::Context, Field, Schema};
 
     /// A wrapper function that applies all XML cleaning transformations.
     ///
     /// [clean_solitary_nested_values]
     /// + [turn_duplicates_into_sequence_field]
     /// + [clean_empty_structs_in_field]
-    pub fn cleanup_xml_schema(schema: &mut Schema) {
+    pub fn cleanup_xml_schema<C: Context + Default>(schema: &mut Schema<C>) {
         clean_solitary_nested_values(schema);
         turn_duplicates_into_sequence_field(schema);
         clean_empty_structs_in_field(schema);
@@ -22,7 +24,7 @@ pub mod xml {
     ///
     /// This function simply finds [Schema::Struct]s with a single field named `$value` and
     /// replaces them with the schema inside the `$value` field.
-    pub fn clean_solitary_nested_values(schema: &mut Schema) {
+    pub fn clean_solitary_nested_values<C: Context>(schema: &mut Schema<C>) {
         use Schema::*;
         match schema {
             Null(_) | Boolean(_) | Integer(_) | Float(_) | String(_) | Bytes(_) => {}
@@ -62,10 +64,10 @@ pub mod xml {
     ///
     /// To help with this the inference software annotates duplicate fields, and this function
     /// takes the schema in that field and places it into a [Schema::Sequence].
-    pub fn turn_duplicates_into_sequence_field(schema: &mut Schema) {
+    pub fn turn_duplicates_into_sequence_field<C: Context + Default>(schema: &mut Schema<C>) {
         clean_field_recursively(schema, _inner_field_cleaning);
 
-        fn _inner_field_cleaning(field: &mut Field) {
+        fn _inner_field_cleaning<C: Context + Default>(field: &mut Field<C>) {
             if let Some(schema) = &mut field.schema {
                 clean_field_recursively(schema, _inner_field_cleaning)
             }
@@ -75,8 +77,8 @@ pub mod xml {
                 *field = Field {
                     status: field.status.clone(),
                     schema: Some(Schema::Sequence {
-                        field: Box::new(field.clone()),
-                        context: Default::default(),
+                        field: Box::new(mem::take(field)),
+                        context: C::Sequence::default(),
                     }),
                 };
                 field.status.may_be_duplicate = false;
@@ -88,10 +90,10 @@ pub mod xml {
     ///
     /// This function replaces those fields with empty [Schema::Struct] with fields of
     /// unknown schema.
-    pub fn clean_empty_structs_in_field(schema: &mut Schema) {
+    pub fn clean_empty_structs_in_field<C: Context>(schema: &mut Schema<C>) {
         clean_field_recursively(schema, _inner_field_cleaning);
 
-        fn _inner_field_cleaning(field: &mut Field) {
+        fn _inner_field_cleaning<C: Context>(field: &mut Field<C>) {
             match &mut field.schema {
                 Some(Schema::Struct { fields, .. }) if fields.is_empty() => {
                     field.schema = None;
@@ -102,7 +104,7 @@ pub mod xml {
         }
     }
 
-    fn clean_field_recursively(schema: &mut Schema, clean_field: fn(&mut Field)) {
+    fn clean_field_recursively<C: Context>(schema: &mut Schema<C>, clean_field: fn(&mut Field<C>)) {
         use Schema::*;
         match schema {
             Null(_) | Boolean(_) | Integer(_) | Float(_) | String(_) | Bytes(_) => {}

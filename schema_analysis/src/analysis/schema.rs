@@ -1,50 +1,58 @@
+use std::marker::PhantomData;
+
 use ordermap::OrderMap;
 use serde::de::{Error, Visitor};
 
-use crate::{Aggregate, Field, Schema};
+use crate::{traits::Aggregate, Field, Schema};
 
 use super::{
-    field::{FieldVisitor, FieldVisitorSeed},
+    field::{InferredField, InferredFieldSeed},
     Context,
 };
 
-pub struct SchemaVisitor<'s> {
-    pub context: &'s Context,
+pub(super) struct SchemaVisitor<C> {
+    _marker: PhantomData<C>,
 }
-
-impl<'de> Visitor<'de> for SchemaVisitor<'_> {
-    type Value = Schema;
+impl<C: Context> SchemaVisitor<C> {
+    pub fn new() -> Self {
+        Self {
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'de, C: Context> Visitor<'de> for SchemaVisitor<C> {
+    type Value = Schema<C>;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         formatter.write_str("anything")
     }
 
     fn visit_bool<E: Error>(self, value: bool) -> Result<Self::Value, E> {
-        let mut aggregators = self.context.for_boolean();
+        let mut aggregators = C::Boolean::default();
         aggregators.aggregate(&value);
 
         Ok(Schema::Boolean(aggregators))
     }
     fn visit_i128<E: Error>(self, value: i128) -> Result<Self::Value, E> {
-        let mut aggregators = self.context.for_integer();
+        let mut aggregators = C::Integer::default();
         aggregators.aggregate(&value);
 
         Ok(Schema::Integer(aggregators))
     }
     fn visit_f64<E: Error>(self, value: f64) -> Result<Self::Value, E> {
-        let mut aggregators = self.context.for_float();
+        let mut aggregators = C::Float::default();
         aggregators.aggregate(&value);
 
         Ok(Schema::Float(aggregators))
     }
     fn visit_borrowed_str<E: Error>(self, value: &'de str) -> Result<Self::Value, E> {
-        let mut aggregators = self.context.for_string();
+        let mut aggregators = C::String::default();
         aggregators.aggregate(value);
 
         Ok(Schema::String(aggregators))
     }
     fn visit_borrowed_bytes<E: Error>(self, value: &'de [u8]) -> Result<Self::Value, E> {
-        let mut aggregators = self.context.for_bytes();
+        let mut aggregators = C::Bytes::default();
         aggregators.aggregate(value);
 
         Ok(Schema::Bytes(aggregators))
@@ -104,7 +112,7 @@ impl<'de> Visitor<'de> for SchemaVisitor<'_> {
     /// This method should only be called if the Null value is at the root of the document,
     /// because otherwise null values are handled at the field level.
     fn visit_none<E: Error>(self) -> Result<Self::Value, E> {
-        let mut aggregators = self.context.for_null();
+        let mut aggregators = C::Null::default();
         aggregators.aggregate(&());
 
         Ok(Schema::Null(aggregators))
@@ -133,18 +141,15 @@ impl<'de> Visitor<'de> for SchemaVisitor<'_> {
     {
         let mut count = 0;
 
-        let initial_seed = FieldVisitor {
-            context: self.context,
-        };
+        let initial_seed = InferredField::new();
 
         let mut field = match seq.next_element_seed(initial_seed)? {
             Some(mut field) => {
                 count += 1;
 
-                while let Some(()) = seq.next_element_seed(FieldVisitorSeed {
-                    context: self.context,
-                    field: &mut field,
-                })? {
+                while let Some(()) =
+                    seq.next_element_seed(InferredFieldSeed { field: &mut field })?
+                {
                     count += 1;
                 }
 
@@ -158,7 +163,7 @@ impl<'de> Visitor<'de> for SchemaVisitor<'_> {
             field.status.may_be_missing = true;
         }
 
-        let mut aggregators = self.context.for_sequence();
+        let mut aggregators = C::Sequence::default();
         aggregators.aggregate(&count);
 
         Ok(Schema::Sequence {
@@ -172,22 +177,17 @@ impl<'de> Visitor<'de> for SchemaVisitor<'_> {
         A: serde::de::MapAccess<'de>,
     {
         let mut keys = Vec::new();
-        let mut fields: OrderMap<String, Field> = OrderMap::new();
+        let mut fields: OrderMap<String, Field<C>> = OrderMap::new();
 
         while let Some(key) = map.next_key::<String>()? {
             match fields.get_mut(&key) {
                 Some(old_field) => {
-                    map.next_value_seed(FieldVisitorSeed {
-                        context: self.context,
-                        field: old_field,
-                    })?;
+                    map.next_value_seed(InferredFieldSeed { field: old_field })?;
                     old_field.status.allow_duplicates(true);
                 }
 
                 None => {
-                    let new_field = map.next_value_seed(FieldVisitor {
-                        context: self.context,
-                    })?;
+                    let new_field = map.next_value_seed(InferredField::new())?;
                     fields.insert(key.clone(), new_field);
                 }
             }
@@ -195,7 +195,7 @@ impl<'de> Visitor<'de> for SchemaVisitor<'_> {
             keys.push(key.clone());
         }
 
-        let mut aggregators = self.context.for_map_struct();
+        let mut aggregators = C::Struct::default();
         aggregators.aggregate(&keys);
 
         Ok(Schema::Struct {

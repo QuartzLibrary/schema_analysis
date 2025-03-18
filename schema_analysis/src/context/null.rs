@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::{traits::Coalesce, Aggregate};
+use crate::{traits::Aggregate, traits::Coalesce};
 
 use super::Counter;
 
@@ -16,10 +16,7 @@ impl Aggregate<()> for NullContext {
     }
 }
 impl Coalesce for NullContext {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
     }
 }

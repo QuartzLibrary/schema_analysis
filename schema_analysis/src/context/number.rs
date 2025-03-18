@@ -1,8 +1,10 @@
 #![allow(missing_docs)]
 
+use std::fmt::Debug;
+
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
-use crate::{traits::Coalesce, Aggregate, Aggregators};
+use crate::{traits::Aggregate, traits::Coalesce};
 
 use super::{
     shared::{MinMax, Sampler},
@@ -20,15 +22,12 @@ pub struct NumberContext<T: Orderly> {
     pub samples: Sampler<T::Ordered>,
     #[serde(flatten)]
     pub min_max: MinMax<T>,
-    #[serde(skip)]
-    pub other_aggregators: Aggregators<T>,
 }
 impl Aggregate<i128> for NumberContext<i128> {
     fn aggregate(&mut self, value: &i128) {
         self.count.aggregate(value);
         self.samples.aggregate(value);
         self.min_max.aggregate(value);
-        self.other_aggregators.aggregate(value);
     }
 }
 impl Aggregate<f64> for NumberContext<f64> {
@@ -38,23 +37,16 @@ impl Aggregate<f64> for NumberContext<f64> {
         if !value.is_nan() {
             self.min_max.aggregate(value);
         }
-        self.other_aggregators.aggregate(value);
     }
 }
-impl<T: Clone + PartialOrd + Orderly + 'static> Coalesce for NumberContext<T> {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+impl<T: Clone + PartialOrd + Orderly> Coalesce for NumberContext<T> {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
         self.samples.coalesce(other.samples);
         self.min_max.coalesce(other.min_max);
-        self.other_aggregators.coalesce(other.other_aggregators);
     }
 }
 impl<T: PartialEq + Orderly> PartialEq for NumberContext<T> {
-    /// NOTE: [NumberContext]'s [PartialEq] implementation ignores the `other_aggregators`
-    /// provided by the user of the library.
     fn eq(&self, other: &Self) -> bool {
         self.count == other.count && self.min_max == other.min_max
     }

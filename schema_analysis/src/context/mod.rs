@@ -1,6 +1,7 @@
-//! The [Context] provides a way to store information about the types found during analysis.
+//! A [Context] provides a way to store information about the types found during analysis.
+//!
+//! [DefaultContext] is the one used by default. `()` can be used to skip any additional analysis.
 
-mod aggregators;
 mod boolean;
 mod bytes;
 mod map_struct;
@@ -10,7 +11,6 @@ mod sequence;
 mod shared;
 mod string;
 
-pub use aggregators::Aggregators;
 pub use boolean::BooleanContext;
 pub use bytes::BytesContext;
 pub use map_struct::MapStructContext;
@@ -21,64 +21,60 @@ pub use shared::{Counter, CountingSet};
 pub use string::{SemanticExtractor, StringContext, SuspiciousStrings};
 
 use serde::{Deserialize, Serialize};
+use std::fmt::Debug;
 
-/// The Context holds a fresh copy of the context that each [Schema](crate::Schema)
-/// copies when it's first created and then fills as the analysis proceeds.
+use crate::{traits::Aggregate, Coalesce};
+
+/// Interface describing the custom analysis that will be run on each type
+/// alongside the schema shape.
 ///
-/// All default context should respect a constant memory bound on each node.
-/// This will allow analysis of arbitraryly large amounts of data as long as the schema does not
-/// grow out of proportion.
-#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
-pub struct Context {
-    /// The context for null values.
-    pub null: NullContext,
-    /// The context for boolean values.
-    pub boolean: BooleanContext,
-    /// The context for integer values.
-    pub integer: NumberContext<i128>,
-    /// The context for floating point values.
-    pub float: NumberContext<f64>,
-    /// The context for string values.
-    pub string: StringContext,
-    /// The context for bytes values.
-    pub bytes: BytesContext,
-    /// The context for sequence values.
-    pub sequence: SequenceContext,
-    /// The context for struct values.
-    pub map_struct: MapStructContext,
+/// For no analysis, you can use `()`. [DefaultContext] is the one used by default.
+pub trait Context {
+    /// The state for the analysis run on null values.
+    type Null: Aggregate<()> + Coalesce + Default;
+    /// The state for the analysis run on boolean values.
+    type Boolean: Aggregate<bool> + Coalesce + Default;
+    /// The state for the analysis run on integer values.
+    type Integer: Aggregate<i128> + Coalesce + Default;
+    /// The state for the analysis run on floating point values.
+    type Float: Aggregate<f64> + Coalesce + Default;
+    /// The state for the analysis run on strings.
+    type String: Aggregate<str> + Coalesce + Default;
+    /// The state for the analysis run on binary data.
+    type Bytes: Aggregate<[u8]> + Coalesce + Default;
+    /// The state for the analysis run on sequence values.
+    type Sequence: Aggregate<usize> + Coalesce + Default;
+    /// The state for the analysis run on struct values.
+    type Struct: Aggregate<[String]> + Coalesce + Default;
 }
 
-impl Context {
-    /// Returns a fresh context for null schemas.
-    pub fn for_null(&self) -> NullContext {
-        self.null.clone()
-    }
-    /// Returns a fresh context for boolean schemas.
-    pub fn for_boolean(&self) -> BooleanContext {
-        self.boolean.clone()
-    }
-    /// Returns a fresh context for integer schemas.
-    pub fn for_integer(&self) -> NumberContext<i128> {
-        self.integer.clone()
-    }
-    /// Returns a fresh context for floating point schemas.
-    pub fn for_float(&self) -> NumberContext<f64> {
-        self.float.clone()
-    }
-    /// Returns a fresh context for string schemas.
-    pub fn for_string(&self) -> StringContext {
-        self.string.clone()
-    }
-    /// Returns a fresh context for bytes schemas.
-    pub fn for_bytes(&self) -> BytesContext {
-        self.bytes.clone()
-    }
-    /// Returns a fresh context for sequence schemas.
-    pub fn for_sequence(&self) -> SequenceContext {
-        self.sequence.clone()
-    }
-    /// Returns a fresh context for struct schemas.
-    pub fn for_map_struct(&self) -> MapStructContext {
-        self.map_struct.clone()
-    }
+impl Context for () {
+    type Null = ();
+    type Boolean = ();
+    type Integer = ();
+    type Float = ();
+    type String = ();
+    type Bytes = ();
+    type Sequence = ();
+    type Struct = ();
+}
+
+/// This is the default [Context].
+/// It performs some basic analysis like counting and sampling.
+///
+/// This context has a memory bound for each node.
+/// This allows the analysis of arbitraryly large amounts of data as long
+/// as the schema itself does not grow out of proportion.
+/// (Do note that sampling might still be very large if individual leaves are large.)
+#[derive(Debug, Clone, Copy, PartialEq, Default, Serialize, Deserialize)]
+pub struct DefaultContext;
+impl Context for DefaultContext {
+    type Null = NullContext;
+    type Boolean = BooleanContext;
+    type Integer = NumberContext<i128>;
+    type Float = NumberContext<f64>;
+    type String = StringContext;
+    type Bytes = BytesContext;
+    type Sequence = SequenceContext;
+    type Struct = MapStructContext;
 }

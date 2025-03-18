@@ -21,9 +21,9 @@ let output: String = json_typegen_shared::codegen_from_shape("Root", &Shape::Boo
 
 pub use json_typegen_shared::{codegen_from_shape, ErrorKind, JTError, Options, OutputMode, Shape};
 
-use crate::{Field, Schema};
+use crate::{context::Context, Field, Schema};
 
-impl Schema {
+impl<C: Context> Schema<C> {
     /// Convert a [Schema] to a json_typegen [Shape].
     pub fn to_json_typegen_shape(&self) -> Shape {
         schema_to_shape(self)
@@ -47,13 +47,13 @@ impl Schema {
     }
 }
 
-impl From<Schema> for Shape {
-    fn from(schema: Schema) -> Self {
+impl<C: Context> From<Schema<C>> for Shape {
+    fn from(schema: Schema<C>) -> Self {
         schema_to_shape(&schema)
     }
 }
 
-fn schema_to_shape(schema: &Schema) -> Shape {
+fn schema_to_shape<C: Context>(schema: &Schema<C>) -> Shape {
     match schema {
         Schema::Null(_) => Shape::Null,
         Schema::Boolean(_) => Shape::Bool,
@@ -81,7 +81,7 @@ fn schema_to_shape(schema: &Schema) -> Shape {
 /// if they are missing, while sequences whose fields may be missing are merely empty.
 ///
 /// In both cases the field is optional if it may have a value of null/none.
-fn convert_field(field: &Field, is_option: bool) -> Shape {
+fn convert_field<C: Context>(field: &Field<C>, is_option: bool) -> Shape {
     // From Shape docs:
     // `Bottom` represents the absence of any inference information
     // `Optional(T)` represents that a value is nullable, or not always present

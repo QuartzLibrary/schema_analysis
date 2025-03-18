@@ -72,7 +72,7 @@ It's everything you love about Serde, but with runtime state.
 
 ```
 # use serde::de::DeserializeSeed;
-# use schema_analysis::{Schema, InferredSchema, context::NumberContext, Aggregate};
+# use schema_analysis::{Schema, InferredSchema, context::NumberContext, traits::Aggregate};
 # fn main() -> Result<(), Box<dyn std::error::Error>> {
 let a_lot_of_json_files: &[&str] = &[ "1", "2", "1000" ];
 let mut iter = a_lot_of_json_files.iter();
@@ -142,17 +142,14 @@ from that info.
 [~13.3GB]: https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/
 */
 
+mod analysis;
 mod schema;
 
-use traits::CoalescingAggregator;
-
-pub mod analysis;
 pub mod context;
 pub mod helpers;
 pub mod targets;
 pub mod traits;
 
-pub use analysis::{InferredSchema, InferredSchemaWithContext};
-pub use context::{Aggregators, Context};
+pub use analysis::InferredSchema;
 pub use schema::{Field, FieldStatus, Schema};
-pub use traits::{Aggregate, Coalesce, StructuralEq};
+pub use traits::{Coalesce, StructuralEq};

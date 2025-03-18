@@ -2,15 +2,13 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::{traits::Coalesce, Aggregate};
+use crate::{traits::Aggregate, traits::Coalesce};
 
-use super::{Aggregators, Counter};
+use super::Counter;
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct MapStructContext {
     pub count: Counter,
-    #[serde(skip)]
-    pub other_aggregators: Aggregators<[String]>,
 }
 impl Aggregate<[String]> for MapStructContext {
     fn aggregate(&mut self, value: &[String]) {
@@ -18,16 +16,11 @@ impl Aggregate<[String]> for MapStructContext {
     }
 }
 impl Coalesce for MapStructContext {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
     }
 }
 impl PartialEq for MapStructContext {
-    /// NOTE: [MapStructContext]'s [PartialEq] implementation ignores the `other_aggregators`
-    /// provided by the user of the library.
     fn eq(&self, other: &Self) -> bool {
         self.count == other.count
     }
