@@ -97,8 +97,8 @@ impl FormatTests for JsonTypegen {
         let mut fields = LinkedHashMap::new();
 
         fields.insert("hello".to_string(), Shape::Integer);
-        fields.insert("mixed".to_string(), Shape::Any);
         fields.insert("world".to_string(), Shape::StringT);
+        fields.insert("mixed".to_string(), Shape::Any);
 
         Shape::VecT {
             elem_type: Box::new(Shape::Struct { fields }),
@@ -109,15 +109,15 @@ impl FormatTests for JsonTypegen {
         let mut fields = LinkedHashMap::new();
 
         fields.insert("hello".to_string(), Shape::Integer);
-        fields.insert("null_or_missing".to_string(), Shape::Null);
-        fields.insert(
-            "possibly_missing".to_string(),
-            Shape::Optional(Box::new(Shape::Floating)),
-        );
         fields.insert(
             "possibly_null".to_string(),
             Shape::Optional(Box::new(Shape::StringT)),
         );
+        fields.insert(
+            "possibly_missing".to_string(),
+            Shape::Optional(Box::new(Shape::Floating)),
+        );
+        fields.insert("null_or_missing".to_string(), Shape::Null);
 
         Shape::VecT {
             elem_type: Box::new(Shape::Struct { fields }),
@@ -128,13 +128,13 @@ impl FormatTests for JsonTypegen {
         let mut fields = LinkedHashMap::new();
 
         fields.insert("hello".to_string(), Shape::Integer);
+        fields.insert("world".to_string(), Shape::StringT);
         fields.insert(
             "sequence".to_string(),
             Shape::VecT {
                 elem_type: Box::new(Shape::StringT),
             },
         );
-        fields.insert("world".to_string(), Shape::StringT);
 
         Shape::Struct { fields }
     }
@@ -143,6 +143,7 @@ impl FormatTests for JsonTypegen {
         let mut fields = LinkedHashMap::new();
 
         fields.insert("hello".to_string(), Shape::Integer);
+        fields.insert("world".to_string(), Shape::StringT);
         fields.insert("optional".to_string(), Shape::Null);
         fields.insert(
             "sequence".to_string(),
@@ -150,7 +151,6 @@ impl FormatTests for JsonTypegen {
                 elem_type: Box::new(Shape::Optional(Box::new(Shape::StringT))),
             },
         );
-        fields.insert("world".to_string(), Shape::StringT);
 
         Shape::Struct { fields }
     }

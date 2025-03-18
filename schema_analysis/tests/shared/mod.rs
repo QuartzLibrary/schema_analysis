@@ -185,10 +185,7 @@ macro_rules! test_format {
 }
 
 mod targets {
-    use std::collections::BTreeMap;
-
-    use maplit::btreemap;
-
+    use ordermap::OrderMap;
     use schema_analysis::{Field, FieldStatus, Schema};
 
     pub fn null() -> Schema {
@@ -272,7 +269,7 @@ mod targets {
     }
 
     pub fn empty_map_struct() -> Schema {
-        let field_schemas: BTreeMap<String, Field> = BTreeMap::new();
+        let field_schemas: OrderMap<String, Field> = OrderMap::new();
         Schema::Struct {
             fields: field_schemas,
             context: Default::default(),
@@ -285,9 +282,7 @@ mod targets {
                 schema: Some(Schema::Integer(Default::default())),
             };
             hello_field.status.may_be_normal = true;
-            btreemap! {
-                "hello".into() => hello_field
-            }
+            [("hello".into(), hello_field)].into()
         };
         Schema::Struct {
             fields,
@@ -306,10 +301,7 @@ mod targets {
                 schema: Some(Schema::String(Default::default())),
             };
             world_field.status.may_be_normal = true;
-            btreemap! {
-                "hello".into() => hello_field,
-                "world".into() => world_field,
-            }
+            [("hello".into(), hello_field), ("world".into(), world_field)].into()
         };
         Schema::Struct {
             fields,
@@ -332,11 +324,12 @@ mod targets {
             });
             mixed_field.status.may_be_normal = true;
 
-            btreemap! {
-                "hello".into() => hello_field,
-                "world".into() => world_field,
-                "mixed".into() => mixed_field,
-            }
+            [
+                ("hello".into(), hello_field),
+                ("world".into(), world_field),
+                ("mixed".into(), mixed_field),
+            ]
+            .into()
         };
 
         let mut element_field = Field::with_schema(Schema::Struct {
@@ -367,12 +360,13 @@ mod targets {
             null_or_missing_field.status.may_be_null = true;
             null_or_missing_field.status.may_be_missing = true;
 
-            btreemap! {
-                "hello".into() => hello_field,
-                "possibly_null".into() => possibly_null_field,
-                "possibly_missing".into() => possibly_missing_field,
-                "null_or_missing".into() => null_or_missing_field,
-            }
+            [
+                ("hello".into(), hello_field),
+                ("possibly_null".into(), possibly_null_field),
+                ("possibly_missing".into(), possibly_missing_field),
+                ("null_or_missing".into(), null_or_missing_field),
+            ]
+            .into()
         };
 
         let mut element_field = Field::with_schema(Schema::Struct {
@@ -406,11 +400,12 @@ mod targets {
             };
             sequence_field.status.may_be_normal = true;
 
-            btreemap! {
-                "hello".into() => hello_field,
-                "world".into() => world_field,
-                "sequence".into() => sequence_field,
-            }
+            [
+                ("hello".into(), hello_field),
+                ("world".into(), world_field),
+                ("sequence".into(), sequence_field),
+            ]
+            .into()
         };
         Schema::Struct {
             fields,
@@ -441,12 +436,13 @@ mod targets {
             };
             sequence_field.status.may_be_normal = true;
 
-            btreemap! {
-                "hello".into() => hello_field,
-                "world".into() => world_field,
-                "optional".into() => optional_field,
-                "sequence".into() => sequence_field,
-            }
+            [
+                ("hello".into(), hello_field),
+                ("world".into(), world_field),
+                ("optional".into(), optional_field),
+                ("sequence".into(), sequence_field),
+            ]
+            .into()
         };
         Schema::Struct {
             fields,

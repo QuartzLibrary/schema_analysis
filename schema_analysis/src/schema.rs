@@ -1,5 +1,4 @@
-use std::collections::BTreeMap;
-
+use ordermap::OrderMap;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -47,7 +46,7 @@ pub enum Schema {
     Struct {
         /// Each [String] key gets assigned a [Field].
         /// Currently we are using a [BTreeMap], but that might change in the future.
-        fields: BTreeMap<String, Field>,
+        fields: OrderMap<String, Field>,
         /// The context aggregates information about the struct.
         /// It is passed a vector of the key names.
         context: MapStructContext,
@@ -101,6 +100,59 @@ pub struct FieldStatus {
 //
 // Schema implementations
 //
+impl Schema {
+    /// Sorts the fields of the schema by their name (using [String::cmp]).
+    pub fn sort_fields(&mut self) {
+        match self {
+            Schema::Null(_)
+            | Schema::Boolean(_)
+            | Schema::Integer(_)
+            | Schema::Float(_)
+            | Schema::String(_)
+            | Schema::Bytes(_) => {}
+            Schema::Sequence { field, context: _ } => {
+                field.sort_fields();
+            }
+            Schema::Struct { fields, context: _ } => {
+                fields.sort_keys();
+                for field in fields.values_mut() {
+                    field.sort_fields();
+                }
+            }
+            Schema::Union { variants } => {
+                variants.sort_by(schema_cmp);
+                for variant in variants {
+                    variant.sort_fields();
+                }
+            }
+        }
+    }
+    /// Sorts/normalises the order of [Schema::Union] variants.
+    pub fn sort_variants(&mut self) {
+        match self {
+            Schema::Null(_)
+            | Schema::Boolean(_)
+            | Schema::Integer(_)
+            | Schema::Float(_)
+            | Schema::String(_)
+            | Schema::Bytes(_) => {}
+            Schema::Sequence { field, context: _ } => {
+                field.sort_variants();
+            }
+            Schema::Struct { fields, context: _ } => {
+                for field in fields.values_mut() {
+                    field.sort_variants();
+                }
+            }
+            Schema::Union { variants } => {
+                variants.sort_by(schema_cmp);
+                for variant in variants {
+                    variant.sort_variants();
+                }
+            }
+        }
+    }
+}
 impl StructuralEq for Schema {
     fn structural_eq(&self, other: &Self) -> bool {
         use Schema::*;
@@ -123,7 +175,15 @@ impl StructuralEq for Schema {
                 Struct {
                     fields: fields_2, ..
                 },
-            ) => fields_1.structural_eq(fields_2),
+            ) => {
+                fields_1.len() == fields_2.len()
+                    && fields_1.iter().all(|(sk, sv)| {
+                        let Some(ov) = fields_2.get(sk) else {
+                            return false;
+                        };
+                        sv.structural_eq(ov)
+                    })
+            }
 
             (Union { variants: s }, Union { variants: o }) => {
                 let mut s = s.clone();
@@ -378,6 +438,17 @@ impl Field {
             schema: Some(schema),
         }
     }
+
+    fn sort_fields(&mut self) {
+        if let Some(schema) = &mut self.schema {
+            schema.sort_fields();
+        }
+    }
+    fn sort_variants(&mut self) {
+        if let Some(schema) = &mut self.schema {
+            schema.sort_variants();
+        }
+    }
 }
 impl Coalesce for Field {
     fn coalesce(&mut self, other: Self)
@@ -437,63 +508,20 @@ impl Coalesce for FieldStatus {
 /// Since a [Schema::Union] should never hold two schemas of the same type, it is enough to
 /// just compare the top level without recursion.
 fn schema_cmp(first: &Schema, second: &Schema) -> std::cmp::Ordering {
-    use std::cmp::Ordering::*;
-    use Schema::*;
-    match first {
-        Null(_) => match second {
-            Null(_) => Equal,
-            _ => Less,
-        },
-        Boolean(_) => match second {
-            Null(_) | Boolean(_) => Equal,
-            _ => Less,
-        },
-        Integer(_) => match second {
-            Null(_) | Boolean(_) => Greater,
-            Integer(_) => Equal,
-            _ => Less,
-        },
-        Float(_) => match second {
-            Null(_) | Boolean(_) | Integer(_) => Greater,
-            Float(_) => Equal,
-            _ => Less,
-        },
-        String(_) => match second {
-            Null(_) | Boolean(_) | Integer(_) | Float(_) => Greater,
-            String(_) => Equal,
-            _ => Less,
-        },
-        Bytes(_) => match second {
-            Null(_) | Boolean(_) | Integer(_) | Float(_) | String(_) => Greater,
-            Bytes(_) => Equal,
-            _ => Less,
-        },
-        Sequence { .. } => match second {
-            Null(_) | Boolean(_) | Integer(_) | Float(_) | String(_) | Bytes(_) => Greater,
-            Sequence { .. } => Equal,
-            _ => Less,
-        },
-        Struct { .. } => match second {
-            Null(_)
-            | Boolean(_)
-            | Integer(_)
-            | Float(_)
-            | String(_)
-            | Bytes(_)
-            | Sequence { .. } => Greater,
-            Struct { .. } => Equal,
-            _ => Less,
-        },
-        Union { .. } => match second {
-            Null(_)
-            | Boolean(_)
-            | Integer(_)
-            | Float(_)
-            | String(_)
-            | Bytes(_)
-            | Sequence { .. }
-            | Struct { .. } => Greater,
-            Union { .. } => Equal,
-        },
+    fn ordering(v: &Schema) -> u8 {
+        use Schema::*;
+
+        match v {
+            Null(_) => 0,
+            Boolean(_) => 1,
+            Integer(_) => 2,
+            Float(_) => 3,
+            String(_) => 4,
+            Bytes(_) => 5,
+            Sequence { .. } => 6,
+            Struct { .. } => 7,
+            Union { .. } => 8,
+        }
     }
+    Ord::cmp(&ordering(first), &ordering(second))
 }

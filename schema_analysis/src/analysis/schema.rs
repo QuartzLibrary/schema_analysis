@@ -1,5 +1,4 @@
-use std::collections::BTreeMap;
-
+use ordermap::OrderMap;
 use serde::de::{Error, Visitor};
 
 use crate::{Aggregate, Field, Schema};
@@ -173,7 +172,7 @@ impl<'de> Visitor<'de> for SchemaVisitor<'_> {
         A: serde::de::MapAccess<'de>,
     {
         let mut keys = Vec::new();
-        let mut fields: BTreeMap<String, Field> = BTreeMap::new();
+        let mut fields: OrderMap<String, Field> = OrderMap::new();
 
         while let Some(key) = map.next_key::<String>()? {
             match fields.get_mut(&key) {
