@@ -13,7 +13,7 @@ pub struct SchemaVisitor<'s> {
     pub context: &'s Context,
 }
 
-impl<'de, 's> Visitor<'de> for SchemaVisitor<'s> {
+impl<'de> Visitor<'de> for SchemaVisitor<'_> {
     type Value = Schema;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {

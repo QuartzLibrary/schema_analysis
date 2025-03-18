@@ -26,10 +26,11 @@ pub mod xml {
         use Schema::*;
         match schema {
             Null(_) | Boolean(_) | Integer(_) | Float(_) | String(_) | Bytes(_) => {}
-            Sequence { field, .. } => match &mut field.schema {
-                Some(schema) => clean_solitary_nested_values(schema),
-                None => {}
-            },
+            Sequence { field, .. } => {
+                if let Some(schema) = &mut field.schema {
+                    clean_solitary_nested_values(schema)
+                }
+            }
             Struct { fields, .. } => {
                 // If the only field is $value, then we 'bring it up'.
                 if fields.len() == 1 && fields.contains_key("$value") {
@@ -42,9 +43,8 @@ pub mod xml {
                     }
                 } else {
                     for (_, field) in fields.iter_mut() {
-                        match &mut field.schema {
-                            Some(schema) => clean_solitary_nested_values(schema),
-                            None => {}
+                        if let Some(schema) = &mut field.schema {
+                            clean_solitary_nested_values(schema)
                         }
                     }
                 }
@@ -66,9 +66,8 @@ pub mod xml {
         clean_field_recursively(schema, _inner_field_cleaning);
 
         fn _inner_field_cleaning(field: &mut Field) {
-            match &mut field.schema {
-                Some(schema) => clean_field_recursively(schema, _inner_field_cleaning),
-                None => {}
+            if let Some(schema) = &mut field.schema {
+                clean_field_recursively(schema, _inner_field_cleaning)
             }
             // In xml, sequences are simply registered as a field appearing more than once,
             // the parser records this but now we need to move the duplicate field into its own sequence.
