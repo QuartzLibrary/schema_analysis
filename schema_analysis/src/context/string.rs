@@ -32,10 +32,7 @@ impl Aggregate<str> for StringContext {
     }
 }
 impl Coalesce for StringContext {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
         self.samples.coalesce(other.samples);
         self.suspicious_strings.coalesce(other.suspicious_strings);
@@ -78,10 +75,7 @@ impl Aggregate<str> for SuspiciousStrings {
     }
 }
 impl Coalesce for SuspiciousStrings {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.0.coalesce(other.0);
     }
 }
@@ -128,10 +122,7 @@ impl Aggregate<str> for SemanticExtractor {
     }
 }
 impl Coalesce for SemanticExtractor {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.0.coalesce(other.0);
     }
 }

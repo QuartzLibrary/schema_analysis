@@ -18,10 +18,7 @@ impl Aggregate<[u8]> for BytesContext {
     }
 }
 impl Coalesce for BytesContext {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
         self.min_max_length.coalesce(other.min_max_length);
     }

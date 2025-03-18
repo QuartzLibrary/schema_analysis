@@ -423,10 +423,7 @@ impl<C: Context> Coalesce for Field<C>
 where
     Schema<C>: Coalesce,
 {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.status.coalesce(other.status);
         self.schema = match (self.schema.take(), other.schema) {
             (Some(mut s), Some(o)) => {
@@ -463,10 +460,7 @@ impl FieldStatus {
     }
 }
 impl Coalesce for FieldStatus {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.may_be_null |= other.may_be_null;
         self.may_be_normal |= other.may_be_normal;
         self.may_be_missing |= other.may_be_missing;

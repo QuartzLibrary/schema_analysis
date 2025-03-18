@@ -20,10 +20,7 @@ impl<T: ?Sized> Aggregate<T> for Counter {
     }
 }
 impl Coalesce for Counter {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.0 += other.0;
     }
 }
@@ -67,10 +64,7 @@ impl<T: Clone + Ord> CountingSet<T> {
     }
 }
 impl<T: Ord> Coalesce for CountingSet<T> {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         for (k, v) in other.0 {
             let s: &mut usize = self.0.entry(k).or_insert(0);
             *s += v;
@@ -111,10 +105,7 @@ impl<T: Clone + PartialOrd> Aggregate<T> for MinMax<T> {
     }
 }
 impl<T: Clone + PartialOrd> Coalesce for MinMax<T> {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         if let Some(other_min) = other.min {
             self.aggregate(&other_min);
         }
@@ -150,10 +141,7 @@ where
     }
 }
 impl<T: Ord> Coalesce for Sampler<T> {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.values.extend(other.values);
         if self.values.len() > MAX_SAMPLE_COUNT {
             self.is_exaustive = false;

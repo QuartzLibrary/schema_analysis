@@ -40,10 +40,7 @@ impl Aggregate<f64> for NumberContext<f64> {
     }
 }
 impl<T: Clone + PartialOrd + Orderly> Coalesce for NumberContext<T> {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
         self.samples.coalesce(other.samples);
         self.min_max.coalesce(other.min_max);

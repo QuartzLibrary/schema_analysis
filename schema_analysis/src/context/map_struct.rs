@@ -16,10 +16,7 @@ impl Aggregate<[String]> for MapStructContext {
     }
 }
 impl Coalesce for MapStructContext {
-    fn coalesce(&mut self, other: Self)
-    where
-        Self: Sized,
-    {
+    fn coalesce(&mut self, other: Self) {
         self.count.coalesce(other.count);
     }
 }
