@@ -34,19 +34,15 @@ impl<C: Context> Schema<C> {
 }
 
 /// The currently supported json schema versions.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub enum JsonSchemaVersion {
     /// `schemars::r#gen::SchemaSettings::draft07`
     Draft07,
     /// `schemars::r#gen::SchemaSettings::draft2019_09`
+    #[default]
     Draft2019_09,
     /// `schemars::r#gen::SchemaSettings::openapi3`
     OpenApi3,
-}
-impl Default for JsonSchemaVersion {
-    fn default() -> Self {
-        Self::Draft2019_09
-    }
 }
 impl JsonSchemaVersion {
     /// Convert the version to full settings.
