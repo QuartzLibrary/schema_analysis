@@ -1,11 +1,11 @@
 use serde::de::{Error, Visitor};
 
-use crate::{traits::Aggregate, traits::Coalesce, Schema};
+use crate::{Schema, traits::Aggregate, traits::Coalesce};
 
 use super::{
+    Context,
     field::{InferredField, InferredFieldSeed},
     schema::SchemaVisitor,
-    Context,
 };
 
 pub(super) struct SchemaVisitorSeed<'s, C: Context> {
@@ -182,8 +182,8 @@ where
         match &mut self.schema {
             // The schema matches
             Schema::Sequence {
-                field: ref mut boxed_field,
-                context: ref mut aggregators,
+                field: boxed_field,
+                context: aggregators,
             } => {
                 let field = boxed_field.as_mut();
 

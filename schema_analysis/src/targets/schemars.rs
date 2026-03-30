@@ -1,24 +1,23 @@
 //! Integration with [schemars](https://github.com/GREsau/schemars)
 
-use std::error::Error;
-
 use schemars::schema as schemars_types;
 
-use crate::{context::Context, Schema};
+use crate::{Schema, context::Context};
 
 impl<C: Context> Schema<C> {
     /// Convert into a json_schema using the default settings.
-    pub fn to_json_schema_with_schemars(&self) -> Result<String, impl Error> {
-        self.to_json_schema_with_schemars_version(&Default::default())
+    pub fn to_json_schema_with_schemars(&self) -> serde_json::Result<String> {
+        let default = Default::default();
+        self.to_json_schema_with_schemars_version(&default)
     }
 
     /// Convert into a specific version of json_schema.
     pub fn to_json_schema_with_schemars_version(
         &self,
         version: &JsonSchemaVersion,
-    ) -> Result<String, impl Error> {
-        let settings: schemars::gen::SchemaSettings = version.to_schemars_settings();
-        let mut generator: schemars::gen::SchemaGenerator = settings.into();
+    ) -> serde_json::Result<String> {
+        let settings: schemars::r#gen::SchemaSettings = version.to_schemars_settings();
+        let mut generator: schemars::r#gen::SchemaGenerator = settings.into();
 
         let root = self.to_schemars_schema(&mut generator);
         serde_json::to_string_pretty(&root)
@@ -27,7 +26,7 @@ impl<C: Context> Schema<C> {
     /// Convert using a provided generator (which also holds the settings) to a json schema.
     pub fn to_schemars_schema(
         &self,
-        generator: &mut schemars::gen::SchemaGenerator,
+        generator: &mut schemars::r#gen::SchemaGenerator,
     ) -> schemars_types::RootSchema {
         let inner = helpers::inferred_to_schemars(generator, self);
         helpers::wrap_in_root(inner, generator.settings())
@@ -37,11 +36,11 @@ impl<C: Context> Schema<C> {
 /// The currently supported json schema versions.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsonSchemaVersion {
-    /// `schemars::gen::SchemaSettings::draft07`
+    /// `schemars::r#gen::SchemaSettings::draft07`
     Draft07,
-    /// `schemars::gen::SchemaSettings::draft2019_09`
+    /// `schemars::r#gen::SchemaSettings::draft2019_09`
     Draft2019_09,
-    /// `schemars::gen::SchemaSettings::openapi3`
+    /// `schemars::r#gen::SchemaSettings::openapi3`
     OpenApi3,
 }
 impl Default for JsonSchemaVersion {
@@ -51,8 +50,8 @@ impl Default for JsonSchemaVersion {
 }
 impl JsonSchemaVersion {
     /// Convert the version to full settings.
-    pub fn to_schemars_settings(&self) -> schemars::gen::SchemaSettings {
-        use schemars::gen::SchemaSettings;
+    pub fn to_schemars_settings(&self) -> schemars::r#gen::SchemaSettings {
+        use schemars::r#gen::SchemaSettings;
         match self {
             JsonSchemaVersion::Draft07 => SchemaSettings::draft07(),
             JsonSchemaVersion::Draft2019_09 => SchemaSettings::draft2019_09(),
@@ -67,12 +66,12 @@ mod helpers {
 
     use schemars::schema as schemars_types;
 
-    use crate::{context::Context, Field, Schema};
+    use crate::{Field, Schema, context::Context};
 
     /// Wraps a [Schema](schemars_types::Schema) in a [RootSchema](schemars_types::RootSchema).
     pub fn wrap_in_root(
         inner: schemars_types::Schema,
-        settings: &schemars::gen::SchemaSettings,
+        settings: &schemars::r#gen::SchemaSettings,
     ) -> schemars_types::RootSchema {
         schemars_types::RootSchema {
             meta_schema: settings.meta_schema.clone(),
@@ -83,7 +82,7 @@ mod helpers {
 
     /// Converts an inferred [Schema] to a schemars [Schema](schemars_types::Schema).
     pub fn inferred_to_schemars<C: Context>(
-        generator: &mut schemars::gen::SchemaGenerator,
+        generator: &mut schemars::r#gen::SchemaGenerator,
         inferred: &Schema<C>,
     ) -> schemars_types::Schema {
         // Note: we can use the generator even if we don't generate the final root schema
@@ -166,7 +165,7 @@ mod helpers {
 
     /// Converts a [Field] into a [Schema](schemars_types::Schema).
     fn internal_field_to_schemars_schema<C: Context>(
-        generator: &mut schemars::gen::SchemaGenerator,
+        generator: &mut schemars::r#gen::SchemaGenerator,
         field: &Field<C>,
     ) -> schemars_types::Schema {
         // Note: we can use the generator even if we don't generate the final root schema
