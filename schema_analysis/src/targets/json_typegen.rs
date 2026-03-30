@@ -19,9 +19,9 @@ let output: String = json_typegen_shared::codegen_from_shape("Root", &Shape::Boo
 ```
 */
 
-pub use json_typegen_shared::{codegen_from_shape, ErrorKind, JTError, Options, OutputMode, Shape};
+pub use json_typegen_shared::{ErrorKind, JTError, Options, OutputMode, Shape, codegen_from_shape};
 
-use crate::{context::Context, Field, Schema};
+use crate::{Field, Schema, context::Context};
 
 impl<C: Context> Schema<C> {
     /// Convert a [Schema] to a json_typegen [Shape].

@@ -4,7 +4,7 @@ use serde::de::{DeserializeSeed, Error, Visitor};
 
 use crate::Field;
 
-use super::{schema::SchemaVisitor, schema_seed::SchemaVisitorSeed, Context};
+use super::{Context, schema::SchemaVisitor, schema_seed::SchemaVisitorSeed};
 
 pub(super) struct InferredField<C> {
     _marker: PhantomData<C>,

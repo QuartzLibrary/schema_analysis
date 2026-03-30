@@ -1,9 +1,9 @@
 use std::mem;
 
-use ordermap::{map::Entry, OrderMap};
+use ordermap::{OrderMap, map::Entry};
 use serde::{Deserialize, Serialize};
 
-use crate::{context::Context, context::DefaultContext, Coalesce, StructuralEq};
+use crate::{Coalesce, StructuralEq, context::Context, context::DefaultContext};
 
 /// This enum is the core output of the analysis, it describes the structure of a document.
 ///

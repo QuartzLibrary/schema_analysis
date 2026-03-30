@@ -1,4 +1,4 @@
-use toml::{value::Table, Value};
+use toml::{Value, value::Table};
 
 use schema_analysis::InferredSchema;
 

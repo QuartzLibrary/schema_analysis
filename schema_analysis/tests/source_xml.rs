@@ -1,4 +1,4 @@
-use schema_analysis::{helpers, InferredSchema};
+use schema_analysis::{InferredSchema, helpers};
 
 mod shared;
 use shared::FormatTests;

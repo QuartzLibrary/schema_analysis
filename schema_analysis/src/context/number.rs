@@ -2,13 +2,13 @@
 
 use std::fmt::Debug;
 
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 
 use crate::{traits::Aggregate, traits::Coalesce};
 
 use super::{
-    shared::{MinMax, Sampler},
     Counter,
+    shared::{MinMax, Sampler},
 };
 
 /// The context for numeric values.

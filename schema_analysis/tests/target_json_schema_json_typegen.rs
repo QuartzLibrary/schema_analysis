@@ -1,7 +1,7 @@
 #![cfg(feature = "json_typegen")]
 
 use json_typegen_shared::OutputMode;
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 
 use schema_analysis::{InferredSchema, Schema};
 

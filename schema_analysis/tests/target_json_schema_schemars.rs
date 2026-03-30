@@ -1,6 +1,6 @@
 #![cfg(feature = "schemars_integration")]
 
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 
 use schema_analysis::{InferredSchema, Schema};
 
