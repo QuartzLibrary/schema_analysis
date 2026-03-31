@@ -1,12 +1,12 @@
 {
-  "type": "Struct",
+  "type": "struct",
   "fields": {
     "name": {
       "may_be_null": false,
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "String",
+      "type": "string",
       "count": 1,
       "samples": {
         "values": [
@@ -24,7 +24,7 @@
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "String",
+      "type": "string",
       "count": 1,
       "samples": {
         "values": [
@@ -45,7 +45,7 @@
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "String",
+      "type": "string",
       "count": 1,
       "samples": {
         "values": [

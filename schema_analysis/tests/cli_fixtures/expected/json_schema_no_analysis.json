@@ -1,39 +1,39 @@
 {
-  "type": "Struct",
+  "type": "struct",
   "fields": {
     "name": {
       "may_be_null": false,
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "String"
+      "type": "string"
     },
     "age": {
       "may_be_null": false,
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "Integer"
+      "type": "integer"
     },
     "active": {
       "may_be_null": false,
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "Boolean"
+      "type": "boolean"
     },
     "scores": {
       "may_be_null": false,
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "Sequence",
+      "type": "sequence",
       "field": {
         "may_be_null": false,
         "may_be_normal": true,
         "may_be_missing": false,
         "may_be_duplicate": false,
-        "type": "Integer"
+        "type": "integer"
       },
       "context": null
     }

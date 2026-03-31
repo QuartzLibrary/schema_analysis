@@ -1,12 +1,12 @@
 {
-  "type": "Struct",
+  "type": "struct",
   "fields": {
     "name": {
       "may_be_null": false,
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "String",
+      "type": "string",
       "count": 1,
       "samples": {
         "values": [
@@ -24,7 +24,7 @@
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "Integer",
+      "type": "integer",
       "count": 1,
       "samples": {
         "values": [
@@ -40,7 +40,7 @@
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "Boolean",
+      "type": "boolean",
       "count": 1,
       "trues": 1,
       "falses": 0
@@ -50,13 +50,13 @@
       "may_be_normal": true,
       "may_be_missing": false,
       "may_be_duplicate": false,
-      "type": "Sequence",
+      "type": "sequence",
       "field": {
         "may_be_null": false,
         "may_be_normal": true,
         "may_be_missing": false,
         "may_be_duplicate": false,
-        "type": "Integer",
+        "type": "integer",
         "count": 3,
         "samples": {
           "values": [
