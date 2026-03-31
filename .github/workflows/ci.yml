@@ -1,67 +1,95 @@
 name: Automated Testing
 
-on: push
+on:
+  push:
+    branches: ["*"]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  check:
-    name: Check
+  clippy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up cache
+        uses: actions/cache@v3
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
+          path: |
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.rustup/toolchains/
+            target/
+          key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install WASM toolchain
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Check project
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+      - name: Check project (WASM)
+        # Note lack of --all-targets here because tests and examples are not wasm compatible
+        run: cargo clippy --workspace --all-features --target wasm32-unknown-unknown -- -D warnings
+
+  clippy-stable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up cache
+        uses: actions/cache@v3
         with:
-          command: check
+          path: |
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.rustup/toolchains/
+            target/
+          key: ${{ runner.os }}-cargo-check-stable-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        run: rustup toolchain install stable
+
+      - name: Install WASM toolchain
+        run: rustup target add wasm32-unknown-unknown --toolchain stable
+
+      - name: Check on stable
+        run: cargo +stable clippy --all-targets -- -D warnings
+
+      - name: Check project (WASM) on stable
+        # Note lack of --all-targets here because tests and examples are not wasm compatible
+        run: cargo +stable clippy --target wasm32-unknown-unknown -- -D warnings
 
   test:
-    name: Test Suite
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  format:
-    name: Format
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Set up cache
+        uses: actions/cache@v3
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: rustfmt
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+          path: |
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.rustup/toolchains/
+            target/
+          key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.lock') }}
 
-  clippy:
-    name: Clippy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: clippy
-      - uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: -- -D warnings
+      - name: Test project
+        run: RUST_BACKTRACE=1 cargo test --workspace --all-targets --all-features
