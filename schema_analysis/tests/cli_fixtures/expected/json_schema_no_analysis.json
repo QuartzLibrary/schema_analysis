@@ -1,0 +1,42 @@
+{
+  "type": "Struct",
+  "fields": {
+    "name": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "String"
+    },
+    "age": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "Integer"
+    },
+    "active": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "Boolean"
+    },
+    "scores": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "Sequence",
+      "field": {
+        "may_be_null": false,
+        "may_be_normal": true,
+        "may_be_missing": false,
+        "may_be_duplicate": false,
+        "type": "Integer"
+      },
+      "context": null
+    }
+  },
+  "context": null
+}
