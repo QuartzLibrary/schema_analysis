@@ -30,7 +30,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: wheel-${{ matrix.target }}
-          path: dist/*.whl
+          path: packages/python/dist/*.whl
 
   sdist:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: sdist
-          path: dist/*.tar.gz
+          path: packages/python/dist/*.tar.gz
 
   publish:
     needs: [build, sdist]
