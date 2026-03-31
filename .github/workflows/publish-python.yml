@@ -25,7 +25,8 @@ jobs:
         with:
           command: build
           target: ${{ matrix.target }}
-          args: --release --manifest-path packages/python/pyproject.toml --out dist
+          args: --release --out dist
+          working-directory: packages/python
       - uses: actions/upload-artifact@v4
         with:
           name: wheel-${{ matrix.target }}
@@ -38,7 +39,8 @@ jobs:
       - uses: PyO3/maturin-action@v1
         with:
           command: sdist
-          args: --manifest-path packages/python/pyproject.toml --out dist
+          args: --out dist
+          working-directory: packages/python
       - uses: actions/upload-artifact@v4
         with:
           name: sdist
