@@ -1,2 +1,17 @@
 [toolchain]
 channel = "1.90"
+targets = ["wasm32-unknown-unknown"]
+components = [
+    "rustc",
+    "cargo",
+    "rustfmt",
+    "rust-std",
+    "rust-docs",
+    "rust-analyzer",
+    "clippy",
+    # "miri",
+    "rust-src",
+    # "rust-mingw",
+    # "llvm-tools",
+    # "rustc-dev",
+]
