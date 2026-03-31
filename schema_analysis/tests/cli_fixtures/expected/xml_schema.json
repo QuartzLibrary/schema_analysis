@@ -1,0 +1,68 @@
+{
+  "type": "struct",
+  "fields": {
+    "name": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "string",
+      "count": 1,
+      "samples": {
+        "values": [
+          "Alice"
+        ],
+        "is_exaustive": true
+      },
+      "min_max_length": {
+        "min": 5,
+        "max": 5
+      }
+    },
+    "age": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "string",
+      "count": 1,
+      "samples": {
+        "values": [
+          "30"
+        ],
+        "is_exaustive": true
+      },
+      "semantic_extractor": {
+        "Integer": 1
+      },
+      "min_max_length": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "active": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "string",
+      "count": 1,
+      "samples": {
+        "values": [
+          "true"
+        ],
+        "is_exaustive": true
+      },
+      "semantic_extractor": {
+        "Boolean": 1
+      },
+      "min_max_length": {
+        "min": 4,
+        "max": 4
+      }
+    }
+  },
+  "context": {
+    "count": 1
+  }
+}

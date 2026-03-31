@@ -10,7 +10,7 @@ use crate::{Coalesce, StructuralEq, context::Context, context::DefaultContext};
 /// Each variant also contains [context](crate::context) data that allows it to store information
 /// about the values it has encountered.
 #[derive(Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[serde(tag = "type", rename_all = "snake_case")]
 pub enum Schema<C: Context = DefaultContext> {
     /// The Null variant is a special one that is only ever found when a document has a single
     /// null value at the root of the document.

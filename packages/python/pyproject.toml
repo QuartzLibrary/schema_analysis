@@ -1,0 +1,25 @@
+[build-system]
+requires = ["maturin>=1.12,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "schema_analysis"
+version = "0.6.0"
+description = "Infer schemas from JSON, YAML, XML, TOML, CBOR, and BSON"
+license = { text = "MIT OR Apache-2.0" }
+requires-python = ">=3.8"
+authors = [{ name = "QuartzLibrary" }]
+keywords = ["schema", "analysis", "json", "yaml", "serde"]
+classifiers = [
+    "Programming Language :: Rust",
+]
+
+[project.urls]
+Homepage = "https://schema-analysis.com/"
+Repository = "https://github.com/QuartzLibrary/schema_analysis"
+
+[tool.maturin]
+bindings = "bin"
+manifest-path = "../../schema_analysis/Cargo.toml"
+features = ["cli"]
+strip = true

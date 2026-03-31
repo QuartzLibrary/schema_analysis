@@ -9,7 +9,7 @@ Ever wished you could figure out what was in that json file? Or maybe it was xml
 It was definitely toml.
 
 Alas, many great tools will only work with one of those formats, and the internet is not so
-nice a place as to finally understand that no, xml is not an acceptable document format.
+nice a place as to finally understand that no, xml is not an acceptable data format.
 
 Enter this neat little tool, a single interface to any self-describing format supported by
 our gymnast friend, serde.
@@ -24,7 +24,66 @@ our gymnast friend, serde.
   [json_typegen](https://github.com/evestera/json_typegen) to produce types and json schema if needed.
 - There's a demo website [here](https://schema-analysis.com/).
 
-### Usage
+### Installation
+
+```bash
+# Run without installing
+uvx schema_analysis data.json
+# or
+pipx run schema_analysis data.json
+
+# Install
+pip install schema_analysis
+# or
+uv tool install schema_analysis
+# or
+cargo install schema_analysis --features cli --locked
+```
+
+### CLI Usage
+
+The `schema_analysis` binary can infer schemas and generate types directly from the command line.
+
+```
+schema_analysis [OPTIONS] [FILES]...
+```
+
+It auto-detects the input format from file extensions (`.json`, `.yaml`/`.yml`, `.xml`, `.toml`, `.cbor`, `.bson`)
+and reads from stdin if no files are provided.
+
+**Options:**
+
+| Option | Description | Default |
+| --- | --- | --- |
+| `--format <FORMAT>` | Override input format (`json`, `yaml`, `xml`, `toml`, `cbor`, `bson`) | auto-detected |
+| `--output <OUTPUT>` | Output mode (`schema`, `rust`, `typescript`, `typescript-alias`, `kotlin`, `kotlin-kotlinx`, `json-schema`, `shape`) | `schema` |
+| `--name <NAME>` | Root type name for code generation | `Root` |
+| `--compact` | Compact JSON output (no pretty printing) | |
+| `--no-analysis` | Skip analysis info (counts, samples, min/max, etc.), outputting only the schema structure | |
+
+**Examples:**
+
+```bash
+# Infer a schema from a JSON file
+schema_analysis data.json
+
+# Generate Rust types
+schema_analysis data.json --output rust --name MyData
+
+# Generate TypeScript interfaces
+schema_analysis api.json --output typescript --name ApiResponse
+
+# Generate JSON Schema
+schema_analysis data.json --output json-schema
+
+# Merge multiple files into a single schema
+schema_analysis file1.json file2.json file3.json
+
+# Read from stdin
+cat data.json | schema_analysis --format json
+```
+
+### Library Usage
 
 ```rust
 let data: &[u8] = b"true";

@@ -1,0 +1,19 @@
+name: Publish Rust
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-python:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    defaults:
+      run:
+        working-directory: packages/python
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+      - run: uv build
+      - run: uv publish --trusted-publishing always

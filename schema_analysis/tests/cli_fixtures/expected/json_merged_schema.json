@@ -1,0 +1,104 @@
+{
+  "type": "struct",
+  "fields": {
+    "name": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "string",
+      "count": 2,
+      "samples": {
+        "values": [
+          "Alice",
+          "Bob"
+        ],
+        "is_exaustive": true
+      },
+      "min_max_length": {
+        "min": 3,
+        "max": 5
+      }
+    },
+    "age": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "integer",
+      "count": 2,
+      "samples": {
+        "values": [
+          25,
+          30
+        ],
+        "is_exaustive": true
+      },
+      "min": 25,
+      "max": 30
+    },
+    "active": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": false,
+      "may_be_duplicate": false,
+      "type": "boolean",
+      "count": 2,
+      "trues": 1,
+      "falses": 1
+    },
+    "scores": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": true,
+      "may_be_duplicate": false,
+      "type": "sequence",
+      "field": {
+        "may_be_null": false,
+        "may_be_normal": true,
+        "may_be_missing": false,
+        "may_be_duplicate": false,
+        "type": "integer",
+        "count": 3,
+        "samples": {
+          "values": [
+            87,
+            92,
+            95
+          ],
+          "is_exaustive": true
+        },
+        "min": 87,
+        "max": 95
+      },
+      "context": {
+        "count": 1,
+        "length": {
+          "min": 3,
+          "max": 3
+        }
+      }
+    },
+    "email": {
+      "may_be_null": false,
+      "may_be_normal": true,
+      "may_be_missing": true,
+      "may_be_duplicate": false,
+      "type": "string",
+      "count": 1,
+      "samples": {
+        "values": [
+          "bob@example.com"
+        ],
+        "is_exaustive": true
+      },
+      "min_max_length": {
+        "min": 15,
+        "max": 15
+      }
+    }
+  },
+  "context": {
+    "count": 2
+  }
+}
