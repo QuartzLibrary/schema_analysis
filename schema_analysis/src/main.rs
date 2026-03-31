@@ -1,8 +1,8 @@
-use std::io::{self, BufReader, Read};
+use std::io::{self, BufReader, IsTerminal, Read};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use clap::Parser;
+use clap::{CommandFactory, Parser};
 use schema_analysis::context::{Context, DefaultContext};
 use schema_analysis::helpers::xml::cleanup_xml_schema;
 use schema_analysis::targets::json_typegen::OutputMode;
@@ -66,6 +66,11 @@ enum Output {
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
+
+    if cli.files.is_empty() && io::stdin().is_terminal() {
+        Cli::command().print_help()?;
+        return Ok(());
+    }
     let format = resolve_format(&cli)?;
 
     let output = if cli.no_analysis {
