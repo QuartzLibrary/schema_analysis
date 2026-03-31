@@ -6,7 +6,7 @@ on:
 jobs:
   publish-rust:
     runs-on: ubuntu-latest
-    environment: crates-io
+    environment: crates.io
     permissions:
       id-token: write
     steps:
