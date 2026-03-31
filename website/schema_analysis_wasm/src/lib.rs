@@ -3,7 +3,7 @@ use std::{error::Error, fmt, sync::Mutex};
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-use schema_analysis::{targets::json_typegen::OutputMode, InferredSchema, Schema};
+use schema_analysis::{InferredSchema, Schema, targets::json_typegen::OutputMode};
 
 // For some reason Rust Analyzer (clippy) errors with missing-unsafe if log! (or similar)
 // is not in a nested function. Adding an unsafe block results in a rustc lint (unused_unsafe).
@@ -68,7 +68,7 @@ pub fn infer(data: Vec<u8>, file_type: DataType) -> Result<(), wasm_bindgen::JsV
 
 mod infer {
 
-    use serde::{de::DeserializeSeed, Deserializer};
+    use serde::{Deserializer, de::DeserializeSeed};
 
     use schema_analysis::InferredSchema;
 

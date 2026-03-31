@@ -2,7 +2,7 @@
 name = "schema_analysis_wasm"
 version = "0.2.2"
 authors = ["QuartzLibrary"]
-edition = "2018"
+edition = "2024"
 publish = false
 
 [lib]

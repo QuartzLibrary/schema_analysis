@@ -6,7 +6,7 @@ pub mod xml {
 
     use std::mem;
 
-    use crate::{context::Context, Field, Schema};
+    use crate::{Field, Schema, context::Context};
 
     /// A wrapper function that applies all XML cleaning transformations.
     ///

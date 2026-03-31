@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{traits::Aggregate, traits::Coalesce};
 
-use super::{shared::MinMax, Counter};
+use super::{Counter, shared::MinMax};
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct SequenceContext {

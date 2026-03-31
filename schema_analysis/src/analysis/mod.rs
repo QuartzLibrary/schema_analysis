@@ -170,14 +170,14 @@ let _: Visitor::Value = deserializer.deserialize_str(visitor);
 `[...]`
 
 */
-use serde::{de::DeserializeSeed, Deserialize};
+use serde::{Deserialize, de::DeserializeSeed};
 
 #[allow(unused_imports)]
 use serde::de::Visitor; // For docs above.
 
 use crate::{
-    context::{Context, DefaultContext},
     Coalesce, Schema,
+    context::{Context, DefaultContext},
 };
 
 mod field;
@@ -235,7 +235,7 @@ where
 mod boilerplate {
     use std::fmt;
 
-    use crate::{context::Context, Schema};
+    use crate::{Schema, context::Context};
 
     use super::InferredSchema;
 

@@ -3,11 +3,11 @@ use std::marker::PhantomData;
 use ordermap::OrderMap;
 use serde::de::{Error, Visitor};
 
-use crate::{traits::Aggregate, Field, Schema};
+use crate::{Field, Schema, traits::Aggregate};
 
 use super::{
-    field::{InferredField, InferredFieldSeed},
     Context,
+    field::{InferredField, InferredFieldSeed},
 };
 
 pub(super) struct SchemaVisitor<C> {

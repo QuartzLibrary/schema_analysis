@@ -23,7 +23,7 @@ pub use string::{SemanticExtractor, StringContext, SuspiciousStrings};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 
-use crate::{traits::Aggregate, Coalesce};
+use crate::{Coalesce, traits::Aggregate};
 
 /// Interface describing the custom analysis that will be run on each type
 /// alongside the schema shape.
