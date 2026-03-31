@@ -255,16 +255,7 @@ impl<C: Context> Coalesce for Schema<C> {
                 },
             ) => {
                 self_agg.coalesce(other_agg);
-                for (name, other_schema) in other_fields {
-                    match self_fields.entry(name) {
-                        Entry::Occupied(mut schema) => {
-                            schema.get_mut().coalesce(other_schema);
-                        }
-                        Entry::Vacant(entry) => {
-                            entry.insert(other_schema);
-                        }
-                    }
-                }
+                coalesce_struct_fields(self_fields, other_fields);
             }
             (
                 Union {
@@ -370,16 +361,7 @@ impl<C: Context> Coalesce for Schema<C> {
                         },
                     ) => {
                         self_agg.coalesce(other_agg);
-                        for (name, other_schema) in other_fields {
-                            match self_fields.entry(name) {
-                                Entry::Occupied(mut schema) => {
-                                    schema.get_mut().coalesce(other_schema);
-                                }
-                                Entry::Vacant(entry) => {
-                                    entry.insert(other_schema);
-                                }
-                            }
-                        }
+                        coalesce_struct_fields(self_fields, other_fields);
                         return;
                     }
 
@@ -392,6 +374,33 @@ impl<C: Context> Coalesce for Schema<C> {
 
             // If we were unable to find a match, push the schema to the alternatives:
             alternatives.push(other);
+        }
+
+        fn coalesce_struct_fields<C: Context>(
+            self_fields: &mut OrderMap<std::string::String, Field<C>>,
+            other_fields: OrderMap<std::string::String, Field<C>>,
+        ) where
+            Field<C>: Coalesce,
+        {
+            // Fields in self but not in other were missing from other's documents.
+            for (name, field) in self_fields.iter_mut() {
+                if !other_fields.contains_key(name) {
+                    field.status.may_be_missing = true;
+                }
+            }
+            for (name, other_field) in other_fields {
+                match self_fields.entry(name) {
+                    Entry::Occupied(mut entry) => {
+                        entry.get_mut().coalesce(other_field);
+                    }
+                    // Fields in other but not in self were missing from self's documents.
+                    Entry::Vacant(entry) => {
+                        let mut field = other_field;
+                        field.status.may_be_missing = true;
+                        entry.insert(field);
+                    }
+                }
+            }
         }
     }
 }
