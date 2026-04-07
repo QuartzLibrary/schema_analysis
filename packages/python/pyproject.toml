@@ -6,6 +6,7 @@ build-backend = "maturin"
 name = "schema_analysis"
 version = "0.6.0"
 description = "Infer schemas from JSON, YAML, XML, TOML, CBOR, and BSON"
+readme = "README.md"
 license = { text = "MIT OR Apache-2.0" }
 requires-python = ">=3.8"
 authors = [{ name = "QuartzLibrary" }]
