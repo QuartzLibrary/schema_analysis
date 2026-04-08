@@ -1,8 +1,1 @@
 /target
-
-/website/schema_analysis_wasm/pgk
-
-/website/build
-/website/node_modules
-/website/package-lock.json
-/website/*firebase*

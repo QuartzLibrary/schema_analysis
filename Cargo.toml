@@ -1,7 +1,14 @@
 [workspace]
 resolver = "3"
 
-members = [
-    "schema_analysis",
-    "website/schema_analysis_wasm",
-]
+members = ["schema_analysis", "web/web_worker", "web"]
+
+[workspace.dependencies]
+web_worker = { path = "web/web_worker" }
+
+utile = { git = "https://github.com/QuartzLibrary/bio" } # rev = "2895f5feed801850d39bd2e429220ac1785c6c50"
+leptos_ext = { git = "https://github.com/QuartzLibrary/leptos_ext", rev = "3f4145508710bbc51577a7a8a702104b277fcfa8" }
+
+# Pinned because of conflicting reqwest versions.
+leptos = { version = "=0.8.15", features = ["csr", "rustls"] }
+server_fn = "=0.8.9"

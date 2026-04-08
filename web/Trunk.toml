@@ -1,0 +1,13 @@
+[serve]
+addresses = ["127.0.0.1"]
+port = 8001
+
+# Post-build: separate DWARF debug info into .debug.wasm files, then strip+optimize the served binaries.
+# Chrome DevTools (with C/C++ DWARF extension) can load the .debug.wasm files for debugging.
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = [
+    "-c",
+    "for f in \"${TRUNK_STAGING_DIR}\"/*.wasm; do cp \"$f\" \"${f%.wasm}.debug.wasm\" && wasm-opt --strip-dwarf -Oz \"$f\" -o \"$f\"; done",
+]

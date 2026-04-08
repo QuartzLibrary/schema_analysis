@@ -1,0 +1,91 @@
+[package]
+name = "schema_analysis_web"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "schema_analysis_web"
+path = "src/app/main.rs"
+
+[[bin]]
+name = "worker"
+path = "src/worker/main.rs"
+
+[dependencies]
+# Core schema analysis
+schema_analysis = { path = "../schema_analysis", features = [
+    "json_typegen",
+    "schemars_integration",
+] }
+web_worker.workspace = true
+
+utile.workspace = true
+
+# Leptos framework
+leptos.workspace = true
+leptos_ext.workspace = true
+server_fn.workspace = true # Pin
+
+# Web APIs
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = [
+    "Blob",
+    "BlobPropertyBag",
+    "Clipboard",
+    "DataTransfer",
+    "DataTransferItem",
+    "DataTransferItemList",
+    "DedicatedWorkerGlobalScope",
+    "Document",
+    "DragEvent",
+    "Element",
+    "Event",
+    "File",
+    "FileList",
+    "FilePropertyBag",
+    "FileReaderSync",
+    "FileSystemDirectoryEntry",
+    "FileSystemDirectoryReader",
+    "FileSystemEntry",
+    "FileSystemFileEntry",
+    "HtmlAnchorElement",
+    "HtmlInputElement",
+    "HtmlSelectElement",
+    "HtmlTextAreaElement",
+    "KeyboardEvent",
+    "MessageEvent",
+    "MouseEvent",
+    "Navigator",
+    "Node",
+    "Response",
+    "Url",
+    "Window",
+    "Worker",
+    "WorkerOptions",
+    "WorkerType",
+] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+toml = "0.8"
+bson = "2"
+quick-xml = { version = "0.37", features = ["serialize"] }
+serde_cbor = "0.11"
+
+# Serde-JsValue interop
+serde-wasm-bindgen = "0.6"
+
+# Utilities
+console_error_panic_hook = "0.1"
+console_log = "1"
+log = "0.4"
+futures = "0.3"
+
+# WASM random support
+getrandom = { version = "0.3", features = ["wasm_js"] }
+getrandom2 = { version = "0.2", features = ["js"], package = "getrandom" }
+uuid = { version = "1", features = ["js"] }
