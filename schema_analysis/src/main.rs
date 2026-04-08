@@ -39,7 +39,7 @@ struct Cli {
 
     /// Only output the schema structure, without analysis info (counts, samples, min/max, etc.)
     #[arg(long)]
-    no_analysis: bool,
+    minimal: bool,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, clap::ValueEnum)]
@@ -73,7 +73,7 @@ fn main() -> Result<()> {
     }
     let format = resolve_format(&cli)?;
 
-    let output = if cli.no_analysis {
+    let output = if cli.minimal {
         let mut schema = infer_schema::<()>(format, &cli.files)?;
         if format == InputFormat::Xml {
             cleanup_xml_schema(&mut schema);

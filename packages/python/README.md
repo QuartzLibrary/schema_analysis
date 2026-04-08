@@ -15,7 +15,7 @@ our gymnast friend, serde.
 
 - Works with any self-describing format with a Serde implementation.
 - Suitable for large files.
-- Keeps track of some useful info for each type (opt out with --no-analysis).
+- Keeps track of some useful info for each type (opt out with --minimal).
 - Keeps track of null/missing/duplicate values separately.
 - Integrates with [Schemars](https://github.com/GREsau/schemars) and 
   [json_typegen](https://github.com/evestera/json_typegen) to produce types and a json schema if needed.
@@ -56,7 +56,7 @@ and reads from stdin if no files are provided.
 | `--output <OUTPUT>` | Output mode (`schema`, `rust`, `typescript`, `typescript-alias`, `kotlin`, `kotlin-kotlinx`, `json-schema`, `shape`) | `schema` |
 | `--name <NAME>` | Root type name for code generation | `Root` |
 | `--compact` | Compact JSON output (no pretty printing) | |
-| `--no-analysis` | Skip analysis info (counts, samples, min/max, etc.), outputting only the schema structure | |
+| `--minimal` | Skip analysis info (counts, samples, min/max, etc.), outputting only the schema structure | |
 
 **Examples:**
 

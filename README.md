@@ -59,7 +59,7 @@ and reads from stdin if no files are provided.
 | `--output <OUTPUT>` | Output mode (`schema`, `rust`, `typescript`, `typescript-alias`, `kotlin`, `kotlin-kotlinx`, `json-schema`, `shape`) | `schema` |
 | `--name <NAME>` | Root type name for code generation | `Root` |
 | `--compact` | Compact JSON output (no pretty printing) | |
-| `--no-analysis` | Skip analysis info (counts, samples, min/max, etc.), outputting only the schema structure | |
+| `--minimal` | Skip analysis info (counts, samples, min/max, etc.), outputting only the schema structure | |
 
 **Examples:**
 

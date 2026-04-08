@@ -100,14 +100,14 @@ fn compact_flag() {
 }
 
 #[test]
-fn no_analysis_flag() {
+fn minimal_flag() {
     cmd()
         .arg(input("sample.json"))
-        .arg("--no-analysis")
+        .arg("--minimal")
         .assert()
         .success()
         .stdout(include_str!(
-            "cli_fixtures/expected/json_schema_no_analysis.json"
+            "cli_fixtures/expected/json_schema_minimal.json"
         ));
 }
 
