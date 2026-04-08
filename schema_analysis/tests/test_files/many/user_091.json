@@ -1,0 +1,20 @@
+{
+  "id": 91,
+  "name": "Lauren Smith",
+  "email": "zroman@example.org",
+  "address": {
+    "street": "687 Berry Garden",
+    "city": "South Timothystad",
+    "zip": "75117",
+    "country": "MW"
+  },
+  "age": 79,
+  "active": true,
+  "balance": 3553.87,
+  "tags": [
+    "vip",
+    "delta",
+    "beta"
+  ],
+  "joined": "2007-07-30T03:55:13.333924"
+}

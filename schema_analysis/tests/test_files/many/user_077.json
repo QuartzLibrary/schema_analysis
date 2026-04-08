@@ -1,0 +1,16 @@
+{
+  "id": 77,
+  "name": "Alex Ford",
+  "email": "afox@example.org",
+  "address": {
+    "street": "09515 Sarah Underpass Suite 110",
+    "city": "Lake Javiermouth",
+    "zip": "53393",
+    "country": "TH"
+  },
+  "age": 88,
+  "active": true,
+  "balance": 9170.62,
+  "tags": [],
+  "joined": "1977-12-07T22:37:24.445333"
+}

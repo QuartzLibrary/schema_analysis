@@ -1,0 +1,16 @@
+{
+  "id": 5,
+  "name": "Bryan Gonzalez",
+  "email": "catherinebaker@example.org",
+  "address": {
+    "street": "718 Melinda View",
+    "city": "Odonnelltown",
+    "zip": "13406",
+    "country": "AT"
+  },
+  "age": 38,
+  "active": true,
+  "balance": 9982.79,
+  "tags": [],
+  "joined": "1995-05-31T23:17:30.760289"
+}

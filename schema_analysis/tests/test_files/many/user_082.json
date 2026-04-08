@@ -1,0 +1,20 @@
+{
+  "id": 82,
+  "name": "Nicole Valenzuela",
+  "email": "davidsonchristine@example.net",
+  "address": {
+    "street": "9665 Brenda Camp Suite 704",
+    "city": "Dwayneshire",
+    "zip": "65084",
+    "country": "TR"
+  },
+  "age": 86,
+  "active": true,
+  "balance": 5372.72,
+  "tags": [
+    "delta",
+    "beta",
+    "alpha"
+  ],
+  "joined": "1999-02-13T06:30:08.354069"
+}

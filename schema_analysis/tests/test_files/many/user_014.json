@@ -1,0 +1,16 @@
+{
+  "id": 14,
+  "name": "Sarah Davis",
+  "email": "amandahicks@example.org",
+  "address": {
+    "street": "97572 Smith Court Apt. 006",
+    "city": "East William",
+    "zip": "91126",
+    "country": "SE"
+  },
+  "age": 80,
+  "active": false,
+  "balance": 5388.06,
+  "tags": [],
+  "joined": "1971-10-04T14:32:20.469308"
+}

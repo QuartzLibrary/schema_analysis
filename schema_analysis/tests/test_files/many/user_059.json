@@ -1,0 +1,18 @@
+{
+  "id": 59,
+  "name": "Melvin Tate",
+  "email": "mooreanthony@example.com",
+  "address": {
+    "street": "38319 Douglas Drive Suite 402",
+    "city": "Christinetown",
+    "zip": "66663",
+    "country": "CF"
+  },
+  "age": 75,
+  "active": false,
+  "balance": 9665.29,
+  "tags": [
+    "beta"
+  ],
+  "joined": "1986-11-23T11:06:41.054651"
+}

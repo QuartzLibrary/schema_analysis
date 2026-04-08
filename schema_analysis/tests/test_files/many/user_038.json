@@ -1,0 +1,16 @@
+{
+  "id": 38,
+  "name": "Erica Carroll",
+  "email": "jwarner@example.com",
+  "address": {
+    "street": "835 Jenna Lake",
+    "city": "Port Williamside",
+    "zip": "95078",
+    "country": "PG"
+  },
+  "age": 84,
+  "active": true,
+  "balance": 5715.3,
+  "tags": [],
+  "joined": "1988-05-16T12:34:50.387126"
+}

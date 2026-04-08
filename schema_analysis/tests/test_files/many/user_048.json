@@ -1,0 +1,16 @@
+{
+  "id": 48,
+  "name": "Jared Walker",
+  "email": "patelgary@example.net",
+  "address": {
+    "street": "4165 Kyle Mission",
+    "city": "New Phillipstad",
+    "zip": "14907",
+    "country": "LA"
+  },
+  "age": 85,
+  "active": true,
+  "balance": 3427.11,
+  "tags": [],
+  "joined": "1991-08-29T16:32:08.220455"
+}

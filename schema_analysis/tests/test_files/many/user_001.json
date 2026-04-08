@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "name": "Robin Mccullough",
+  "email": "jasmine63@example.org",
+  "address": {
+    "street": "2123 Cox Manor",
+    "city": "Heatherside",
+    "zip": "26460",
+    "country": "LT"
+  },
+  "age": 52,
+  "active": false,
+  "balance": 4144.28,
+  "tags": [
+    "gamma",
+    "beta"
+  ],
+  "joined": "1977-01-19T15:20:46.848596"
+}

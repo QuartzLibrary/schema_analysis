@@ -1,0 +1,18 @@
+{
+  "id": 30,
+  "name": "Sonia Burton",
+  "email": "marshallalan@example.com",
+  "address": {
+    "street": "9123 Martinez Meadow Apt. 193",
+    "city": "Ianview",
+    "zip": "94626",
+    "country": "HN"
+  },
+  "age": 41,
+  "active": false,
+  "balance": 2217.71,
+  "tags": [
+    "trial"
+  ],
+  "joined": "1980-09-21T20:03:07.913602"
+}

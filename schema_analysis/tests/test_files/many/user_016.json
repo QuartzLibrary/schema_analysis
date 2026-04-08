@@ -1,0 +1,18 @@
+{
+  "id": 16,
+  "name": "Lori Phillips",
+  "email": "pennyhanson@example.net",
+  "address": {
+    "street": "38321 David Green Suite 858",
+    "city": "Monicachester",
+    "zip": "25754",
+    "country": "DJ"
+  },
+  "age": 68,
+  "active": true,
+  "balance": 5712.02,
+  "tags": [
+    "trial"
+  ],
+  "joined": "2020-12-01T15:17:58.695136"
+}

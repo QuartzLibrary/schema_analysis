@@ -1,0 +1,19 @@
+{
+  "id": 9,
+  "name": "Jennifer Martinez",
+  "email": "tara46@example.org",
+  "address": {
+    "street": "80723 Carroll Landing",
+    "city": "Port Jenniferhaven",
+    "zip": "94838",
+    "country": "CM"
+  },
+  "age": 38,
+  "active": false,
+  "balance": 8880.05,
+  "tags": [
+    "beta",
+    "trial"
+  ],
+  "joined": "1975-12-26T04:36:02.290815"
+}

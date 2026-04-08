@@ -1,0 +1,18 @@
+{
+  "id": 17,
+  "name": "Mary Serrano",
+  "email": "heatherhouse@example.org",
+  "address": {
+    "street": "582 Stewart Roads",
+    "city": "Lake Rileyberg",
+    "zip": "36528",
+    "country": "SB"
+  },
+  "age": 80,
+  "active": false,
+  "balance": 4627.26,
+  "tags": [
+    "vip"
+  ],
+  "joined": "2002-12-27T14:42:59.789623"
+}

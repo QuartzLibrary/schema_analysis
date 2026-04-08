@@ -1,0 +1,19 @@
+{
+  "id": 57,
+  "name": "Mallory Hill",
+  "email": "montgomeryaaron@example.net",
+  "address": {
+    "street": "8536 Ortiz Curve",
+    "city": "Cooperfurt",
+    "zip": "99452",
+    "country": "SO"
+  },
+  "age": 28,
+  "active": true,
+  "balance": 725.37,
+  "tags": [
+    "beta",
+    "trial"
+  ],
+  "joined": "1985-04-04T10:31:15.823110"
+}

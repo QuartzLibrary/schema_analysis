@@ -1,0 +1,18 @@
+{
+  "id": 87,
+  "name": "Alexander Robinson",
+  "email": "andrewcampbell@example.com",
+  "address": {
+    "street": "891 Ruiz Neck Apt. 269",
+    "city": "Yeseniatown",
+    "zip": "29356",
+    "country": "TN"
+  },
+  "age": 55,
+  "active": false,
+  "balance": 7772.97,
+  "tags": [
+    "gamma"
+  ],
+  "joined": "2007-03-22T23:19:11.339212"
+}

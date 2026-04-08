@@ -1,0 +1,19 @@
+{
+  "id": 92,
+  "name": "Kelsey Dean",
+  "email": "johnsonheather@example.org",
+  "address": {
+    "street": "2921 Parks Way",
+    "city": "Melissastad",
+    "zip": "07627",
+    "country": "MK"
+  },
+  "age": 65,
+  "active": false,
+  "balance": 126.82,
+  "tags": [
+    "delta",
+    "beta"
+  ],
+  "joined": "2007-01-31T14:37:00.302451"
+}

@@ -1,0 +1,18 @@
+{
+  "id": 58,
+  "name": "James Hays",
+  "email": "lbuckley@example.org",
+  "address": {
+    "street": "4623 Carol Throughway",
+    "city": "South Catherine",
+    "zip": "75634",
+    "country": "CZ"
+  },
+  "age": 80,
+  "active": false,
+  "balance": 4032.13,
+  "tags": [
+    "trial"
+  ],
+  "joined": "1978-01-22T20:25:57.235196"
+}

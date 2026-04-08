@@ -1,0 +1,16 @@
+{
+  "id": 46,
+  "name": "Craig Leon",
+  "email": "cummingstimothy@example.com",
+  "address": {
+    "street": "9196 Knox Extension",
+    "city": "West Barbara",
+    "zip": "84163",
+    "country": "TO"
+  },
+  "age": 43,
+  "active": false,
+  "balance": 8746.97,
+  "tags": [],
+  "joined": "2000-06-24T20:02:41.495225"
+}

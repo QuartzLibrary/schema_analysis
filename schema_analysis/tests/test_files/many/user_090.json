@@ -1,0 +1,20 @@
+{
+  "id": 90,
+  "name": "Jessica Austin",
+  "email": "timothymartinez@example.org",
+  "address": {
+    "street": "9804 Saunders Glens",
+    "city": "Watkinston",
+    "zip": "46062",
+    "country": "BZ"
+  },
+  "age": 81,
+  "active": true,
+  "balance": 5879.07,
+  "tags": [
+    "gamma",
+    "delta",
+    "alpha"
+  ],
+  "joined": "2007-11-18T08:55:24.139221"
+}

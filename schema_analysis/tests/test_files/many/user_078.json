@@ -1,0 +1,19 @@
+{
+  "id": 78,
+  "name": "Jamie Bell",
+  "email": "lee53@example.com",
+  "address": {
+    "street": "991 Dean Spurs",
+    "city": "West Kristen",
+    "zip": "11960",
+    "country": "PG"
+  },
+  "age": 53,
+  "active": false,
+  "balance": 3405.03,
+  "tags": [
+    "beta",
+    "alpha"
+  ],
+  "joined": "1992-03-31T01:26:27.852670"
+}

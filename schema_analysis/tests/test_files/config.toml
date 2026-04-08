@@ -1,0 +1,14 @@
+[package]
+name = "mock-app"
+version = "0.1.0"
+edition = "2021"
+
+[server]
+host = "localhost"
+port = 8080
+tls = false
+
+[database]
+url = "postgres://localhost/mock"
+pool_size = 10
+timeout_seconds = 30

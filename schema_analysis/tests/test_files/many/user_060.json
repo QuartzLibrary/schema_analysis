@@ -1,0 +1,18 @@
+{
+  "id": 60,
+  "name": "Charles Robinson PhD",
+  "email": "calexander@example.com",
+  "address": {
+    "street": "492 Daniel Freeway Suite 788",
+    "city": "North Zoefurt",
+    "zip": "73513",
+    "country": "IS"
+  },
+  "age": 86,
+  "active": true,
+  "balance": 1249.61,
+  "tags": [
+    "gamma"
+  ],
+  "joined": "2024-06-17T11:39:36.115738"
+}

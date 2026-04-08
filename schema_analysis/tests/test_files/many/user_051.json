@@ -1,0 +1,20 @@
+{
+  "id": 51,
+  "name": "Dylan Wells",
+  "email": "stephaniehutchinson@example.org",
+  "address": {
+    "street": "102 Andrade Mission Apt. 911",
+    "city": "South Tammy",
+    "zip": "53277",
+    "country": "GR"
+  },
+  "age": 66,
+  "active": false,
+  "balance": 1103.52,
+  "tags": [
+    "gamma",
+    "beta",
+    "delta"
+  ],
+  "joined": "2023-04-14T22:01:02.124363"
+}

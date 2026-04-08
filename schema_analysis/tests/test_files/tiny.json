@@ -1,0 +1,20 @@
+[
+  {
+    "id": 0,
+    "name": "Allison Hill",
+    "email": "donaldgarcia@example.net",
+    "address": {
+      "street": "600 Jeffery Parkways",
+      "city": "New Jamesside",
+      "zip": "55488",
+      "country": "GN"
+    },
+    "age": 32,
+    "active": true,
+    "balance": 7415.5,
+    "tags": [
+      "beta"
+    ],
+    "joined": "1995-04-12T02:26:42.287661"
+  }
+]

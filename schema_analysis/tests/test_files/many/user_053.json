@@ -1,0 +1,20 @@
+{
+  "id": 53,
+  "name": "Anthony Flores",
+  "email": "brandon66@example.net",
+  "address": {
+    "street": "76484 Nathaniel Club Apt. 636",
+    "city": "South Elizabethfort",
+    "zip": "60767",
+    "country": "MW"
+  },
+  "age": 38,
+  "active": true,
+  "balance": 503.53,
+  "tags": [
+    "beta",
+    "gamma",
+    "trial"
+  ],
+  "joined": "2001-10-04T03:04:55.447060"
+}

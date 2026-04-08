@@ -1,0 +1,20 @@
+{
+  "id": 18,
+  "name": "Dennis Leonard",
+  "email": "connorfrank@example.com",
+  "address": {
+    "street": "70848 Melissa Lane Apt. 848",
+    "city": "Mccoyfurt",
+    "zip": "26216",
+    "country": "VC"
+  },
+  "age": 61,
+  "active": false,
+  "balance": 8287.39,
+  "tags": [
+    "alpha",
+    "vip",
+    "trial"
+  ],
+  "joined": "2001-08-06T16:30:05.998158"
+}

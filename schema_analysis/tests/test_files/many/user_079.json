@@ -1,0 +1,20 @@
+{
+  "id": 79,
+  "name": "Nicole Huynh",
+  "email": "angela19@example.com",
+  "address": {
+    "street": "57841 Roach Junctions",
+    "city": "Port Amymouth",
+    "zip": "85073",
+    "country": "MH"
+  },
+  "age": 77,
+  "active": true,
+  "balance": 8533.25,
+  "tags": [
+    "beta",
+    "gamma",
+    "alpha"
+  ],
+  "joined": "1986-10-23T07:25:48.029691"
+}

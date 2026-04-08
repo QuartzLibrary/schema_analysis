@@ -1,0 +1,19 @@
+{
+  "id": 34,
+  "name": "Troy Reed",
+  "email": "meredithbrown@example.org",
+  "address": {
+    "street": "754 Garcia Pine Suite 904",
+    "city": "New Justinhaven",
+    "zip": "72946",
+    "country": "KP"
+  },
+  "age": 62,
+  "active": true,
+  "balance": 2653.16,
+  "tags": [
+    "vip",
+    "beta"
+  ],
+  "joined": "2000-08-17T12:15:36.312480"
+}

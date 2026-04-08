@@ -1,0 +1,20 @@
+{
+  "id": 35,
+  "name": "Peggy Taylor",
+  "email": "wilsoneddie@example.net",
+  "address": {
+    "street": "99902 Andrew Ville Suite 911",
+    "city": "Juliemouth",
+    "zip": "97497",
+    "country": "PY"
+  },
+  "age": 70,
+  "active": false,
+  "balance": 9196.83,
+  "tags": [
+    "trial",
+    "gamma",
+    "alpha"
+  ],
+  "joined": "1995-11-21T03:18:33.972972"
+}

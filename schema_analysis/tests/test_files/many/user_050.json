@@ -1,0 +1,18 @@
+{
+  "id": 50,
+  "name": "Tiffany Miller",
+  "email": "stanleyandrew@example.net",
+  "address": {
+    "street": "1048 Jenna Stravenue Apt. 130",
+    "city": "North Jessica",
+    "zip": "44747",
+    "country": "CD"
+  },
+  "age": 77,
+  "active": false,
+  "balance": 9630.33,
+  "tags": [
+    "alpha"
+  ],
+  "joined": "2016-11-29T00:17:24.877452"
+}

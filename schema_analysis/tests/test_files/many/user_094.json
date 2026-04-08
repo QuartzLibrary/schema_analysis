@@ -1,0 +1,16 @@
+{
+  "id": 94,
+  "name": "Heather Cooper",
+  "email": "ericoneill@example.net",
+  "address": {
+    "street": "55398 Tran Via",
+    "city": "Jenniferville",
+    "zip": "01381",
+    "country": "BB"
+  },
+  "age": 83,
+  "active": true,
+  "balance": 6008.65,
+  "tags": [],
+  "joined": "2017-12-28T20:44:59.370178"
+}

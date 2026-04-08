@@ -1,0 +1,18 @@
+{
+  "id": 68,
+  "name": "Jennifer Macias",
+  "email": "gregoryebony@example.com",
+  "address": {
+    "street": "953 Eric Shores",
+    "city": "Lake Kelseychester",
+    "zip": "41459",
+    "country": "BI"
+  },
+  "age": 52,
+  "active": false,
+  "balance": 8620.79,
+  "tags": [
+    "delta"
+  ],
+  "joined": "2002-05-18T06:14:43.402326"
+}

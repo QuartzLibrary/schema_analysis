@@ -1,0 +1,18 @@
+{
+  "id": 8,
+  "name": "Mark Miller",
+  "email": "oyoung@example.com",
+  "address": {
+    "street": "3974 Barry Point Suite 272",
+    "city": "Vasquezhaven",
+    "zip": "25671",
+    "country": "TH"
+  },
+  "age": 22,
+  "active": false,
+  "balance": 1764.22,
+  "tags": [
+    "trial"
+  ],
+  "joined": "2010-04-11T05:44:22.568944"
+}

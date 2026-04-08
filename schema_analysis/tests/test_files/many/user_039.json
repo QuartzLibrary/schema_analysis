@@ -1,0 +1,16 @@
+{
+  "id": 39,
+  "name": "Joseph Phillips",
+  "email": "davistraci@example.org",
+  "address": {
+    "street": "11893 Burton Roads Suite 396",
+    "city": "Jacquelineshire",
+    "zip": "57160",
+    "country": "JP"
+  },
+  "age": 50,
+  "active": true,
+  "balance": 7259.87,
+  "tags": [],
+  "joined": "1986-12-23T06:44:50.271955"
+}

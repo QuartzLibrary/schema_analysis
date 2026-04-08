@@ -1,0 +1,20 @@
+{
+  "id": 73,
+  "name": "Yolanda Sanchez",
+  "email": "martinezandrew@example.net",
+  "address": {
+    "street": "813 Cynthia Stravenue",
+    "city": "Ortizburgh",
+    "zip": "19012",
+    "country": "LU"
+  },
+  "age": 81,
+  "active": true,
+  "balance": 2614.62,
+  "tags": [
+    "alpha",
+    "trial",
+    "beta"
+  ],
+  "joined": "2022-03-13T05:09:43.167012"
+}

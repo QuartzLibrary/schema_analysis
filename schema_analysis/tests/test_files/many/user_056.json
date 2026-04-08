@@ -1,0 +1,18 @@
+{
+  "id": 56,
+  "name": "Sharon Mitchell",
+  "email": "susanstevens@example.org",
+  "address": {
+    "street": "065 Todd Fall Apt. 900",
+    "city": "Charlesmouth",
+    "zip": "47360",
+    "country": "LR"
+  },
+  "age": 83,
+  "active": true,
+  "balance": 2768.38,
+  "tags": [
+    "vip"
+  ],
+  "joined": "2000-10-08T17:59:09.053910"
+}

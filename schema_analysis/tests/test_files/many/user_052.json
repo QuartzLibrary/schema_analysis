@@ -1,0 +1,20 @@
+{
+  "id": 52,
+  "name": "Lindsay Rocha",
+  "email": "briannafowler@example.org",
+  "address": {
+    "street": "41201 Jeff Mission",
+    "city": "Rochaborough",
+    "zip": "22691",
+    "country": "GY"
+  },
+  "age": 74,
+  "active": false,
+  "balance": 1262.98,
+  "tags": [
+    "trial",
+    "delta",
+    "gamma"
+  ],
+  "joined": "2013-09-07T17:27:47.098932"
+}

@@ -1,0 +1,184 @@
+[
+  {
+    "id": 0,
+    "name": "Sean Blake",
+    "email": "helenpeterson@example.org",
+    "address": {
+      "street": "1161 Abbott Rapids",
+      "city": "Lindsaymouth",
+      "zip": "70785",
+      "country": "CM"
+    },
+    "age": 35,
+    "active": true,
+    "balance": 6766.99,
+    "tags": [],
+    "joined": "2024-10-03T09:11:52.120686"
+  },
+  {
+    "id": 1,
+    "name": "Juan Calderon",
+    "email": "barbara10@example.net",
+    "address": {
+      "street": "1316 Chavez Village",
+      "city": "Franciscostad",
+      "zip": "27961",
+      "country": "SV"
+    },
+    "age": 72,
+    "active": true,
+    "balance": 297.97,
+    "tags": [
+      "beta"
+    ],
+    "joined": "1985-01-08T21:40:17.032330"
+  },
+  {
+    "id": 2,
+    "name": "Maria Lynch",
+    "email": "amandasanchez@example.com",
+    "address": {
+      "street": "8350 Lydia Valley Suite 641",
+      "city": "New Nancy",
+      "zip": "41746",
+      "country": "GH"
+    },
+    "age": 82,
+    "active": true,
+    "balance": 5612.45,
+    "tags": [
+      "beta",
+      "delta",
+      "gamma"
+    ],
+    "joined": "2006-11-18T12:19:28.459903"
+  },
+  {
+    "id": 3,
+    "name": "Thomas Ellis",
+    "email": "donald88@example.com",
+    "address": {
+      "street": "653 William Course Apt. 122",
+      "city": "Carlsonfurt",
+      "zip": "50520",
+      "country": "UG"
+    },
+    "age": 18,
+    "active": true,
+    "balance": 6981.39,
+    "tags": [
+      "gamma",
+      "beta"
+    ],
+    "joined": "2026-01-19T04:37:11.479575"
+  },
+  {
+    "id": 4,
+    "name": "Tricia Valencia",
+    "email": "frazierdanny@example.net",
+    "address": {
+      "street": "514 Moore Alley Suite 828",
+      "city": "Port Colleenhaven",
+      "zip": "80319",
+      "country": "FJ"
+    },
+    "age": 45,
+    "active": false,
+    "balance": 1022.1,
+    "tags": [
+      "alpha",
+      "gamma",
+      "vip"
+    ],
+    "joined": "1978-08-08T03:19:01.093904"
+  },
+  {
+    "id": 5,
+    "name": "Kimberly Osborne",
+    "email": "georgetracy@example.org",
+    "address": {
+      "street": "3039 Christopher Oval Apt. 822",
+      "city": "Arroyoburgh",
+      "zip": "35242",
+      "country": "SM"
+    },
+    "age": 51,
+    "active": true,
+    "balance": 7297.32,
+    "tags": [],
+    "joined": "2019-02-03T03:52:27.866282"
+  },
+  {
+    "id": 6,
+    "name": "Daniel Ryan",
+    "email": "jenniferross@example.net",
+    "address": {
+      "street": "8713 Caleb Brooks Apt. 930",
+      "city": "Lake Crystalbury",
+      "zip": "09335",
+      "country": "AU"
+    },
+    "age": 66,
+    "active": true,
+    "balance": 5520.41,
+    "tags": [
+      "vip",
+      "beta"
+    ],
+    "joined": "2018-05-16T03:29:33.651924"
+  },
+  {
+    "id": 7,
+    "name": "David Caldwell",
+    "email": "ambercummings@example.net",
+    "address": {
+      "street": "76311 Gomez Loop Suite 010",
+      "city": "Chandlerville",
+      "zip": "33092",
+      "country": "FI"
+    },
+    "age": 26,
+    "active": true,
+    "balance": 6612.63,
+    "tags": [
+      "alpha",
+      "beta"
+    ],
+    "joined": "1980-09-14T03:43:56.538889"
+  },
+  {
+    "id": 8,
+    "name": "Javier Ramirez",
+    "email": "nancyjones@example.net",
+    "address": {
+      "street": "80132 Tucker Forest",
+      "city": "Barreraburgh",
+      "zip": "50173",
+      "country": "AD"
+    },
+    "age": 30,
+    "active": false,
+    "balance": 2779.74,
+    "tags": [
+      "beta",
+      "gamma"
+    ],
+    "joined": "2025-06-10T23:22:56.599892"
+  },
+  {
+    "id": 9,
+    "name": "Richard Gibson",
+    "email": "uhorton@example.net",
+    "address": {
+      "street": "34309 Julie Centers Apt. 978",
+      "city": "North Susan",
+      "zip": "11001",
+      "country": "ER"
+    },
+    "age": 63,
+    "active": true,
+    "balance": 6701.75,
+    "tags": [],
+    "joined": "1973-11-09T05:51:17.788890"
+  }
+]

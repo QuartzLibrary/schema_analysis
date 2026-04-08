@@ -1,0 +1,19 @@
+{
+  "id": 84,
+  "name": "Danny Chavez",
+  "email": "sara11@example.com",
+  "address": {
+    "street": "082 Vaughn Island Apt. 843",
+    "city": "Dalefurt",
+    "zip": "70188",
+    "country": "GY"
+  },
+  "age": 23,
+  "active": false,
+  "balance": 9819.51,
+  "tags": [
+    "gamma",
+    "trial"
+  ],
+  "joined": "1976-07-26T17:57:38.873392"
+}

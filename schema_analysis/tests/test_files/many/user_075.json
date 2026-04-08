@@ -1,0 +1,19 @@
+{
+  "id": 75,
+  "name": "Dana Fuentes",
+  "email": "kharris@example.com",
+  "address": {
+    "street": "4062 Cindy Loop Suite 458",
+    "city": "Port Jamestown",
+    "zip": "21497",
+    "country": "CN"
+  },
+  "age": 73,
+  "active": true,
+  "balance": 8860.21,
+  "tags": [
+    "vip",
+    "delta"
+  ],
+  "joined": "1979-10-18T10:23:00.671188"
+}

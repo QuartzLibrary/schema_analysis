@@ -1,0 +1,16 @@
+{
+  "id": 10,
+  "name": "Alexis Donovan",
+  "email": "schmidtdonald@example.com",
+  "address": {
+    "street": "11235 Barton Mountain Suite 066",
+    "city": "Christopherville",
+    "zip": "61014",
+    "country": "SC"
+  },
+  "age": 83,
+  "active": true,
+  "balance": 2101.65,
+  "tags": [],
+  "joined": "2005-01-30T10:33:13.811489"
+}

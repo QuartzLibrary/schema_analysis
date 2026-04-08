@@ -1,0 +1,16 @@
+{
+  "id": 81,
+  "name": "Jacob Morales",
+  "email": "greenkathryn@example.org",
+  "address": {
+    "street": "18078 Berg Parks",
+    "city": "Port William",
+    "zip": "33417",
+    "country": "HU"
+  },
+  "age": 33,
+  "active": false,
+  "balance": 3920.32,
+  "tags": [],
+  "joined": "2006-09-26T09:31:37.504414"
+}
