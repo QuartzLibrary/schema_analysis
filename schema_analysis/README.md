@@ -19,9 +19,9 @@ our gymnast friend, serde.
 - Works with any self-describing format with a Serde implementation.
 - Suitable for large files.
 - Keeps track of some useful info for each type.
-- Keeps track of null/normal/missing/duplicate values separately.
+- Keeps track of null/missing/duplicate values separately.
 - Integrates with [Schemars](https://github.com/GREsau/schemars) and 
-  [json_typegen](https://github.com/evestera/json_typegen) to produce types and json schema if needed.
+  [json_typegen](https://github.com/evestera/json_typegen) to produce types and a json schema if needed.
 - There's a demo website [here](https://schema-analysis.com/).
 
 ### Usage
@@ -51,6 +51,10 @@ That's it.
 Check [Schema](https://docs.rs/schema_analysis/latest/schema_analysis/enum.Schema.html) 
 to see what info you get, and [targets](https://github.com/QuartzLibrary/schema_analysis/blob/HEAD/schema_analysis/src/targets) 
 to see the available integrations (which include code and json schema generation).
+
+### CLI Usage
+
+You can use this crate as a CLI, more info in the [repo](https://github.com/QuartzLibrary/schema_analysis).
 
 ### Advanced Usage
 

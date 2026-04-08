@@ -2,9 +2,6 @@
 
 ## Universal-ish Schema Analysis
 
-[![](https://img.shields.io/crates/v/schema_analysis.svg)](https://crates.io/crates/schema_analysis)
-[![](https://docs.rs/schema_analysis/badge.svg)](https://docs.rs/schema_analysis/)
-
 Ever wished you could figure out what was in that json file? Or maybe it was xml... Ehr, yaml?
 It was definitely toml.
 
@@ -18,7 +15,7 @@ our gymnast friend, serde.
 
 - Works with any self-describing format with a Serde implementation.
 - Suitable for large files.
-- Keeps track of some useful info for each type.
+- Keeps track of some useful info for each type (opt out with --minimal).
 - Keeps track of null/missing/duplicate values separately.
 - Integrates with [Schemars](https://github.com/GREsau/schemars) and 
   [json_typegen](https://github.com/evestera/json_typegen) to produce types and a json schema if needed.
@@ -85,83 +82,7 @@ cat data.json | schema_analysis --format json
 
 ### Library Usage
 
-```rust
-let data: &[u8] = b"true";
-
-// Just pick your format, and deserialize InferredSchema as if it were a normal type.
-let inferred: InferredSchema = serde_json::from_slice(data)?;
-// let inferred: InferredSchema = serde_yaml::from_slice(data)?;
-// let inferred: InferredSchema = serde_cbor::from_slice(data)?;
-// let inferred: InferredSchema = toml::from_slice(data)?;
-// let inferred: InferredSchema = rawbson::de::from_bytes(data)?;
-// let inferred: InferredSchema = quick_xml::de::from_reader(data)?;
-
-// InferredSchema is a wrapper around Schema
-let schema: Schema = inferred.schema;
-let expected: Schema = Schema::Boolean(Default::default());
-assert!(schema.structural_eq(&expected));
-
-// The wrapper is there so we can both do the magic above, and also store the data for later
-let serialized_schema: String = serde_json::to_string_pretty(&schema)?;
-```
-
-That's it.
-
-Check [Schema](https://docs.rs/schema_analysis/latest/schema_analysis/enum.Schema.html) to see what info you get, 
-and [targets](schema_analysis/src/targets) to see the available integrations (which include code and 
-json schema generation).
-
-### Advanced Usage
-
-I know, I know, the internet is evil and has decided to plague you with not one, but thousands,
-maybe even millions, of files.
-
-Unfortunately Serde relies on type information to work, so ~~there is nothing we can do about it~~
-we can bring out the big guns: [DeserializeSeed](https://docs.serde.rs/serde/de/trait.DeserializeSeed.html).
-It's everything you love about Serde, but with runtime state.
-
-```rust
-let a_lot_of_json_files: &[&str] = &[ "1", "2", "1000" ];
-let mut iter = a_lot_of_json_files.iter();
-
-if let Some(file) = iter.next() {
-    // We use the first file to generate a new schema to work with.
-    let mut inferred: InferredSchema = serde_json::from_str(file)?;
-
-    // Then we iterate over the rest to expand the schema.
-    for file in iter {
-        let mut json_deserializer = serde_json::Deserializer::from_str(file);
-        // DeserializeSeed is implemented on &mut InferredSchema
-        // So here it borrows the data mutably and runs it against the deserializer.
-        let () = inferred.deserialize(&mut json_deserializer)?;
-    }
-
-    // The result in this case would be a simple integer schema
-    // that 'has met' the numbers 1, 2, and 100.
-    let mut context: NumberContext<i128> = Default::default();
-    context.aggregate(&1);
-    context.aggregate(&2);
-    context.aggregate(&1000);
-
-    assert_eq!(inferred.schema, Schema::Integer(context));
-}
-```
-
-Furthermore, if you need to generate separate schemas (for example to run the analysis on multiple
-threads) you can use the Coalesce trait to merge them after-the-fact.
-
-### I really wish I could convert that Schema in something, you know, actually useful.
-
-You are in luck! You can check out [here](schema_analysis/src/targets) the integrations with
-[json_typegen](https://github.com/evestera/json_typegen) and [Schemars](https://github.com/GREsau/schemars) 
-to convert the analysis into useful files like Rust types and json schemas.
-You can also find a demo website [here](https://schema-analysis.com/).
-
-### How does this work?
-
-For the short story long go [here](https://docs.rs/schema_analysis/latest/schema_analysis/analysis/index.html), the juicy bit is that Serde is kind enough to let
-the format tell us what it is working with, we take it from there and construct a nice schema
-from that info.
+For use as a library, see the [Rust crate](https://crates.io/crates/schema_analysis/) or the [repo](https://github.com/QuartzLibrary/schema_analysis).
 
 ### Performance
 
