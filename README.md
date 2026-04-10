@@ -28,11 +28,15 @@ our gymnast friend, serde.
 
 ```bash
 # Run without installing
+npx schema_analysis data.json
+# or
 uvx schema_analysis data.json
 # or
 pipx run schema_analysis data.json
 
 # Install
+npm install -g schema_analysis
+# or
 pip install schema_analysis
 # or
 uv tool install schema_analysis

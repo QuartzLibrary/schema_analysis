@@ -1,0 +1,80 @@
+name: Publish Node
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            binary: schema_analysis-linux-x64
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            binary: schema_analysis-linux-arm64
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            binary: schema_analysis-darwin-x64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            binary: schema_analysis-darwin-arm64
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            binary: schema_analysis-win32-x64.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install cross-compilation tools
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
+          echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: cargo build --release --features cli --target ${{ matrix.target }}
+        working-directory: schema_analysis
+
+      - name: Rename binary (unix)
+        if: runner.os != 'Windows'
+        run: cp target/${{ matrix.target }}/release/schema_analysis packages/node/binaries/${{ matrix.binary }}
+
+      - name: Rename binary (windows)
+        if: runner.os == 'Windows'
+        run: cp target/${{ matrix.target }}/release/schema_analysis.exe packages/node/binaries/${{ matrix.binary }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.binary }}
+          path: packages/node/binaries/${{ matrix.binary }}
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: packages/node/binaries
+          merge-multiple: true
+
+      - run: chmod +x packages/node/binaries/*
+
+      - run: npx npm@latest publish --provenance
+        working-directory: packages/node

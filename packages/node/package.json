@@ -1,0 +1,26 @@
+{
+  "name": "schema_analysis",
+  "version": "0.6.0",
+  "description": "Infer schemas from JSON, YAML, XML, TOML, CBOR, and BSON",
+  "license": "MIT OR Apache-2.0",
+  "author": "QuartzLibrary",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QuartzLibrary/schema_analysis"
+  },
+  "homepage": "https://schema-analysis.com/",
+  "keywords": [
+    "schema",
+    "analysis",
+    "json",
+    "yaml",
+    "serde"
+  ],
+  "bin": {
+    "schema_analysis": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "binaries/"
+  ]
+}
