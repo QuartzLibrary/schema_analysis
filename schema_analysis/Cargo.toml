@@ -43,7 +43,7 @@ ordered-float = { version = "5", features = [ "serde" ] } # To save sets of floa
 ordermap = { version = "1", features = [ "serde" ] } # To preserve the order of fields in the schema
 
 # Schemars integration allows the generation of json schemas.
-schemars = { version = "0.8", optional = true }
+schemars = { version = "1", optional = true }
 serde_json = { version = "1", optional = true }
 
 # json_typegen integration allows the generation of types in several languages and json schemas.

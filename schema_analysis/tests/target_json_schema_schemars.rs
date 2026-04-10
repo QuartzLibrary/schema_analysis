@@ -167,7 +167,7 @@ impl FormatTests for JSchema {
             "type": "array",
             "items": {
                 "type": "object",
-                "required": [ "hello", "mixed", "world" ],
+                "required": [ "hello", "world", "mixed" ],
                 "properties": {
                     "hello": { "type": "integer" },
                     "mixed": {
@@ -204,7 +204,7 @@ impl FormatTests for JSchema {
         json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
-            "required": [ "hello", "sequence", "world" ],
+            "required": [ "hello", "world", "sequence" ],
             "properties": {
                 "hello": { "type": "integer" },
                 "world": { "type": "string" },
@@ -220,7 +220,7 @@ impl FormatTests for JSchema {
         json!({
             "$schema": SCHEMA_TYPE,
             "type": "object",
-            "required": [ "hello", "optional", "sequence", "world" ],
+            "required": [ "hello", "world", "optional", "sequence" ],
             "properties": {
                 "hello": { "type": "integer" },
                 "optional": true,
