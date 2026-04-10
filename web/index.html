@@ -22,12 +22,13 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
     <!-- Trunk: Main app binary -->
-    <link data-trunk rel="rust" href="Cargo.toml" data-wasm-opt="0" data-bin="schema_analysis_web" data-type="main"
-        data-keep-debug="true" data-inline />
+    <!-- wasm-opt -Oz -g: optimize for size, keep the names section so in-browser stack traces stay symbolicated. -->
+    <link data-trunk rel="rust" href="Cargo.toml" data-bin="schema_analysis_web" data-type="main"
+        data-wasm-opt="z" data-wasm-opt-params="-g" data-inline />
 
     <!-- Trunk: Worker binary -->
-    <link data-trunk rel="rust" href="Cargo.toml" data-wasm-opt="0" data-bin="worker" data-type="worker" data-bindgen-target="web"
-        data-keep-debug="true" data-inline />
+    <link data-trunk rel="rust" href="Cargo.toml" data-bin="worker" data-type="worker" data-bindgen-target="web"
+        data-wasm-opt="4" data-wasm-opt-params="-g" data-inline />
 
     <!-- Trunk: CSS -->
     <link data-trunk rel="css" href="normalize.css" data-inline />
