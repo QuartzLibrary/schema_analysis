@@ -257,7 +257,7 @@ where
         }
 
         Output::JsonSchema => schema
-            .to_json_schema_with_schemars_version(&JsonSchemaVersion::Draft2019_09)
+            .to_json_schema_with_schemars_version(&JsonSchemaVersion::Draft2020_12)
             .context("Failed to generate JSON Schema"),
 
         output => {

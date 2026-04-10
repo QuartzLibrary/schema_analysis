@@ -43,9 +43,9 @@ pub enum JsonSchemaVersion {
     /// [schemars::generate::SchemaSettings::draft07]
     Draft07,
     /// [schemars::generate::SchemaSettings::draft2019_09]
-    #[default]
     Draft2019_09,
     /// [schemars::generate::SchemaSettings::draft2020_12]
+    #[default]
     Draft2020_12,
     /// [schemars::generate::SchemaSettings::openapi3]
     OpenApi3,

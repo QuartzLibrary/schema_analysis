@@ -11,7 +11,7 @@ struct JSchema;
 
 test_format!(JSchema);
 
-const SCHEMA_TYPE: &str = "https://json-schema.org/draft/2019-09/schema";
+const SCHEMA_TYPE: &str = "https://json-schema.org/draft/2020-12/schema";
 
 impl FormatTests for JSchema {
     type Value = Value;
