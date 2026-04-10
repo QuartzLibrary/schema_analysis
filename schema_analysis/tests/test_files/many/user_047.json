@@ -1,0 +1,19 @@
+{
+  "id": 47,
+  "name": "Patricia Garcia",
+  "email": "villegaskristin@example.com",
+  "address": {
+    "street": "5654 Moore Islands",
+    "city": "New Molly",
+    "zip": "44564",
+    "country": "MW"
+  },
+  "age": 32,
+  "active": false,
+  "balance": 825.42,
+  "tags": [
+    "vip",
+    "gamma"
+  ],
+  "joined": "1983-12-05T15:01:12.072311"
+}

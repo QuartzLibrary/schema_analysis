@@ -1,0 +1,20 @@
+{
+  "id": 64,
+  "name": "Charles Walker",
+  "email": "rmalone@example.org",
+  "address": {
+    "street": "91325 Colton Radial Apt. 419",
+    "city": "East Jesusmouth",
+    "zip": "62309",
+    "country": "BJ"
+  },
+  "age": 80,
+  "active": false,
+  "balance": 8694.09,
+  "tags": [
+    "gamma",
+    "alpha",
+    "delta"
+  ],
+  "joined": "2023-03-22T04:39:58.049915"
+}

@@ -1,0 +1,18 @@
+{
+  "id": 36,
+  "name": "Carolyn Rodriguez",
+  "email": "lwalker@example.net",
+  "address": {
+    "street": "24155 Pugh Parkway Suite 908",
+    "city": "Port Scott",
+    "zip": "68388",
+    "country": "PS"
+  },
+  "age": 86,
+  "active": false,
+  "balance": 9455.11,
+  "tags": [
+    "beta"
+  ],
+  "joined": "2009-10-06T19:05:25.385120"
+}

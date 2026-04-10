@@ -1,0 +1,19 @@
+{
+  "id": 89,
+  "name": "William Arnold",
+  "email": "perkinsjohn@example.com",
+  "address": {
+    "street": "5057 Victor Meadow Apt. 219",
+    "city": "Johnburgh",
+    "zip": "26375",
+    "country": "DZ"
+  },
+  "age": 70,
+  "active": false,
+  "balance": 90.36,
+  "tags": [
+    "delta",
+    "vip"
+  ],
+  "joined": "2005-03-27T14:36:29.558054"
+}

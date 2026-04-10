@@ -1,0 +1,18 @@
+{
+  "id": 19,
+  "name": "Cody Mercado",
+  "email": "weavershelby@example.com",
+  "address": {
+    "street": "91789 Koch Cape Apt. 712",
+    "city": "Smithmouth",
+    "zip": "14687",
+    "country": "CY"
+  },
+  "age": 86,
+  "active": true,
+  "balance": 2721.54,
+  "tags": [
+    "alpha"
+  ],
+  "joined": "2016-04-22T12:34:06.665192"
+}

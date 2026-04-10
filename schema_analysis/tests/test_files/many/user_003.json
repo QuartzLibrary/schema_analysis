@@ -1,0 +1,18 @@
+{
+  "id": 3,
+  "name": "Cheryl Gonzales",
+  "email": "olivia78@example.org",
+  "address": {
+    "street": "083 Bullock Bridge",
+    "city": "East Hannahtown",
+    "zip": "62008",
+    "country": "SK"
+  },
+  "age": 87,
+  "active": true,
+  "balance": 7255.22,
+  "tags": [
+    "gamma"
+  ],
+  "joined": "1993-03-25T20:24:45.246960"
+}

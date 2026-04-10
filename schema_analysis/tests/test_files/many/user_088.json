@@ -1,0 +1,20 @@
+{
+  "id": 88,
+  "name": "Jessica Edwards",
+  "email": "leslie32@example.com",
+  "address": {
+    "street": "964 Hannah Green Suite 987",
+    "city": "Hardinfurt",
+    "zip": "91889",
+    "country": "AZ"
+  },
+  "age": 60,
+  "active": true,
+  "balance": 3785.57,
+  "tags": [
+    "alpha",
+    "delta",
+    "vip"
+  ],
+  "joined": "1994-08-27T19:13:43.615328"
+}

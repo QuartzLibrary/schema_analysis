@@ -1,0 +1,18 @@
+{
+  "id": 95,
+  "name": "Anthony Phelps",
+  "email": "cassandra83@example.com",
+  "address": {
+    "street": "924 Snyder Rue Suite 614",
+    "city": "South Denise",
+    "zip": "03163",
+    "country": "AR"
+  },
+  "age": 78,
+  "active": true,
+  "balance": 2980.89,
+  "tags": [
+    "delta"
+  ],
+  "joined": "2008-03-26T10:59:57.559206"
+}

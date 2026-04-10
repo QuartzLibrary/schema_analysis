@@ -1,0 +1,19 @@
+{
+  "id": 28,
+  "name": "Sandra Scott",
+  "email": "katherine78@example.com",
+  "address": {
+    "street": "51102 Donald Green",
+    "city": "New Johnbury",
+    "zip": "99903",
+    "country": "LU"
+  },
+  "age": 67,
+  "active": false,
+  "balance": 6008.56,
+  "tags": [
+    "delta",
+    "gamma"
+  ],
+  "joined": "2015-08-12T01:33:20.766049"
+}

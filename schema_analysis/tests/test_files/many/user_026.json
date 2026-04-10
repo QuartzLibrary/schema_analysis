@@ -1,0 +1,18 @@
+{
+  "id": 26,
+  "name": "Gabriel Young",
+  "email": "matthewphillips@example.org",
+  "address": {
+    "street": "51805 Sherry Plains Apt. 785",
+    "city": "Hallmouth",
+    "zip": "39274",
+    "country": "HR"
+  },
+  "age": 26,
+  "active": false,
+  "balance": 7007.92,
+  "tags": [
+    "vip"
+  ],
+  "joined": "1973-11-17T13:57:24.703280"
+}

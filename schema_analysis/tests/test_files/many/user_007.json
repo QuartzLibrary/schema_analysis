@@ -1,0 +1,19 @@
+{
+  "id": 7,
+  "name": "David Blanchard",
+  "email": "ddelgado@example.net",
+  "address": {
+    "street": "847 Melissa Villages",
+    "city": "Lake Terri",
+    "zip": "18495",
+    "country": "LY"
+  },
+  "age": 33,
+  "active": false,
+  "balance": 3232.84,
+  "tags": [
+    "alpha",
+    "vip"
+  ],
+  "joined": "1983-03-31T07:27:35.814185"
+}

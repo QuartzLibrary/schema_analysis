@@ -1,0 +1,20 @@
+{
+  "id": 70,
+  "name": "Katherine Boone",
+  "email": "joshua26@example.org",
+  "address": {
+    "street": "1669 Valerie Ramp",
+    "city": "South Mark",
+    "zip": "50311",
+    "country": "CM"
+  },
+  "age": 75,
+  "active": true,
+  "balance": 5236.8,
+  "tags": [
+    "vip",
+    "beta",
+    "gamma"
+  ],
+  "joined": "1985-11-25T01:02:00.495561"
+}

@@ -1,0 +1,16 @@
+{
+  "id": 65,
+  "name": "Robin Le",
+  "email": "catherine26@example.net",
+  "address": {
+    "street": "29246 Graham Vista Apt. 366",
+    "city": "Cunninghamchester",
+    "zip": "45777",
+    "country": "DM"
+  },
+  "age": 36,
+  "active": true,
+  "balance": 3007.96,
+  "tags": [],
+  "joined": "2018-10-11T00:14:27.840827"
+}

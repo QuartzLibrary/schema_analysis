@@ -1,0 +1,20 @@
+{
+  "id": 80,
+  "name": "Andrew Little",
+  "email": "chelsea10@example.com",
+  "address": {
+    "street": "04399 James Crest",
+    "city": "Parkerhaven",
+    "zip": "90171",
+    "country": "BD"
+  },
+  "age": 68,
+  "active": true,
+  "balance": 2268.03,
+  "tags": [
+    "vip",
+    "gamma",
+    "alpha"
+  ],
+  "joined": "1973-10-28T02:28:30.275318"
+}

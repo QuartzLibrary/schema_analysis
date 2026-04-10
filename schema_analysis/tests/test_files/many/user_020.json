@@ -1,0 +1,18 @@
+{
+  "id": 20,
+  "name": "Elizabeth Garner",
+  "email": "edwardscarolyn@example.org",
+  "address": {
+    "street": "632 Golden Islands Suite 020",
+    "city": "North Gordon",
+    "zip": "35590",
+    "country": "GA"
+  },
+  "age": 83,
+  "active": true,
+  "balance": 3806.49,
+  "tags": [
+    "beta"
+  ],
+  "joined": "1990-09-04T16:00:21.753375"
+}

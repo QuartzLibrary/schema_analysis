@@ -1,0 +1,19 @@
+{
+  "id": 63,
+  "name": "Ruben Grant",
+  "email": "roger45@example.com",
+  "address": {
+    "street": "771 Joseph Freeway Apt. 734",
+    "city": "Port Crystalfort",
+    "zip": "94716",
+    "country": "NA"
+  },
+  "age": 31,
+  "active": true,
+  "balance": 2713.12,
+  "tags": [
+    "vip",
+    "beta"
+  ],
+  "joined": "2022-09-19T07:37:21.849972"
+}

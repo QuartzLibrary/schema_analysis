@@ -1,0 +1,18 @@
+{
+  "id": 4,
+  "name": "Zachary Williamson",
+  "email": "vhernandez@example.net",
+  "address": {
+    "street": "4747 Larry Plains",
+    "city": "New Theresaside",
+    "zip": "38496",
+    "country": "GW"
+  },
+  "age": 88,
+  "active": true,
+  "balance": 1499.11,
+  "tags": [
+    "gamma"
+  ],
+  "joined": "2013-11-13T05:36:20.053885"
+}

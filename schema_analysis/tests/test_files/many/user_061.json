@@ -1,0 +1,18 @@
+{
+  "id": 61,
+  "name": "Veronica Contreras",
+  "email": "jchen@example.net",
+  "address": {
+    "street": "1909 Snow Road Suite 789",
+    "city": "Lake Laura",
+    "zip": "59893",
+    "country": "LK"
+  },
+  "age": 71,
+  "active": true,
+  "balance": 1808.06,
+  "tags": [
+    "alpha"
+  ],
+  "joined": "2010-08-20T09:24:32.383129"
+}

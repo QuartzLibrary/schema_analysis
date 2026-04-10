@@ -1,0 +1,9 @@
+@use 'picker-base' as *;
+
+.sa-format {
+  @include picker-base(0.5rem);
+
+  &__label { @include picker-label; }
+  &__options { @include picker-options; }
+  &__btn { @include picker-btn; }
+}

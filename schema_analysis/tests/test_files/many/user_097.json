@@ -1,0 +1,16 @@
+{
+  "id": 97,
+  "name": "Kristen Davis MD",
+  "email": "robertmorrison@example.net",
+  "address": {
+    "street": "0757 Andrews Rue Suite 274",
+    "city": "Shawnstad",
+    "zip": "91283",
+    "country": "CD"
+  },
+  "age": 39,
+  "active": false,
+  "balance": 5527.18,
+  "tags": [],
+  "joined": "1989-11-02T13:45:57.863411"
+}

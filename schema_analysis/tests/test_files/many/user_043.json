@@ -1,0 +1,16 @@
+{
+  "id": 43,
+  "name": "Christina Fisher",
+  "email": "zgordon@example.com",
+  "address": {
+    "street": "978 Joshua Summit Suite 221",
+    "city": "North Ricky",
+    "zip": "00967",
+    "country": "SM"
+  },
+  "age": 28,
+  "active": true,
+  "balance": 4156.31,
+  "tags": [],
+  "joined": "2009-07-03T12:05:11.004833"
+}

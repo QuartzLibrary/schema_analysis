@@ -1,0 +1,18 @@
+{
+  "id": 54,
+  "name": "Chad Mills",
+  "email": "aphillips@example.com",
+  "address": {
+    "street": "2866 Robert Village",
+    "city": "Lake Brett",
+    "zip": "51245",
+    "country": "UG"
+  },
+  "age": 73,
+  "active": true,
+  "balance": 8957.54,
+  "tags": [
+    "vip"
+  ],
+  "joined": "2020-04-28T16:25:04.118831"
+}

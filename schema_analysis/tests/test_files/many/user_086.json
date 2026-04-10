@@ -1,0 +1,20 @@
+{
+  "id": 86,
+  "name": "Sean Chung",
+  "email": "daniel88@example.com",
+  "address": {
+    "street": "2476 Jose Ranch Suite 848",
+    "city": "Danielhaven",
+    "zip": "92383",
+    "country": "PL"
+  },
+  "age": 24,
+  "active": false,
+  "balance": 6645.9,
+  "tags": [
+    "trial",
+    "beta",
+    "gamma"
+  ],
+  "joined": "1975-04-16T12:23:50.084395"
+}

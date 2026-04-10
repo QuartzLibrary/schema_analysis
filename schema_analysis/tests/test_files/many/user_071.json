@@ -1,0 +1,19 @@
+{
+  "id": 71,
+  "name": "Teresa Garcia",
+  "email": "dstafford@example.net",
+  "address": {
+    "street": "12679 Mathews Port Apt. 132",
+    "city": "West Mark",
+    "zip": "72111",
+    "country": "KE"
+  },
+  "age": 73,
+  "active": true,
+  "balance": 892.45,
+  "tags": [
+    "vip",
+    "beta"
+  ],
+  "joined": "1977-04-24T00:13:16.533289"
+}

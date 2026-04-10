@@ -1,0 +1,18 @@
+{
+  "id": 74,
+  "name": "Sharon Vasquez",
+  "email": "bonnie22@example.org",
+  "address": {
+    "street": "3119 Frank Manor",
+    "city": "Andrewtown",
+    "zip": "21334",
+    "country": "UZ"
+  },
+  "age": 62,
+  "active": false,
+  "balance": 543.83,
+  "tags": [
+    "trial"
+  ],
+  "joined": "2019-09-30T09:44:27.322902"
+}

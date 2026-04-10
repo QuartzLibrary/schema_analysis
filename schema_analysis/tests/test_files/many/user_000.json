@@ -1,0 +1,20 @@
+{
+  "id": 0,
+  "name": "Zachary Williams",
+  "email": "jthompson@example.net",
+  "address": {
+    "street": "74215 Patterson Cliff",
+    "city": "New Cynthia",
+    "zip": "26030",
+    "country": "TJ"
+  },
+  "age": 22,
+  "active": true,
+  "balance": 1544.81,
+  "tags": [
+    "vip",
+    "delta",
+    "gamma"
+  ],
+  "joined": "2001-02-15T06:55:18.198357"
+}

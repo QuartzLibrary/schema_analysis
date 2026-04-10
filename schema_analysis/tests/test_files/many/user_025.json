@@ -1,0 +1,19 @@
+{
+  "id": 25,
+  "name": "Deborah Gonzalez",
+  "email": "zhowell@example.com",
+  "address": {
+    "street": "321 Kristin Track Suite 809",
+    "city": "Lake Angela",
+    "zip": "01282",
+    "country": "SY"
+  },
+  "age": 41,
+  "active": false,
+  "balance": 511.89,
+  "tags": [
+    "delta",
+    "gamma"
+  ],
+  "joined": "2008-12-23T16:48:40.266790"
+}

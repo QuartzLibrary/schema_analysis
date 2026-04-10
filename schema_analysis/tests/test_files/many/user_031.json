@@ -1,0 +1,20 @@
+{
+  "id": 31,
+  "name": "Richard Robinson",
+  "email": "robert04@example.org",
+  "address": {
+    "street": "6281 Willie Island",
+    "city": "Burtonstad",
+    "zip": "18848",
+    "country": "IQ"
+  },
+  "age": 78,
+  "active": true,
+  "balance": 8932.4,
+  "tags": [
+    "beta",
+    "gamma",
+    "vip"
+  ],
+  "joined": "1980-11-21T08:25:07.569128"
+}

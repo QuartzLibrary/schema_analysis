@@ -1,0 +1,20 @@
+{
+  "id": 85,
+  "name": "Richard Ramirez",
+  "email": "njones@example.org",
+  "address": {
+    "street": "734 Jeffrey Junction Apt. 840",
+    "city": "Nathanielborough",
+    "zip": "33054",
+    "country": "AR"
+  },
+  "age": 78,
+  "active": false,
+  "balance": 8329.43,
+  "tags": [
+    "alpha",
+    "delta",
+    "trial"
+  ],
+  "joined": "1982-10-07T08:59:51.847390"
+}

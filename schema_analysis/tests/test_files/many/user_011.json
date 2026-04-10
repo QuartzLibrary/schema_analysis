@@ -1,0 +1,16 @@
+{
+  "id": 11,
+  "name": "Kathryn Hall",
+  "email": "elarson@example.org",
+  "address": {
+    "street": "84967 Paul Lane",
+    "city": "North Stephaniemouth",
+    "zip": "23833",
+    "country": "SR"
+  },
+  "age": 31,
+  "active": false,
+  "balance": 969.94,
+  "tags": [],
+  "joined": "2024-09-11T22:14:10.134128"
+}

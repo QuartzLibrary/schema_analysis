@@ -1,0 +1,20 @@
+{
+  "id": 99,
+  "name": "Todd Mcmillan",
+  "email": "uwilliams@example.com",
+  "address": {
+    "street": "98926 Cox Locks",
+    "city": "Amyhaven",
+    "zip": "42612",
+    "country": "TL"
+  },
+  "age": 31,
+  "active": false,
+  "balance": 2553.11,
+  "tags": [
+    "vip",
+    "gamma",
+    "beta"
+  ],
+  "joined": "2013-04-01T22:22:02.673872"
+}

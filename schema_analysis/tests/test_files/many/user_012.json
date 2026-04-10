@@ -1,0 +1,16 @@
+{
+  "id": 12,
+  "name": "Sarah Shaffer",
+  "email": "tylerlane@example.net",
+  "address": {
+    "street": "6298 Flores Fords Apt. 164",
+    "city": "Tuckerland",
+    "zip": "17484",
+    "country": "NO"
+  },
+  "age": 88,
+  "active": true,
+  "balance": 4232.68,
+  "tags": [],
+  "joined": "1991-01-26T11:22:30.575129"
+}

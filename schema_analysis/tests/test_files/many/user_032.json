@@ -1,0 +1,16 @@
+{
+  "id": 32,
+  "name": "Richard Hall",
+  "email": "geoffreybarnett@example.com",
+  "address": {
+    "street": "57567 Catherine Street Suite 474",
+    "city": "Olsonton",
+    "zip": "25314",
+    "country": "VN"
+  },
+  "age": 72,
+  "active": true,
+  "balance": 2425.86,
+  "tags": [],
+  "joined": "1998-12-05T03:33:48.661083"
+}

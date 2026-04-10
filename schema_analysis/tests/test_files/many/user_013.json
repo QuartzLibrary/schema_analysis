@@ -1,0 +1,19 @@
+{
+  "id": 13,
+  "name": "Gregory Robinson",
+  "email": "villanuevaashley@example.com",
+  "address": {
+    "street": "45683 Nichols Orchard",
+    "city": "Christinahaven",
+    "zip": "64184",
+    "country": "NA"
+  },
+  "age": 28,
+  "active": true,
+  "balance": 9989.42,
+  "tags": [
+    "beta",
+    "delta"
+  ],
+  "joined": "1977-07-27T02:46:06.628472"
+}

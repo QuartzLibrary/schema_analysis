@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: light dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free online tool to infer schemas from data files. Supports JSON, YAML, TOML, XML, CBOR, and BSON. Generate Rust, TypeScript, Kotlin types and JSON Schema." />
+    <link rel="canonical" href="https://schema-analysis.com/" />
+    <meta property="og:title" content="Schema Analysis" />
+    <meta property="og:description" content="Infer schemas from data files. Supports JSON, YAML, TOML, XML, CBOR, and BSON." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://schema-analysis.com/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Schema Analysis" />
+    <meta name="twitter:description" content="Infer schemas from data files. Supports JSON, YAML, TOML, XML, CBOR, and BSON." />
+    <title>Schema Analysis</title>
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="assets/manifest.json" />
+
+    <!-- Preconnect to CDN for faster stylesheet/script loading -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+    <!-- Trunk: Main app binary -->
+    <link data-trunk rel="rust" href="Cargo.toml" data-wasm-opt="0" data-bin="schema_analysis_web" data-type="main"
+        data-keep-debug="true" data-inline />
+
+    <!-- Trunk: Worker binary -->
+    <link data-trunk rel="rust" href="Cargo.toml" data-wasm-opt="0" data-bin="worker" data-type="worker" data-bindgen-target="web"
+        data-keep-debug="true" data-inline />
+
+    <!-- Trunk: CSS -->
+    <link data-trunk rel="css" href="normalize.css" data-inline />
+    <link data-trunk rel="sass" href="index.scss" data-inline />
+
+    <!-- Trunk: Copy assets -->
+    <link data-trunk rel="copy-dir" href="assets" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" />
+
+    <!-- Theme color for browser chrome -->
+    <meta name="theme-color" content="#f5f5f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)" />
+
+    <!-- Syntax highlighting: highlight.js (light/dark themes) -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/a11y-light.min.css"
+        integrity="sha512-WDk6RzwygsN9KecRHAfm9HTN87LQjqdygDmkHSJxVkVI7ErCZ8ZWxP6T8RvBujY1n2/E4Ac+bn2ChXnp5rnnHA=="
+        crossorigin="anonymous"
+        media="(prefers-color-scheme: light)" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/a11y-dark.min.css"
+        integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
+        crossorigin="anonymous"
+        media="(prefers-color-scheme: dark)" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+        integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ=="
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js"
+        integrity="sha512-vp/BmF+BW+m/wuIgSZQYqoB2Rwz46sD8YnVM51unvyvOcqYOwyP1BMAO4lHfmVpSZ+eeJAPnkk2fv7mdQN5HDw=="
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"
+        integrity="sha512-4vpIjGsfq0+egLN5rGwjaJIRTStudg+Mw8oEqQXo9VHbacv6NnmtG8BAHPokUpus1LaXCyyfDOgFYSp/xsupPg=="
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"
+        integrity="sha512-GsPn8jZedZaPLThVdRVJ9kvS02HmLZBsoC9qon3IZE8Al7pUBlDIK4IzAtMbxtZ2GtLMFhHusOLTwf2JIDr0oA=="
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"
+        integrity="sha512-Tj35Q81ghoSFK84ee0H7qn2IjAyKwZQ9oYJDjtBmKOmlSz3MUqHrXxoMxIR9GrXzFakEiSV/VMrWwyAp45Bqjw=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div id="loading" role="status" aria-label="Loading application">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Loading&hellip;</p>
+    </div>
+</body>
+
+</html>

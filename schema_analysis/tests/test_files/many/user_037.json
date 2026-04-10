@@ -1,0 +1,20 @@
+{
+  "id": 37,
+  "name": "Chelsea Dominguez",
+  "email": "kevin69@example.com",
+  "address": {
+    "street": "07381 Baxter Inlet Apt. 452",
+    "city": "East Mark",
+    "zip": "14052",
+    "country": "GD"
+  },
+  "age": 60,
+  "active": false,
+  "balance": 2785.43,
+  "tags": [
+    "trial",
+    "alpha",
+    "gamma"
+  ],
+  "joined": "1981-07-06T18:02:37.675455"
+}

@@ -1,0 +1,20 @@
+{
+  "id": 83,
+  "name": "Stephen Spears",
+  "email": "salaswayne@example.com",
+  "address": {
+    "street": "12672 Perry Walk Apt. 031",
+    "city": "Williamsside",
+    "zip": "05599",
+    "country": "RS"
+  },
+  "age": 72,
+  "active": false,
+  "balance": 5945.63,
+  "tags": [
+    "trial",
+    "vip",
+    "beta"
+  ],
+  "joined": "1992-12-22T23:40:58.821998"
+}

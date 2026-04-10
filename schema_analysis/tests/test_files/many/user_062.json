@@ -1,0 +1,19 @@
+{
+  "id": 62,
+  "name": "Terri Flores",
+  "email": "james19@example.com",
+  "address": {
+    "street": "92172 Jennifer Locks",
+    "city": "South Michaelstad",
+    "zip": "35184",
+    "country": "NR"
+  },
+  "age": 57,
+  "active": true,
+  "balance": 6574.97,
+  "tags": [
+    "delta",
+    "beta"
+  ],
+  "joined": "1983-07-21T07:52:27.087493"
+}

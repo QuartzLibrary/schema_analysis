@@ -1,0 +1,52 @@
+@mixin picker-base($margin-bottom: 0.5rem) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin-bottom: $margin-bottom;
+}
+
+@mixin picker-label {
+  color: var(--sa-text-dim);
+  font-size: 0.85rem;
+  margin-right: 0.25rem;
+}
+
+@mixin picker-options {
+  display: flex;
+  gap: 0.1rem;
+  flex-wrap: wrap;
+}
+
+@mixin picker-btn {
+  background: none;
+  border: none;
+  color: var(--sa-text-dim);
+  padding: 0.15rem 0.4rem;
+  cursor: pointer;
+  font-family: var(--sa-font-mono);
+  font-size: 0.85rem;
+
+  &:hover {
+    color: var(--sa-text);
+  }
+
+  &:active {
+    color: var(--sa-accent-active);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sa-accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &--active {
+    color: var(--sa-accent);
+    text-decoration: underline;
+  }
+}

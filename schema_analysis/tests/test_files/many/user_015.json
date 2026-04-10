@@ -1,0 +1,16 @@
+{
+  "id": 15,
+  "name": "Joseph Murphy",
+  "email": "stephenoliver@example.com",
+  "address": {
+    "street": "704 Kristy Street Suite 013",
+    "city": "New Cameronburgh",
+    "zip": "36309",
+    "country": "LA"
+  },
+  "age": 67,
+  "active": false,
+  "balance": 5889.81,
+  "tags": [],
+  "joined": "1997-05-28T00:01:53.466086"
+}

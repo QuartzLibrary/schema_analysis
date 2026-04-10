@@ -1,0 +1,18 @@
+{
+  "id": 72,
+  "name": "Lori White",
+  "email": "gonzalezdonald@example.net",
+  "address": {
+    "street": "14028 Kristopher Port Suite 471",
+    "city": "Brownberg",
+    "zip": "84630",
+    "country": "CY"
+  },
+  "age": 76,
+  "active": true,
+  "balance": 7155.73,
+  "tags": [
+    "delta"
+  ],
+  "joined": "1999-11-06T18:02:12.904753"
+}

@@ -1,0 +1,19 @@
+{
+  "id": 44,
+  "name": "Jeffery Roy",
+  "email": "njones@example.org",
+  "address": {
+    "street": "473 Travis Street Apt. 382",
+    "city": "South Brandy",
+    "zip": "35976",
+    "country": "MT"
+  },
+  "age": 87,
+  "active": false,
+  "balance": 2061.59,
+  "tags": [
+    "beta",
+    "alpha"
+  ],
+  "joined": "2018-10-12T07:15:55.939924"
+}

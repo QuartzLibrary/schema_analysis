@@ -1,0 +1,18 @@
+{
+  "id": 23,
+  "name": "Zoe Smith",
+  "email": "butlerfrancis@example.org",
+  "address": {
+    "street": "358 Lawson Island Apt. 687",
+    "city": "Michellebury",
+    "zip": "54802",
+    "country": "BT"
+  },
+  "age": 54,
+  "active": true,
+  "balance": 2117.04,
+  "tags": [
+    "beta"
+  ],
+  "joined": "1972-12-14T05:58:51.870891"
+}

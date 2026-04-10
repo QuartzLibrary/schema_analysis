@@ -1,0 +1,16 @@
+{
+  "id": 6,
+  "name": "Jennifer Hunter",
+  "email": "timothy33@example.net",
+  "address": {
+    "street": "4458 Derrick Spring Apt. 380",
+    "city": "Williamsmouth",
+    "zip": "98226",
+    "country": "AM"
+  },
+  "age": 61,
+  "active": false,
+  "balance": 9553.64,
+  "tags": [],
+  "joined": "2023-07-06T23:48:52.076911"
+}

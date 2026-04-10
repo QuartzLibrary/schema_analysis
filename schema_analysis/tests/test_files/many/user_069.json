@@ -1,0 +1,16 @@
+{
+  "id": 69,
+  "name": "Nina Rodriguez",
+  "email": "amyers@example.org",
+  "address": {
+    "street": "390 Hernandez Shore Suite 009",
+    "city": "Martinshire",
+    "zip": "50032",
+    "country": "MC"
+  },
+  "age": 70,
+  "active": true,
+  "balance": 2432.64,
+  "tags": [],
+  "joined": "1976-02-19T08:05:14.055205"
+}

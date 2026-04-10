@@ -1,0 +1,19 @@
+{
+  "id": 55,
+  "name": "Mark Gray MD",
+  "email": "johnsonerin@example.org",
+  "address": {
+    "street": "994 Julie Loop Suite 748",
+    "city": "East Mike",
+    "zip": "87305",
+    "country": "MG"
+  },
+  "age": 54,
+  "active": true,
+  "balance": 2124.47,
+  "tags": [
+    "gamma",
+    "vip"
+  ],
+  "joined": "1981-08-05T14:09:05.408391"
+}

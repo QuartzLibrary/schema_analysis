@@ -1,0 +1,19 @@
+{
+  "id": 66,
+  "name": "Ryan Martinez",
+  "email": "gmunoz@example.org",
+  "address": {
+    "street": "5083 David Row",
+    "city": "North Rickey",
+    "zip": "31008",
+    "country": "KI"
+  },
+  "age": 48,
+  "active": true,
+  "balance": 4489.72,
+  "tags": [
+    "gamma",
+    "alpha"
+  ],
+  "joined": "2009-08-16T19:38:34.853771"
+}

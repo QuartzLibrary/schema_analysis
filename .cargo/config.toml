@@ -1,0 +1,8 @@
+[target.wasm32-unknown-unknown]
+rustflags = ['--cfg', 'getrandom_backend="wasm_js"'] # '--cfg', 'leptos_debuginfo' (bug upstream)
+
+# [patch.'https://github.com/QuartzLibrary/leptos_ext']
+# leptos_ext = { path = "../leptos_ext" }
+
+# [patch.crates-io]
+# leptos = { path = "../../leptos/leptos" }

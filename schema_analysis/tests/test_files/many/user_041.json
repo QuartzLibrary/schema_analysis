@@ -1,0 +1,20 @@
+{
+  "id": 41,
+  "name": "Luke Reeves",
+  "email": "mreyes@example.com",
+  "address": {
+    "street": "2955 Owens Land Apt. 863",
+    "city": "Michelehaven",
+    "zip": "20631",
+    "country": "MK"
+  },
+  "age": 20,
+  "active": false,
+  "balance": 6824.27,
+  "tags": [
+    "delta",
+    "alpha",
+    "vip"
+  ],
+  "joined": "2007-02-26T17:18:15.083274"
+}

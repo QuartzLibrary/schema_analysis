@@ -1,0 +1,19 @@
+{
+  "id": 98,
+  "name": "Jack Jones",
+  "email": "smithdavid@example.org",
+  "address": {
+    "street": "017 David Parkway Suite 514",
+    "city": "Ericburgh",
+    "zip": "08101",
+    "country": "HR"
+  },
+  "age": 24,
+  "active": false,
+  "balance": 7627.69,
+  "tags": [
+    "trial",
+    "gamma"
+  ],
+  "joined": "1974-09-01T16:42:22.007800"
+}

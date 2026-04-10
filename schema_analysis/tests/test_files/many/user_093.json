@@ -1,0 +1,19 @@
+{
+  "id": 93,
+  "name": "Darryl Morris",
+  "email": "hoffmanelizabeth@example.com",
+  "address": {
+    "street": "0354 Robert Pike Apt. 684",
+    "city": "North David",
+    "zip": "12317",
+    "country": "CF"
+  },
+  "age": 20,
+  "active": true,
+  "balance": 3756.23,
+  "tags": [
+    "vip",
+    "delta"
+  ],
+  "joined": "2015-11-03T12:50:05.389262"
+}

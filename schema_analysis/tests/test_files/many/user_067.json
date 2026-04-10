@@ -1,0 +1,16 @@
+{
+  "id": 67,
+  "name": "Kelli Young",
+  "email": "robertosellers@example.net",
+  "address": {
+    "street": "212 Robbins Turnpike",
+    "city": "Cathyville",
+    "zip": "12845",
+    "country": "BW"
+  },
+  "age": 34,
+  "active": false,
+  "balance": 4992.37,
+  "tags": [],
+  "joined": "2003-02-10T15:42:55.592860"
+}

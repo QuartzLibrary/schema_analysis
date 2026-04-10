@@ -1,0 +1,16 @@
+{
+  "id": 24,
+  "name": "Michelle Jones",
+  "email": "johnsonkevin@example.net",
+  "address": {
+    "street": "56404 Bowen Lights Apt. 149",
+    "city": "East Bryanchester",
+    "zip": "43837",
+    "country": "WS"
+  },
+  "age": 35,
+  "active": false,
+  "balance": 8463.86,
+  "tags": [],
+  "joined": "1977-07-18T22:48:45.158813"
+}

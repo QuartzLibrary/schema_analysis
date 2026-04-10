@@ -1,0 +1,63 @@
+[package]
+name = "web_worker"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+utile.workspace = true
+
+# Web APIs
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = [
+    "Blob",
+    "BlobPropertyBag",
+    "DataTransfer",
+    "DedicatedWorkerGlobalScope",
+    "Document",
+    "DragEvent",
+    "Element",
+    "ErrorEvent",
+    "Event",
+    "File",
+    "FileList",
+    "HtmlAnchorElement",
+    "HtmlInputElement",
+    "HtmlSelectElement",
+    "HtmlTextAreaElement",
+    "ImageBitmap",
+    "KeyboardEvent",
+    "Location",
+    "MessageEvent",
+    "MessagePort",
+    "OffscreenCanvas",
+    "ReadableStream",
+    "Response",
+    "TransformStream",
+    "Url",
+    "VideoFrame",
+    "Window",
+    "Worker",
+    "WorkerOptions",
+    "WorkerType",
+    "WritableStream",
+] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Serde-JsValue interop
+serde-wasm-bindgen = "0.6"
+
+# Utilities
+console_error_panic_hook = "0.1"
+console_log = "1"
+log = "0.4"
+futures = "0.3"
+
+# WASM random support
+getrandom = { version = "0.3", features = ["wasm_js"] }
+getrandom2 = { version = "0.2", features = ["js"], package = "getrandom" }
+uuid = { version = "1", features = ["js"] }

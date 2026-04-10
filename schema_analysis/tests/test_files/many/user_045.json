@@ -1,0 +1,18 @@
+{
+  "id": 45,
+  "name": "George Barker",
+  "email": "duncanmatthew@example.org",
+  "address": {
+    "street": "626 Mercedes Glen Apt. 363",
+    "city": "Lake Justin",
+    "zip": "52441",
+    "country": "BJ"
+  },
+  "age": 79,
+  "active": true,
+  "balance": 3169.27,
+  "tags": [
+    "vip"
+  ],
+  "joined": "2005-12-24T10:23:39.062025"
+}

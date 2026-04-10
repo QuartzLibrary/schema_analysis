@@ -1,0 +1,19 @@
+{
+  "id": 40,
+  "name": "Justin Sims",
+  "email": "kristinawilliams@example.com",
+  "address": {
+    "street": "03603 Jennifer Drive Suite 893",
+    "city": "Cindyborough",
+    "zip": "77760",
+    "country": "NE"
+  },
+  "age": 61,
+  "active": false,
+  "balance": 7545.44,
+  "tags": [
+    "trial",
+    "gamma"
+  ],
+  "joined": "1971-11-23T20:19:26.566910"
+}

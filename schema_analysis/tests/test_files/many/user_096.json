@@ -1,0 +1,18 @@
+{
+  "id": 96,
+  "name": "Joshua Smith",
+  "email": "wolfmark@example.net",
+  "address": {
+    "street": "15674 Erica Circle",
+    "city": "Johnsonfurt",
+    "zip": "52293",
+    "country": "FR"
+  },
+  "age": 82,
+  "active": false,
+  "balance": 2725.51,
+  "tags": [
+    "beta"
+  ],
+  "joined": "2024-04-08T13:23:51.657886"
+}

@@ -1,0 +1,16 @@
+{
+  "id": 21,
+  "name": "Zoe Waller",
+  "email": "gary06@example.org",
+  "address": {
+    "street": "38860 Kristen Row Suite 767",
+    "city": "South Terri",
+    "zip": "29804",
+    "country": "NE"
+  },
+  "age": 47,
+  "active": true,
+  "balance": 9297.37,
+  "tags": [],
+  "joined": "1987-04-02T03:12:48.150735"
+}

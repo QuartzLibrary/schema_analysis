@@ -1,0 +1,19 @@
+{
+  "id": 76,
+  "name": "Deborah Barrett",
+  "email": "vasqueznicole@example.org",
+  "address": {
+    "street": "724 Benton Harbor",
+    "city": "East Tanya",
+    "zip": "87534",
+    "country": "TV"
+  },
+  "age": 51,
+  "active": false,
+  "balance": 9198.29,
+  "tags": [
+    "delta",
+    "trial"
+  ],
+  "joined": "1975-07-16T19:42:35.219487"
+}

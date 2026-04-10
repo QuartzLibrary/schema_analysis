@@ -1,0 +1,16 @@
+{
+  "id": 29,
+  "name": "Chelsea Cummings",
+  "email": "mgomez@example.org",
+  "address": {
+    "street": "00528 Crystal Radial Suite 858",
+    "city": "South Juliahaven",
+    "zip": "97995",
+    "country": "UZ"
+  },
+  "age": 81,
+  "active": true,
+  "balance": 8251.23,
+  "tags": [],
+  "joined": "2002-09-11T17:29:05.751479"
+}

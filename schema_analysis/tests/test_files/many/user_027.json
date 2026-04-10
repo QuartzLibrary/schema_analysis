@@ -1,0 +1,16 @@
+{
+  "id": 27,
+  "name": "Gabriel Goodwin",
+  "email": "cindy77@example.com",
+  "address": {
+    "street": "005 Marie Oval",
+    "city": "North Stephen",
+    "zip": "72690",
+    "country": "IR"
+  },
+  "age": 83,
+  "active": false,
+  "balance": 8377.35,
+  "tags": [],
+  "joined": "1973-10-15T23:47:32.378245"
+}
