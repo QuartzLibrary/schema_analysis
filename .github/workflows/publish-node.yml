@@ -49,11 +49,16 @@ jobs:
 
       - name: Rename binary (unix)
         if: runner.os != 'Windows'
-        run: cp target/${{ matrix.target }}/release/schema_analysis packages/node/binaries/${{ matrix.binary }}
+        run: |
+          mkdir -p packages/node/binaries
+          cp target/${{ matrix.target }}/release/schema_analysis packages/node/binaries/${{ matrix.binary }}
 
       - name: Rename binary (windows)
         if: runner.os == 'Windows'
-        run: cp target/${{ matrix.target }}/release/schema_analysis.exe packages/node/binaries/${{ matrix.binary }}
+        shell: bash
+        run: |
+          mkdir -p packages/node/binaries
+          cp target/${{ matrix.target }}/release/schema_analysis.exe packages/node/binaries/${{ matrix.binary }}
 
       - uses: actions/upload-artifact@v4
         with:
