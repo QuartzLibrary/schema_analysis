@@ -219,8 +219,8 @@ where
         }
         InputFormat::Toml => {
             let s = read_all_string(reader)?;
-            let mut de = toml::Deserializer::new(&s);
-            inferred.deserialize(&mut de)?;
+            let de = toml::Deserializer::parse(&s)?;
+            inferred.deserialize(de)?;
         }
         InputFormat::Bson => {
             let doc = bson::Document::from_reader(reader).context("Failed to parse BSON")?;

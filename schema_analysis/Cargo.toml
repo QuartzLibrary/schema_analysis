@@ -56,7 +56,7 @@ anyhow = { version = "1", optional = true }
 # Format parsers for CLI (optional, behind "cli" feature)
 serde_yaml = { version = "0.9", optional = true }
 serde_cbor = { version = "0.11", optional = true }
-toml = { version = "0.5", optional = true }
+toml = { version = "1", optional = true, features = ["preserve_order"] }
 bson = { version = "2", optional = true }
 quick-xml = { version = "0.26", features = ["serialize"], optional = true }
 
@@ -68,7 +68,7 @@ linked-hash-map = "0.5" # Used by json_typegen for structs.
 serde_json = "1"
 serde_yaml = "0.9"
 serde_cbor = "0.11"
-toml = "0.5"
+toml = { version = "1", features = ["preserve_order"] }
 bson = "2"
 quick-xml = {version = "0.26", features = ["serialize"]}
 
