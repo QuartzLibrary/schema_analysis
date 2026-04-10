@@ -1,7 +1,5 @@
 //! Integration with [schemars](https://github.com/GREsau/schemars)
 
-use schemars::schema as schemars_types;
-
 use crate::{Schema, context::Context};
 
 impl<C: Context> Schema<C> {
@@ -16,71 +14,68 @@ impl<C: Context> Schema<C> {
         &self,
         version: &JsonSchemaVersion,
     ) -> serde_json::Result<String> {
-        let settings: schemars::r#gen::SchemaSettings = version.to_schemars_settings();
-        let mut generator: schemars::r#gen::SchemaGenerator = settings.into();
+        let settings: schemars::generate::SchemaSettings = version.to_schemars_settings();
+        let generator: schemars::generate::SchemaGenerator = settings.into();
 
-        let root = self.to_schemars_schema(&mut generator);
+        let root = self.to_schemars_schema(generator);
         serde_json::to_string_pretty(&root)
     }
 
     /// Convert using a provided generator (which also holds the settings) to a json schema.
     pub fn to_schemars_schema(
         &self,
-        generator: &mut schemars::r#gen::SchemaGenerator,
-    ) -> schemars_types::RootSchema {
-        let inner = helpers::inferred_to_schemars(generator, self);
-        helpers::wrap_in_root(inner, generator.settings())
+        mut generator: schemars::generate::SchemaGenerator,
+    ) -> schemars::Schema {
+        let mut schema = helpers::inferred_to_schemars(&mut generator, self);
+        if let Some(meta_schema) = generator.settings().meta_schema.as_deref() {
+            schema.insert("$schema".to_owned(), meta_schema.into());
+        }
+        for transform in generator.transforms_mut() {
+            transform.transform(&mut schema);
+        }
+        schema
     }
 }
 
 /// The currently supported json schema versions.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub enum JsonSchemaVersion {
-    /// `schemars::r#gen::SchemaSettings::draft07`
+    /// [schemars::generate::SchemaSettings::draft07]
     Draft07,
-    /// `schemars::r#gen::SchemaSettings::draft2019_09`
-    #[default]
+    /// [schemars::generate::SchemaSettings::draft2019_09]
     Draft2019_09,
-    /// `schemars::r#gen::SchemaSettings::openapi3`
+    /// [schemars::generate::SchemaSettings::draft2020_12]
+    #[default]
+    Draft2020_12,
+    /// [schemars::generate::SchemaSettings::openapi3]
     OpenApi3,
 }
 impl JsonSchemaVersion {
     /// Convert the version to full settings.
-    pub fn to_schemars_settings(&self) -> schemars::r#gen::SchemaSettings {
-        use schemars::r#gen::SchemaSettings;
+    pub fn to_schemars_settings(&self) -> schemars::generate::SchemaSettings {
+        use schemars::generate::SchemaSettings;
         match self {
             JsonSchemaVersion::Draft07 => SchemaSettings::draft07(),
             JsonSchemaVersion::Draft2019_09 => SchemaSettings::draft2019_09(),
+            JsonSchemaVersion::Draft2020_12 => SchemaSettings::draft2020_12(),
             JsonSchemaVersion::OpenApi3 => SchemaSettings::openapi3(),
         }
     }
 }
 
 mod helpers {
-
-    use std::collections::BTreeSet;
-
-    use schemars::schema as schemars_types;
+    use ordermap::{OrderMap, OrderSet};
+    use schemars::JsonSchema;
+    use schemars::json_schema;
+    use serde_json::Value;
 
     use crate::{Field, Schema, context::Context};
 
-    /// Wraps a [Schema](schemars_types::Schema) in a [RootSchema](schemars_types::RootSchema).
-    pub fn wrap_in_root(
-        inner: schemars_types::Schema,
-        settings: &schemars::r#gen::SchemaSettings,
-    ) -> schemars_types::RootSchema {
-        schemars_types::RootSchema {
-            meta_schema: settings.meta_schema.clone(),
-            definitions: Default::default(),
-            schema: inner.into_object(),
-        }
-    }
-
-    /// Converts an inferred [Schema] to a schemars [Schema](schemars_types::Schema).
+    /// Converts an inferred [Schema] to a schemars [Schema](schemars::Schema).
     pub fn inferred_to_schemars<C: Context>(
-        generator: &mut schemars::r#gen::SchemaGenerator,
+        generator: &mut schemars::generate::SchemaGenerator,
         inferred: &Schema<C>,
-    ) -> schemars_types::Schema {
+    ) -> schemars::Schema {
         // Note: we can use the generator even if we don't generate the final root schema
         //  using it because simple values will not be referrenced.
         //  Do not use for complex values.
@@ -90,38 +85,30 @@ mod helpers {
 
             // Using specific integer/float types causes the schema to remember the
             // specific representation.
-            Schema::Integer(_) => schemars_types::SchemaObject {
-                instance_type: Some(schemars_types::InstanceType::Integer.into()),
-                ..Default::default()
-            }
-            .into(),
-            Schema::Float(_) => schemars_types::SchemaObject {
-                instance_type: Some(schemars_types::InstanceType::Number.into()),
-                ..Default::default()
-            }
-            .into(),
+            Schema::Integer(_) => json_schema!({
+                "type": "integer"
+            }),
+
+            Schema::Float(_) => json_schema!({
+                "type": "number"
+            }),
 
             Schema::String(_) => generator.subschema_for::<String>(),
             Schema::Bytes(_) => generator.subschema_for::<Vec<u8>>(),
 
-            Schema::Sequence { field, .. } => schemars_types::SchemaObject {
-                instance_type: Some(schemars_types::InstanceType::Array.into()),
-                array: Some(Box::new(schemars_types::ArrayValidation {
-                    items: Some(internal_field_to_schemars_schema(generator, field).into()),
-                    ..Default::default()
-                })),
-                ..Default::default()
-            }
-            .into(),
+            Schema::Sequence { field, .. } => schemars::json_schema!({
+                "type": "array",
+                "items": internal_field_to_schemars_schema(generator, field)
+            }),
 
             Schema::Struct { fields, .. } => {
-                let required: BTreeSet<String> = fields
+                let required: OrderSet<_> = fields
                     .iter()
                     // Null values are handled in the Field function.
                     .filter(|(_, v)| !v.status.may_be_missing)
                     .map(|(k, _)| k.clone())
                     .collect();
-                let properties = fields
+                let properties: OrderMap<_, _> = fields
                     .iter()
                     .map(|(k, field)| {
                         (
@@ -130,102 +117,138 @@ mod helpers {
                         )
                     })
                     .collect();
-                schemars_types::SchemaObject {
-                    instance_type: Some(schemars_types::InstanceType::Object.into()),
-                    object: Some(Box::new(schemars_types::ObjectValidation {
-                        required,
-                        properties,
-                        ..Default::default()
-                    })),
-                    ..Default::default()
+
+                let mut schema = json_schema!({ "type": "object" });
+                if !properties.is_empty() {
+                    schema.insert(
+                        "properties".to_owned(),
+                        serde_json::to_value(properties).unwrap(),
+                    );
                 }
-                .into()
+                if !required.is_empty() {
+                    schema.insert(
+                        "required".to_owned(),
+                        serde_json::to_value(required).unwrap(),
+                    );
+                }
+                schema
             }
 
             Schema::Union { variants } => {
-                let json_schemas = variants
+                let json_schemas: Vec<_> = variants
                     .iter()
                     .map(|s| inferred_to_schemars(generator, s))
                     .collect();
-                schemars_types::SchemaObject {
-                    subschemas: Some(Box::new(schemars_types::SubschemaValidation {
-                        any_of: Some(json_schemas),
-                        ..Default::default()
-                    })),
-                    ..Default::default()
-                }
-                .into()
+
+                json_schema!({
+                    "anyOf": json_schemas,
+                })
             }
         }
     }
 
-    /// Converts a [Field] into a [Schema](schemars_types::Schema).
+    /// Converts a [Field] into a [Schema](schemars::Schema).
     fn internal_field_to_schemars_schema<C: Context>(
-        generator: &mut schemars::r#gen::SchemaGenerator,
+        generator: &mut schemars::generate::SchemaGenerator,
         field: &Field<C>,
-    ) -> schemars_types::Schema {
+    ) -> schemars::Schema {
         // Note: we can use the generator even if we don't generate the final root schema
         //  using it because simple values will not be referrenced.
         //  Do not use for complex values.
 
         let mut schema = match &field.schema {
             Some(schema) => inferred_to_schemars(generator, schema),
-            None => schemars_types::Schema::Bool(true),
+            None => schemars::Schema::from(true),
         };
 
         if field.status.may_be_null {
-            // Taken from:
-            // https://github.com/GREsau/schemars/blob/master/schemars/src/json_schema_impls/core.rs
-            if generator.settings().option_add_null_type {
-                schema = match schema {
-                    schemars_types::Schema::Bool(true) => schemars_types::Schema::Bool(true),
-                    schemars_types::Schema::Bool(false) => generator.subschema_for::<()>(),
-                    schemars_types::Schema::Object(schemars_types::SchemaObject {
-                        instance_type: Some(ref mut instance_type),
-                        ..
-                    }) => {
-                        add_null_type(instance_type);
-                        schema
-                    }
-                    schema => schemars_types::SchemaObject {
-                        // TODO technically the schema already accepts null, so this may be unnecessary
-                        subschemas: Some(Box::new(schemars_types::SubschemaValidation {
-                            any_of: Some(vec![schema, generator.subschema_for::<()>()]),
-                            ..Default::default()
-                        })),
-                        ..Default::default()
-                    }
-                    .into(),
-                }
-            }
-            if generator.settings().option_nullable {
-                let mut schema_obj = schema.into_object();
-                schema_obj
-                    .extensions
-                    .insert("nullable".to_owned(), serde_json::json!(true));
-                schema = schemars_types::Schema::Object(schema_obj);
-            };
+            allow_null(generator, &mut schema);
         }
         schema
     }
 
     /// Taken from:
     /// https://github.com/GREsau/schemars/blob/master/schemars/src/json_schema_impls/core.rs
-    fn add_null_type(
-        instance_type: &mut schemars_types::SingleOrVec<schemars_types::InstanceType>,
+    /// https://github.com/GREsau/schemars/blob/master/schemars/src/_private/mod.rs
+    /// Alt hash: e67495be31e784d32f3d3310edb925458b0f2574
+    #[expect(clippy::collapsible_if)] // Min diff
+    fn allow_null(
+        generator: &mut schemars::generate::SchemaGenerator,
+        schema: &mut schemars::Schema,
     ) {
-        match instance_type {
-            schemars_types::SingleOrVec::Single(ty)
-                if **ty != schemars_types::InstanceType::Null =>
-            {
-                *instance_type = vec![**ty, schemars_types::InstanceType::Null].into()
+        fn is_null_schema(value: &Value) -> bool {
+            <&schemars::Schema>::try_from(value).is_ok_and(|s| has_type(s.as_value(), "null"))
+        }
+
+        match (schema.as_bool(), schema.as_object_mut()) {
+            (None, Some(obj)) => {
+                if obj.len() == 1
+                    && obj
+                        .get("anyOf")
+                        .and_then(Value::as_array)
+                        .is_some_and(|a| a.iter().any(is_null_schema))
+                {
+                    return;
+                }
+
+                if contains_immediate_subschema(obj) {
+                    *schema = json_schema!({
+                        "anyOf": [
+                            obj,
+                            <()>::json_schema(generator)
+                        ]
+                    });
+                    // No need to check `type`/`const`/`enum` because they're trivially not present
+                    return;
+                }
+
+                if let Some(instance_type) = obj.get_mut("type") {
+                    match instance_type {
+                        Value::Array(array) => {
+                            let null = Value::from("null");
+                            if !array.contains(&null) {
+                                array.push(null);
+                            }
+                        }
+                        Value::String(string) => {
+                            if string != "null" {
+                                let current_type = core::mem::take(string).into();
+                                *instance_type = Value::Array(vec![current_type, "null".into()]);
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+
+                if let Some(c) = obj.remove("const") {
+                    if !c.is_null() {
+                        obj.insert("enum".to_string(), Value::Array(vec![c, Value::Null]));
+                    }
+                } else if let Some(Value::Array(e)) = obj.get_mut("enum") {
+                    if !e.contains(&Value::Null) {
+                        e.push(Value::Null);
+                    }
+                }
             }
-            schemars_types::SingleOrVec::Vec(ty)
-                if !ty.contains(&schemars_types::InstanceType::Null) =>
-            {
-                ty.push(schemars_types::InstanceType::Null)
+            (Some(true), None) => {}
+            (Some(false), None) => {
+                *schema = <()>::json_schema(generator);
             }
-            _ => {}
-        };
+            _ => unreachable!(),
+        }
+    }
+
+    pub(crate) fn has_type(value: &Value, ty: &str) -> bool {
+        match value.get("type") {
+            Some(Value::Array(values)) => values.iter().any(|v| v.as_str() == Some(ty)),
+            Some(Value::String(s)) => s == ty,
+            _ => false,
+        }
+    }
+
+    fn contains_immediate_subschema(schema_obj: &serde_json::Map<String, Value>) -> bool {
+        ["if", "allOf", "anyOf", "oneOf", "$ref"]
+            .into_iter()
+            .any(|k| schema_obj.contains_key(k))
     }
 }

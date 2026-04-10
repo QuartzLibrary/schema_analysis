@@ -219,8 +219,8 @@ where
         }
         InputFormat::Toml => {
             let s = read_all_string(reader)?;
-            let mut de = toml::Deserializer::new(&s);
-            inferred.deserialize(&mut de)?;
+            let de = toml::Deserializer::parse(&s)?;
+            inferred.deserialize(de)?;
         }
         InputFormat::Bson => {
             let doc = bson::Document::from_reader(reader).context("Failed to parse BSON")?;
@@ -257,7 +257,7 @@ where
         }
 
         Output::JsonSchema => schema
-            .to_json_schema_with_schemars_version(&JsonSchemaVersion::Draft2019_09)
+            .to_json_schema_with_schemars_version(&JsonSchemaVersion::Draft2020_12)
             .context("Failed to generate JSON Schema"),
 
         output => {
