@@ -39,8 +39,8 @@ serde = { version = "1", features = [ "serde_derive" ] }
 
 regex = "1" # Used to detect interesting strings
 once_cell = "1" # For global constants that require allocation
-ordered-float = { version = "3", features = [ "serde" ] } # To save sets of floats
-ordermap = { version = "0.5", features = [ "serde" ] } # To preserve the order of fields in the schema
+ordered-float = { version = "5", features = [ "serde" ] } # To save sets of floats
+ordermap = { version = "1", features = [ "serde" ] } # To preserve the order of fields in the schema
 
 # Schemars integration allows the generation of json schemas.
 schemars = { version = "0.8", optional = true }
