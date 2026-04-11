@@ -25,18 +25,18 @@ our gymnast friend, serde.
 
 ```bash
 # Run without installing
-npx schema_analysis data.json
-# or
 uvx schema_analysis data.json
 # or
 pipx run schema_analysis data.json
+# or
+npx schema_analysis data.json
 
 # Install
-npm install -g schema_analysis
+uv tool install schema_analysis
 # or
 pip install schema_analysis
 # or
-uv tool install schema_analysis
+npm install -g schema_analysis
 # or
 cargo install schema_analysis --features cli --locked
 ```
@@ -83,6 +83,19 @@ schema_analysis file1.json file2.json file3.json
 # Read from stdin
 cat data.json | schema_analysis --format json
 ```
+
+### Agent Skill
+
+An [agent skill](https://agentskills.io/) is included in [`.agents/skills/schema-analysis`](.agents/skills/schema-analysis/SKILL.md),
+compatible with Claude Code, Cursor, GitHub Copilot, and [other agents](https://agentskills.io/specification#supported-products).
+
+Install the skill with:
+
+```bash
+npx skills add QuartzLibrary/schema_analysis
+```
+
+Or copy [`.agents/skills/schema-analysis`](.agents/skills/schema-analysis) into your project's `.agents/skills/` directory.
 
 ### Library Usage
 
