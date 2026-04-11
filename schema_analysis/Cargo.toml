@@ -9,6 +9,7 @@ homepage = "https://schema-analysis.com/"
 repository = "https://github.com/QuartzLibrary/schema_analysis"
 keywords = [ "schema", "analysis", "json", "xml", "serde" ]
 readme = "README.md"
+exclude = ["tests/test_files/"]
 
 [[bin]]
 name = "schema_analysis"
